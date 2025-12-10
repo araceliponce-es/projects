@@ -1,0 +1,91 @@
+# ========================================
+# Git Ignore para proyectos Java en NetBeans
+# Mantiene todos los archivos originales del IDE
+# ========================================
+
+# =========================
+# Carpetas temporales y de compilación
+# =========================
+**/build/
+**/dist/
+**/dist/*
+
+# =========================
+# Archivos compilados o generados automáticamente
+# =========================
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+*.zip
+*.tar.gz
+*.rar
+*.log
+
+# =========================
+# Archivos de sistema (seguridad y limpieza)
+# =========================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+.nfs*
+
+# =========================
+# IDEs adicionales (por si abres el proyecto en otros entornos)
+# =========================
+# IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Eclipse
+.project
+.classpath
+.settings/
+
+# Visual Studio Code
+.vscode/
+
+# =========================
+# Archivos temporales o personales
+# =========================
+*.swp
+*.swo
+*.bak
+*.tmp
+*.old
+
+/Java/Ejercicio-2/Ejercicio-2-9/Ejercicio_3_1_1/nbproject/private/
+/Java/Ejercicio-3/Ejercicio_3_1/Ejercicio_3_1_1/Ejercicio_3_1_2/nbproject/private/
+/Java/Ejercicio-3/Ejercicio_3_1/Ejercicio_3_1_2/nbproject/private/
+/Java/Ejercicio-3/Ejercicio_3_1/Ejercicio_3_1_1/nbproject/private/
+/Java/Ejercicio-3/Ejercicio_3_1/Ejercicio_3_1_3/nbproject/private/
+/Java/Ejercicio-3/Ejercicio_3_2/Ejercicicio_3_2/nbproject/private/
+/Java/Ejercicio-3/Ejercicio_3_2/Ejercicicio_3_2_1/nbproject/private/
+/Java/Ejercicio-3/Ejercicio_3_2/Ejercicicio_3_2_1_1/nbproject/private/
+/Java/Ejercicio-3/Ejercicio_3_2/Ejercicio_3_2_3/nbproject/private/
+/Java/Ejercicio-3/Ejercicio_3_2/Ejercicio_3_2_4/nbproject/private/
+/Java/Ejercicio-3/Ejercicio_3_2/Ejercicicio_3_2_2/nbproject/private/
+/Java/Ejercicio-3/Ejercicio_3_3/Ejercicio_3_3_1/nbproject/private/
+/Java/Ejercicio-3/Ejercicio_3_3/Ejercicio_3_3_3/nbproject/private/
+/Java/Ejercicio-3/Ejercicio_3_3/Ejercicio_3_3_4/nbproject/private/
+/Java/Ejercicio-3/Ejercicio_3_4/Ejercicio_3_4_4/nbproject/private/
+/Java/Ejercicio-3/Ejercicio_3_4/Ejercicio_3_4_1/nbproject/private/
+
+
+# nuevos ignore
+**/nbproject/
+**build.xml
+**manifest.mf
