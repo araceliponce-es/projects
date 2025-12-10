@@ -17,7 +17,6 @@
 package tetris;
 
 import java.awt.Color;
-//
 /**
  * Clase que implementa a peza cadrada do xogo do Tetris
  *
