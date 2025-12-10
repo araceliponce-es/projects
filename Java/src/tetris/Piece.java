@@ -157,6 +157,7 @@ public class Piece {
         // A rotación da ficha cadrada non supón ningunha variación na ficha,
         // por iso simplemente devolvemos true
         return true;
+        //One Piece
     }
 
 }
