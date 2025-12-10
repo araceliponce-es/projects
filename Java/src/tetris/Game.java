@@ -208,5 +208,6 @@ public class Game {
     private boolean hitPieceTheGround() {
         // Polo momento, non facemos nada
         return false;
+        //PRUEBADE QWEUDHOO
     }
 }
