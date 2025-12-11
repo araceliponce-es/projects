@@ -62,7 +62,7 @@ public class Game {
     /**
      * ground squares
      */
-    private HashMap<String, Square> groundSquares = new HashMap<String, Square>();
+    private HashMap<String, Square> groundSquares = new HashMap<>();
 
     /**
      * @return Referenza á ventá principal do xogo
