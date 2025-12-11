@@ -62,7 +62,7 @@ public class Game {
     /**
      * ground squares
      */
-    private HashMap<String, Square> groundSquares = new HashMap<>();
+    private HashMap<String, Square> groundSquares;
 
     /**
      * @return Referenza á ventá principal do xogo
@@ -113,6 +113,7 @@ public class Game {
     public Game(MainWindow mainWindow) {
         this.mainWindow = mainWindow;
         this.createNewPiece();   
+        this.groundSquares = new HashMap<String, Square>();
     }
 
     /**
