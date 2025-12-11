@@ -86,6 +86,6 @@ $RECYCLE.BIN/
 
 
 # nuevos ignore
-**/nbproject/
+**/nbproject/project.xml
 **build.xml
 **manifest.mf
