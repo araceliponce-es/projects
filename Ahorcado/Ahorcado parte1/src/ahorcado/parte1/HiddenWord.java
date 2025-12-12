@@ -12,7 +12,7 @@ import java.util.Scanner;
  */
 public class HiddenWord {
 
-    private char[] characters = new char[16];
+    private char[] characters = new char[1];
     private boolean[] hits = new boolean[characters.length];
 
     public char[] getCharacters() {
@@ -42,6 +42,7 @@ public class HiddenWord {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+
         Scanner scan = new Scanner(System.in);
         System.out.println("¿Qué letra estará en esta palabra misteriosa?:");
         char c = scan.next().charAt(0);
@@ -50,9 +51,9 @@ public class HiddenWord {
         palabraSecreta.show();
     }
 
-    public boolean checkChar(char c) {
-        for (int i = 0; i < hits.length; i++) {
-            if (c == characters[i]) {
+    public boolean checkChar(char caracter) {
+        for (int i = 0; i < characters.length; i++) {
+            if (caracter == characters[i]) {
                 hits[i] = true;
             }
         }
@@ -60,7 +61,7 @@ public class HiddenWord {
     }
 
     public String show() {
-        for (int i = 0; i < hits.length; i++) {
+        for (int i = 0; i < characters.length; i++) {
             if (hits[i] = true) {
                 return "" + characters[i];
             }
