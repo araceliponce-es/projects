@@ -159,8 +159,4 @@ public class Piece {
         return true;
     }
 
-
-
-    // hola
-
 }
