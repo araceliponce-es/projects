@@ -12,8 +12,8 @@ import java.util.Scanner;
  */
 public class HiddenWord {
 
-    private char[] characters = new char[1];
-    private boolean[] hits = new boolean[characters.length];
+    private char[] characters;
+    private boolean[] hits;
 
     public char[] getCharacters() {
         return characters;
@@ -33,6 +33,7 @@ public class HiddenWord {
 
     public HiddenWord(String palabra) {
         characters = palabra.toCharArray();
+        hits = new boolean[characters.length];
         for (int i = 0; i < hits.length; i++) {
             hits[i] = false;
         }
@@ -48,7 +49,14 @@ public class HiddenWord {
         char c = scan.next().charAt(0);
         HiddenWord palabraSecreta = new HiddenWord("Guacamole");
         palabraSecreta.checkChar(c);
-        palabraSecreta.show();
+        //System.out.println(palabraSecreta.show());
+        palabraSecreta.showBis();
+
+        if (palabraSecreta.isVisible()) {
+            System.out.println("GANASTE: " + palabraSecreta.showFullWord());
+        } else {
+            System.out.println("Perdiste: " + palabraSecreta.showFullWord());
+        }
     }
 
     public boolean checkChar(char caracter) {
@@ -61,13 +69,53 @@ public class HiddenWord {
     }
 
     public String show() {
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < characters.length; i++) {
-            if (hits[i] = true) {
-                return "" + characters[i];
+            if (hits[i]) {
+                sb.append(characters[i]);
+            } else {
+                sb.append("-");
             }
-            return "-";
         }
-        return "Esto no debería aparecer";
+        return sb.toString();
     }
 
+    public String showBis() {
+
+        for (int i = 0; i < characters.length; i++) {
+            if (hits[i]) {
+                System.out.print(characters[i]);
+            } else {
+                System.out.print("-");
+            }
+        }
+        System.out.println();
+        return "";
+    }
+
+    public String showFullWord() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < characters.length; i++) {
+            sb.append(characters[i]);
+        }
+        return sb.toString();
+    }
+
+    public boolean isVisible() {
+        boolean acertada = false;
+        for (int i = 0; i < characters.length; i++) {
+            if (characters[i] != 0) {
+                acertada = false;
+
+            } else {
+                acertada = true;
+                for (i = 0; i < characters.length; i++) {
+                    if (characters[i] != 0) {
+                        acertada = false;
+                    }
+                }
+            }
+        }
+        return acertada;
+    }
 }
