@@ -17,6 +17,7 @@
 package tetris;
 
 import java.awt.Color;
+import java.util.Random;
 
 /**
  * Clase que implementa a peza cadrada do xogo do Tetris
@@ -42,10 +43,14 @@ public class Piece {
      */
     public Piece(Game game) {
         this.game = game;
-        squares[0] = new Square(Game.MAX_X / 2 - Game.SQUARE_SIDE, 0, Color.BLUE, game);
-        squares[1] = new Square(Game.MAX_X / 2, 0, Color.BLUE, game);
-        squares[2] = new Square(Game.MAX_X / 2 - Game.SQUARE_SIDE, Game.SQUARE_SIDE, Color.BLUE, game);
-        squares[3] = new Square(Game.MAX_X / 2, Game.SQUARE_SIDE, Color.BLUE, game);
+        
+        Color[] colorsToUse = {Color.MAGENTA, Color.ORANGE, Color.BLUE, Color.PINK, Color.CYAN};
+        int randIndex= new Random().nextInt(colorsToUse.length);
+        
+        squares[0] = new Square(Game.MAX_X / 2 - Game.SQUARE_SIDE, 0, colorsToUse[randIndex], game);
+        squares[1] = new Square(Game.MAX_X / 2, 0, colorsToUse[randIndex], game);
+        squares[2] = new Square(Game.MAX_X / 2 - Game.SQUARE_SIDE, Game.SQUARE_SIDE, colorsToUse[randIndex], game);
+        squares[3] = new Square(Game.MAX_X / 2, Game.SQUARE_SIDE, colorsToUse[randIndex], game);
     }
 
     public Game getGame() {
