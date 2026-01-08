@@ -4,6 +4,8 @@
  */
 package tacebook;
 
+import java.util.ArrayList;
+
 /**
  * modelo
  * 
@@ -12,6 +14,7 @@ package tacebook;
 public class Profile {
     
     private String name, password, status;
+    public ArrayList<Message> messages = new ArrayList<>();
 
     public Profile(String name, String password, String status) {
         this.name = name;

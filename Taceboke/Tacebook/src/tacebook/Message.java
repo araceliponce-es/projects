@@ -14,7 +14,9 @@ public class Message {
 
     private int id;
     private String text;
-    private Date date= new Date();
+    private Date date = new Date();
     private boolean read;
+
+    public Profile destProfile, sourceProfile;
 
 }
