@@ -13,7 +13,7 @@ public class WordGenerator {
     private String[] seleccionPalabras = new String[5];
 
     public String generateWord() {
-        seleccionPalabras[0]="Guacamole";
+        seleccionPalabras[0]="Gucamole";
         seleccionPalabras[1]="Aguacate";
         seleccionPalabras[2]="Cilantro";
         seleccionPalabras[3]="Jalapeño";
