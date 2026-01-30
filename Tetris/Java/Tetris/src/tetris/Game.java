@@ -18,9 +18,11 @@ package tetris;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Clase que implementa o comportamento do xogo do Tetris
+ *
  * @author Profe de Programación
  */
 public class Game {
@@ -33,9 +35,10 @@ public class Game {
      * Constante que define o valor máximo da coordenada x no panel de cadrados
      */
     public final static int MAX_X = 160;
-    
+
     /**
-     * Constante que define o valor minimo en la cordenada y en el panel de cadradros
+     * Constante que define o valor minimo en la cordenada y en el panel de
+     * cadradros
      */
     public final static int MAX_Y = 200;
 
@@ -58,8 +61,7 @@ public class Game {
      * Número de liñas feitas no xogo
      */
     private int numberOfLines = 0;
-    
-    
+
     /**
      * ground squares
      */
@@ -109,11 +111,12 @@ public class Game {
 
     /**
      * Construtor da clase, que crea unha primeira peza
+     *
      * @param mainWindow Referenza á ventá principal do xogo
      */
     public Game(MainWindow mainWindow) {
         this.mainWindow = mainWindow;
-        this.createNewPiece();   
+        this.createNewPiece();
         this.groundSquares = new HashMap<String, Square>();
     }
 
@@ -145,9 +148,9 @@ public class Game {
     }
 
     /**
-     * Move a peza actual abaixo, se o xogo non está pausado Se a peza choca
-     * con algo e xa non pode baixar, pasa a formar parte do chan e créase unha
-     * nova peza
+     * Move a peza actual abaixo, se o xogo non está pausado Se a peza choca con
+     * algo e xa non pode baixar, pasa a formar parte do chan e créase unha nova
+     * peza
      */
     public void movePieceDown() {
         if ((!paused) && (!currentPiece.moveDown())) {
@@ -162,27 +165,31 @@ public class Game {
     /**
      * Método que permite saber se unha posición x,y é válida para un cadrado
      *
-     * úsase dende os métodos da clase "Piece" que moven a peza para comprobar que cada cadrado vai quedar nunha posición correcta se se move a onde se pretende. Este método só comproba se unha posición x,y onde se quere colocar un cadrado sería válida.
+     * úsase dende os métodos da clase "Piece" que moven a peza para comprobar
+     * que cada cadrado vai quedar nunha posición correcta se se move a onde se
+     * pretende. Este método só comproba se unha posición x,y onde se quere
+     * colocar un cadrado sería válida.
+     *
      * @param x Coordenada x
      * @param y Coordenada y
      * @return true se esa posición é válida, se non false
      */
     public boolean isValidPosition(int x, int y) {
-       boolean res = true;
+        boolean res = true;
         //si x o y sobrepasa alguno de los maximos o es menor que cero
-        if ((x == MAX_X) || (x < 0) || (y == MAX_Y)||(y < 0)) {
+        if ((x == MAX_X) || (x < 0) || (y == MAX_Y) || (y < 0)) {
             res = false;
         }
-        
+
         //las ids de los groundSquares esta en formato x,y. por ejemplo 100,120
         //si el x y y a evaluar coinciden significa que está ocupado
-        if (groundSquares.containsKey(x+","+y)){
+        if (groundSquares.containsKey(x + "," + y)) {
             res = false;
         }
         //si x o y es igual al x o y de alguno de los groundSquares
         //es igual a los valores de ground devolvera falso
-        
-        System.out.println("res "+ res + x + ", "+y);
+
+//        System.out.println("res " + res + x + ", " + y);
 
         return res;
     }
@@ -200,17 +207,18 @@ public class Game {
      */
     private void addPieceToGround() {
         // Engadimos os cadrados da peza ao chan
-        
-            Square squares[] = currentPiece.getSquares();
-            for (int j=0; j < squares.length;j++){
-                String coordinates = squares[j].getCoordinates();
-                this.groundSquares.put(coordinates, squares[j]);
-                System.out.println(groundSquares.size()); //verifica que sí se agregan squares al piso
-             
-            }
-            
 
-        
+        //array donde se almacenan los squares de currentPiece
+        Square squares[] = currentPiece.getSquares();
+        for (int j = 0; j < squares.length; j++) {
+            //obtiene las coordenadas de cada square
+            String coordinates = squares[j].getCoordinates();
+            //coloca cada square dentro de groundSquares. coordenadas seran el id
+            this.groundSquares.put(coordinates, squares[j]);
+            System.out.println(groundSquares.size()); //verifica que sí se agregan squares al piso
+
+        }
+
         // Chamamos ao método que borra as liñas do chan que estean completas
         this.deleteCompletedLines();
     }
@@ -220,6 +228,53 @@ public class Game {
      * cadrados do chan e súmase unha nova liña no número de liñas realizadas
      */
     private void deleteCompletedLines() {
+        //encuentra si hay 8 groundsquares que tengan el mismo Y y usa deleteLine para borrar esa linea
+
+        //todo:encontrar el punto mas alto de groundsquares 
+              int maxSquares = MAX_X / SQUARE_SIDE; //cantidad max posible de squares en tablero
+
+        //si groundSquares no esta vacio
+        if (!groundSquares.isEmpty()) {
+            System.out.println("aqui no esta vacio");
+
+            //para almacenar cuantas veces aparece cada Y
+            Map<Integer, Integer> contador = new HashMap<>();
+
+            //llena el hashmap con items tipo: key:100, value:8, donde 100(squareY), 8 (apariciones)
+            for (String key : groundSquares.keySet()) {
+                // divide usando la coma, el segundo valor de las 2 partes obtenidas es y
+                int squareY = Integer.parseInt(key.split(",")[1]);
+                contador.put(squareY, contador.getOrDefault(squareY, 0) + 1);
+            }
+
+            boolean doDelete = false;
+            int lineToDelete = 0;
+
+            for (Map.Entry<Integer, Integer> entry : contador.entrySet()) {
+                if (entry.getValue() == maxSquares) {
+                    System.out.println("El número " + entry.getKey()
+                            + " aparece " + entry.getValue() + " veces");
+                    doDelete = true;
+                    lineToDelete = entry.getKey();
+
+                    //cuando se vuelve true
+                    if (doDelete) {
+
+                        //todo: esto no funciona
+                        System.out.println("borra un cuadrado especifico...");
+                        this.groundSquares.remove("100,180");
+
+                        System.out.println("borrando...");
+                        deleteLine(lineToDelete);
+                    }
+                } else {
+                    System.out.println("no do delete, El número " + entry.getKey()
+                            + " aparece " + entry.getValue() + " veces");
+                }
+            }
+
+
+        }
 
     }
 
@@ -231,7 +286,14 @@ public class Game {
      * @param y Coordenada y da liña a borrar
      */
     private void deleteLine(int y) {
+        System.out.println("dentro de deleteLIne....");
+        for (int j = 0; j < 8; j++) {
+            System.out.println("dentro del for...");
+            System.out.println("debe borrar " + (j * SQUARE_SIDE) + " , " + y);
+            //borra todos los en 0, y     40,y    80,y   .....
+            this.groundSquares.remove((j * SQUARE_SIDE) + "," + y);
 
+        }
     }
 
     /**
@@ -240,14 +302,15 @@ public class Game {
      * @return true se a peza actual choca cos cadrados do chan; se non false
      */
     private boolean hitPieceTheGround() {
-        
-        
-        
-        // Polo momento, non facemos nada
-        /**
-         * comprobar se algún cadrado da peza actual está nunha posición inválida. Este método só se usa cando sae unha nova peza na partida, porque se ao saír a peza esta xa queda en posición inválida, entón remata a partida. Como cando unha peza ao aparecer nunca vai saír do panel, neste método non hai que comprobar que as coordenadas x e y de cada cadrado superen os límites máximo e mínimo, o que haberá que facer e comprobar que na posición de cada cadrado da peza non haxa un cadrado dos que están depositados no chan.
-         * 
-         */
+
+        // TODO: comprobar se algún cadrado da peza actual está nunha posición 
+        // inválida. Este método só se usa cando sae unha nova peza na partida, 
+        // porque se ao saír a peza esta xa queda en posición inválida, entón 
+        // remata a partida. Como cando unha peza ao aparecer nunca vai saír 
+        // do panel, neste método non hai que comprobar que as coordenadas x e 
+        // y de cada cadrado superen os límites máximo e mínimo, o que haberá 
+        // que facer e comprobar que na posición de cada cadrado da peza non 
+        // haxa un cadrado dos que están depositados no chan.
         return false;
     }
 }
