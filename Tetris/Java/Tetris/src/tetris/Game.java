@@ -216,6 +216,11 @@ public class Game {
             //coloca cada square dentro de groundSquares. coordenadas seran el id
             this.groundSquares.put(coordinates, squares[j]);
             System.out.println(groundSquares.size()); //verifica que sí se agregan squares al piso
+            System.out.println("values de groundsquares:");
+            for (Square valor : groundSquares.values()) {
+            System.out.print(valor.getCoordinates()+"  ");
+}
+
 
         }
 
@@ -228,14 +233,19 @@ public class Game {
      * cadrados do chan e súmase unha nova liña no número de liñas realizadas
      */
     private void deleteCompletedLines() {
-        //encuentra si hay 8 groundsquares que tengan el mismo Y y usa deleteLine para borrar esa linea
+        
+              
 
         //todo:encontrar el punto mas alto de groundsquares 
-              int maxSquares = MAX_X / SQUARE_SIDE; //cantidad max posible de squares en tablero
+        int maxSquares = MAX_X / SQUARE_SIDE; //cantidad max posible de squares en tablero
 
         //si groundSquares no esta vacio
         if (!groundSquares.isEmpty()) {
             System.out.println("aqui no esta vacio");
+
+            
+            System.out.println("Claves de groundsquares:");
+            groundSquares.keySet().forEach(k -> System.out.println("[" + k + "]"));
 
             //para almacenar cuantas veces aparece cada Y
             Map<Integer, Integer> contador = new HashMap<>();
@@ -261,8 +271,11 @@ public class Game {
                     if (doDelete) {
 
                         //todo: esto no funciona
-                        System.out.println("borra un cuadrado especifico...");
-                        this.groundSquares.remove("100,180");
+                        System.out.println("borra un cuadrado especifico..." + "tamaño" + this.groundSquares.size());
+                        System.out.println(groundSquares.containsKey("0,180"));
+
+                        this.groundSquares.remove("0,180");
+                        System.out.println("borrado cuadrado especifico..." + "tamaño" + this.groundSquares.size());
 
                         System.out.println("borrando...");
                         deleteLine(lineToDelete);
@@ -291,7 +304,7 @@ public class Game {
             System.out.println("dentro del for...");
             System.out.println("debe borrar " + (j * SQUARE_SIDE) + " , " + y);
             //borra todos los en 0, y     40,y    80,y   .....
-            this.groundSquares.remove((j * SQUARE_SIDE) + "," + y);
+            this.groundSquares.remove((j * SQUARE_SIDE) + ", " + y);
 
         }
     }
