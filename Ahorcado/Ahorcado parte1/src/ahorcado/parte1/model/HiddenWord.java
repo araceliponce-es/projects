@@ -2,9 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
-package ahorcado.parte1;
-
-import java.util.Scanner;
+package ahorcado.parte1.model;
 
 /**
  * Clase que implementa una palabra a adivinar y se encargará de comprobar que

@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package ahorcado.parte1;
+package ahorcado.parte1.ui;
 
+import ahorcado.parte1.model.HangMan;
 import java.util.Scanner;
 
 /**
@@ -24,7 +25,13 @@ public class MenuGenerator {
     public static void main(String[] args) {
         MenuGenerator menuGenerator = new MenuGenerator();
         do {
-            menuGenerator.hangMan = new HangMan(menuGenerator.showInitMenu());
+            try {
+                menuGenerator.hangMan = new HangMan(menuGenerator.showInitMenu());
+            } catch (GenerateWordException ex) {
+                if (ex.isVisible()) {
+                    System.out.println("Error: " + ex.getMessage());
+                }
+            }
             menuGenerator.showGameMenu();
             if (menuGenerator.hangMan.isGameOver() && menuGenerator.hangMan.maxFailsExceeded()) {
                 System.out.println("Perdiste, la palabra era: " + menuGenerator.hangMan.showFullWord());
@@ -36,14 +43,27 @@ public class MenuGenerator {
     }
 
     /**
-     * Método que "muestra" el menú para generar la palabra secreta, actualmente
-     * sólo la genera y la devuelve
+     * Método que pregunta al usuario qué modo de juego quiere y muestra el menú
+     * para generar la palabra secreta, actualmente sólo hay dos modos de juego
+     * y uno no genera ningún menú visible
      *
      * @return La palabra secreta
+     * @throws ahorcado.parte1.ui.GenerateWordException
      */
-    private String showInitMenu() {
-        WordGenerator palabraSecr = new WordGenerator();
-        return palabraSecr.generateWord();
+    private String showInitMenu() throws GenerateWordException {
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Elige el modo de juego:Clásico(1)/Competitivo(2)");
+        String eleccion = scan.nextLine();
+        if ("1".equalsIgnoreCase(eleccion)) {
+            ArrayWordGenerator palabraSecr = new ArrayWordGenerator();
+            return palabraSecr.generateWord();
+        } else if ("2".equalsIgnoreCase(eleccion)) {
+            KeyboardWordGenerator palabraSecr = new KeyboardWordGenerator();
+            return palabraSecr.generateWord();
+        } else {
+            System.out.println("Modo no disponible");
+        }
+        return null;
     }
 
     /**
