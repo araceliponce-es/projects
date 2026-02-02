@@ -19,6 +19,7 @@ package tetris;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.JLabel;
 
 /**
  * Clase que implementa o comportamento do xogo do Tetris
@@ -186,11 +187,8 @@ public class Game {
         if (groundSquares.containsKey(x + "," + y)) {
             res = false;
         }
-        //si x o y es igual al x o y de alguno de los groundSquares
-        //es igual a los valores de ground devolvera falso
 
 //        System.out.println("res " + res + x + ", " + y);
-
         return res;
     }
 
@@ -218,9 +216,9 @@ public class Game {
             System.out.println(groundSquares.size()); //verifica que sí se agregan squares al piso
             System.out.println("values de groundsquares:");
             for (Square valor : groundSquares.values()) {
-            System.out.print(valor.getCoordinates()+"  ");
-}
-
+                System.out.print("anadiendo--- ");
+                System.out.print(valor.getCoordinates() + "  ");
+            }
 
         }
 
@@ -233,8 +231,6 @@ public class Game {
      * cadrados do chan e súmase unha nova liña no número de liñas realizadas
      */
     private void deleteCompletedLines() {
-        
-              
 
         //todo:encontrar el punto mas alto de groundsquares 
         int maxSquares = MAX_X / SQUARE_SIDE; //cantidad max posible de squares en tablero
@@ -243,7 +239,6 @@ public class Game {
         if (!groundSquares.isEmpty()) {
             System.out.println("aqui no esta vacio");
 
-            
             System.out.println("Claves de groundsquares:");
             groundSquares.keySet().forEach(k -> System.out.println("[" + k + "]"));
 
@@ -272,20 +267,22 @@ public class Game {
 
                         //todo: esto no funciona
                         System.out.println("borra un cuadrado especifico..." + "tamaño" + this.groundSquares.size());
-                        System.out.println(groundSquares.containsKey("0,180"));
+                        System.out.println(groundSquares.containsKey("140,180"));
 
-                        this.groundSquares.remove("0,180");
-                        System.out.println("borrado cuadrado especifico..." + "tamaño" + this.groundSquares.size());
+                        //this.groundSquares.remove("140,180");
+                        System.out.println("borrado cuadrado especifico?..." + "tamaño" + this.groundSquares.size());
+                        System.out.println(groundSquares.containsKey("140,180"));
 
                         System.out.println("borrando...");
                         deleteLine(lineToDelete);
+
+                        System.out.println("tamaño despues de borrar..." + this.groundSquares.size());
                     }
                 } else {
                     System.out.println("no do delete, El número " + entry.getKey()
                             + " aparece " + entry.getValue() + " veces");
                 }
             }
-
 
         }
 
@@ -299,12 +296,21 @@ public class Game {
      * @param y Coordenada y da liña a borrar
      */
     private void deleteLine(int y) {
-        System.out.println("dentro de deleteLIne....");
-        for (int j = 0; j < 8; j++) {
-            System.out.println("dentro del for...");
-            System.out.println("debe borrar " + (j * SQUARE_SIDE) + " , " + y);
-            //borra todos los en 0, y     40,y    80,y   .....
-            this.groundSquares.remove((j * SQUARE_SIDE) + ", " + y);
+        System.out.println("dentro de deleteLine....");
+        for (int j = 0; j < MAX_X / SQUARE_SIDE; j++) {
+
+            System.out.println("borra");
+            System.out.println((j * SQUARE_SIDE) + "," + y);
+
+            //obtiene el Square para obtner el LblSquare a borrar
+            Square a = this.groundSquares.get((j * SQUARE_SIDE) + "," + y);
+            
+                //borra de la interfaz
+                mainWindow.deleteSquare(a.getLblSquare());
+
+                //borra del hashmap  . borra todos los en 0, y     40,y    80,y   .....
+                this.groundSquares.remove((j * SQUARE_SIDE) + "," + y);
+            
 
         }
     }
