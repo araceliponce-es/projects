@@ -16,8 +16,8 @@ public class KeyboardWordGenerator implements WordGenerator {
 
     /**
      * Método sobreescrito que pide la palabra secreta por teclado, da null si
-     * no se ejecuta en terminal.
-     *
+     * no se ejecuta en terminal. Para ejecutar en un terminal hay que hacer cd
+     * hasta la carpeta y luego java -jar
      *
      * @return @throws GenerateWordException
      */
