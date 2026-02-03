@@ -7,7 +7,7 @@ package tacebook;
 /**
  * vista
  * 
- * @author daw1al10
+ * @author Araceli,Diego,Oscar
  */
 public class ProfileView {
     

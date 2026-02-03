@@ -10,6 +10,7 @@ import java.util.Scanner;
  *
  * clases para las vistas que tendra la aplicacion: InitMenuView, ProfileView
  * clases controladores: InitMenuController e ProfileController
+ * @author Araceli,Diego,Oscar
  */
 public class Tacebook {
 

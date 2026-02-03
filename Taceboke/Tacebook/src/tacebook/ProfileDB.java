@@ -9,7 +9,7 @@ import java.util.ArrayList;
 /**
  * todo: como hacer global el TacebookDB db???
  * 
- * @author daw1al10
+ * @author Araceli,Diego,Oscar
  */
 public class ProfileDB {
 

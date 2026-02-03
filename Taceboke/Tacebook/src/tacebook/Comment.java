@@ -6,7 +6,7 @@ package tacebook;
 
 /**
  *
- * @author daw1al10
+ * @author Araceli,Diego,Oscar
  */
 public class Comment {
     

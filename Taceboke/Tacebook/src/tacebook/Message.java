@@ -8,7 +8,7 @@ import java.util.Date;
 
 /**
  *
- * @author daw1al10
+ * @author Araceli,Diego,Oscar
  */
 public class Message {
 

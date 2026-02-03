@@ -9,7 +9,7 @@ import java.util.ArrayList;
 /**
  * modelo
  * 
- * @author daw1al10
+ * @author Araceli,Diego,Oscar
  */
 public class Profile {
     

@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  *
- * @author daw1al10
+ * @author Araceli,Diego,Oscar
  */
 public class TacebookDB {
 
