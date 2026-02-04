@@ -237,10 +237,6 @@ public class Game {
 
         //si groundSquares no esta vacio
         if (!groundSquares.isEmpty()) {
-            System.out.println("aqui no esta vacio");
-
-            System.out.println("Claves de groundsquares:");
-            groundSquares.keySet().forEach(k -> System.out.println("[" + k + "]"));
 
             //para almacenar cuantas veces aparece cada Y
             Map<Integer, Integer> contador = new HashMap<>();
@@ -322,14 +318,6 @@ public class Game {
      */
     private boolean hitPieceTheGround() {
 
-        // TODO: comprobar se algún cadrado da peza actual está nunha posición 
-        // inválida. Este método só se usa cando sae unha nova peza na partida, 
-        // porque se ao saír a peza esta xa queda en posición inválida, entón 
-        // remata a partida. Como cando unha peza ao aparecer nunca vai saír 
-        // do panel, neste método non hai que comprobar que as coordenadas x e 
-        // y de cada cadrado superen os límites máximo e mínimo, o que haberá 
-        // que facer e comprobar que na posición de cada cadrado da peza non 
-        // haxa un cadrado dos que están depositados no chan.
         return false;
     }
 }
