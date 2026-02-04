@@ -183,7 +183,7 @@ public class Game {
         // o 
         // si el x y y a evaluar coinciden con un key existente en groundSquares
         // retorna falso
-        if ((x == MAX_X) || (x < 0) || (y == MAX_Y) || (y < 0) || groundSquares.containsKey(x + "," + y)) {
+        if (((x == MAX_X) || (x < 0) || (y == MAX_Y) || (y < 0)) || groundSquares.containsKey(x + "," + y)) {
             res = false;
         }
 
@@ -235,10 +235,6 @@ public class Game {
 
         //si groundSquares no esta vacio
         if (!groundSquares.isEmpty()) {
-            System.out.println("aqui no esta vacio");
-
-            System.out.println("Claves de groundsquares:");
-            groundSquares.keySet().forEach(k -> System.out.println("[" + k + "]"));
 
             //para almacenar cuantas veces aparece cada Y
             Map<Integer, Integer> contador = new HashMap<>();
@@ -247,38 +243,25 @@ public class Game {
             for (String key : groundSquares.keySet()) {
                 // divide usando la coma, el segundo valor de las 2 partes obtenidas es y
                 int squareY = Integer.parseInt(key.split(",")[1]);
+                //le introduces la clave al square si esta existe la suma al contador del hashmap
                 contador.put(squareY, contador.getOrDefault(squareY, 0) + 1);
             }
-
+            //Creamos dos variables para saber si tiene que borrar y la linea que borrar
             boolean doDelete = false;
             int lineToDelete = 0;
 
             for (Map.Entry<Integer, Integer> entry : contador.entrySet()) {
                 if (entry.getValue() == maxSquares) {
-                    System.out.println("El número " + entry.getKey()
-                            + " aparece " + entry.getValue() + " veces");
                     doDelete = true;
                     lineToDelete = entry.getKey();
 
                     //cuando se vuelve true
                     if (doDelete) {
 
-                        //todo: esto no funciona
-                        System.out.println("borra un cuadrado especifico..." + "tamaño" + this.groundSquares.size());
-                        System.out.println(groundSquares.containsKey("140,180"));
-
-                        //this.groundSquares.remove("140,180");
-                        System.out.println("borrado cuadrado especifico?..." + "tamaño" + this.groundSquares.size());
-                        System.out.println(groundSquares.containsKey("140,180"));
-
-                        System.out.println("borrando...");
+                        //Metodo que se encarga de borrar una linea
                         deleteLine(lineToDelete);
 
-                        System.out.println("tamaño despues de borrar..." + this.groundSquares.size());
                     }
-                } else {
-                    System.out.println("no do delete, El número " + entry.getKey()
-                            + " aparece " + entry.getValue() + " veces");
                 }
             }
 
@@ -294,22 +277,34 @@ public class Game {
      * @param y Coordenada y da liña a borrar
      */
     private void deleteLine(int y) {
+
         System.out.println("dentro de deleteLine....");
-        for (int j = 0; j < MAX_X ; j+=SQUARE_SIDE) {
+        for (int j = 0; j < MAX_X; j += SQUARE_SIDE) {
 
             System.out.println("borra");
             System.out.println(j + "," + y);
 
             //obtiene el Square para obtner el LblSquare a borrar
-            Square a = this.groundSquares.get(j  + "," + y);
-            
-                //borra de la interfaz
-                mainWindow.deleteSquare(a.getLblSquare());
+            Square a = this.groundSquares.get(j + "," + y);
+            //borra de la interfaz
+            mainWindow.deleteSquare(a.getLblSquare());
+            //borra del hashmap  . borra todos los en 0, y   40,y    80,y   .....
+            this.groundSquares.remove(j + "," + y);
 
-                //borra del hashmap  . borra todos los en 0, y   40,y    80,y   .....
-                this.groundSquares.remove(j + "," + y);
-            
+        }
 
+        for (int j = 0; j < MAX_X; j += SQUARE_SIDE) {
+            for (int i = y; i >= 0; i -= SQUARE_SIDE) {
+                //obtiene el Square para obtner el LblSquare a borrar
+                Square a = this.groundSquares.get(j + "," + i);
+                if (a != null) {
+                    this.groundSquares.remove(a.getCoordinates());
+                    a.setY(i + SQUARE_SIDE);
+                    this.groundSquares.put(a.getCoordinates(), a);
+                }
+            }
+            System.out.println("Claves de groundsquares:");
+            groundSquares.keySet().forEach(k -> System.out.println("[" + k + "]"));
         }
     }
 
@@ -328,41 +323,17 @@ public class Game {
         // y de cada cadrado superen os límites máximo e mínimo, o que haberá 
         // que facer e comprobar que na posición de cada cadrado da peza non 
         // haxa un cadrado dos que están depositados no chan.
-        
-
         //encuentra el  mas alto de cada columna o x
-//        boolean[] exists = new boolean[8];
-//        for (int x = 0; x < MAX_X; x += SQUARE_SIDE) {
-//            
-//            for (int y = 0; y < MAX_Y; y += SQUARE_SIDE) {
-//
-//                boolean doExist= groundSquares.containsKey(0 + "," + y);
-//                if(doExist){
-//                exists[y/SQUARE_SIDE] = doExist;
-//                }
-//
-//            }
-//
-//        }
+        boolean res = false;
+        for (int x = 0; x < (MAX_X / SQUARE_SIDE) * SQUARE_SIDE; x += SQUARE_SIDE) {
+            for (int y = 0; y < 4 * SQUARE_SIDE; y += SQUARE_SIDE) {
+                if (!isValidPosition(x, y)) {
 
-boolean res = false;
-       for (int x = 0; x < 16; x += SQUARE_SIDE) {
-            
-            for (int y = 0; y < 2; y += SQUARE_SIDE) {
-
-                if (!isValidPosition(x, y)){
-                
-                res = true;
+                    res = true;
                 }
 
             }
-
         }
-
-
-
-        
-        
         return res;
     }
 }
