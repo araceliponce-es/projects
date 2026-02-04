@@ -177,18 +177,16 @@ public class Game {
      */
     public boolean isValidPosition(int x, int y) {
         boolean res = true;
-        //si x o y sobrepasa alguno de los maximos o es menor que cero
-        if ((x == MAX_X) || (x < 0) || (y == MAX_Y) || (y < 0)) {
+        // si x sobrepasa alguno de los maximos o es menor que cero
+        // o
+        // si y sobrepasa alguno de los maximos o es menor que cero
+        // o 
+        // si el x y y a evaluar coinciden con un key existente en groundSquares
+        // retorna falso
+        if ((x == MAX_X) || (x < 0) || (y == MAX_Y) || (y < 0) || groundSquares.containsKey(x + "," + y)) {
             res = false;
         }
 
-        //las ids de los groundSquares esta en formato x,y. por ejemplo 100,120
-        //si el x y y a evaluar coinciden significa que está ocupado
-        if (groundSquares.containsKey(x + "," + y)) {
-            res = false;
-        }
-
-//        System.out.println("res " + res + x + ", " + y);
         return res;
     }
 
@@ -297,19 +295,19 @@ public class Game {
      */
     private void deleteLine(int y) {
         System.out.println("dentro de deleteLine....");
-        for (int j = 0; j < MAX_X / SQUARE_SIDE; j++) {
+        for (int j = 0; j < MAX_X ; j+=SQUARE_SIDE) {
 
             System.out.println("borra");
-            System.out.println((j * SQUARE_SIDE) + "," + y);
+            System.out.println(j + "," + y);
 
             //obtiene el Square para obtner el LblSquare a borrar
-            Square a = this.groundSquares.get((j * SQUARE_SIDE) + "," + y);
+            Square a = this.groundSquares.get(j  + "," + y);
             
                 //borra de la interfaz
                 mainWindow.deleteSquare(a.getLblSquare());
 
-                //borra del hashmap  . borra todos los en 0, y     40,y    80,y   .....
-                this.groundSquares.remove((j * SQUARE_SIDE) + "," + y);
+                //borra del hashmap  . borra todos los en 0, y   40,y    80,y   .....
+                this.groundSquares.remove(j + "," + y);
             
 
         }
@@ -330,6 +328,41 @@ public class Game {
         // y de cada cadrado superen os límites máximo e mínimo, o que haberá 
         // que facer e comprobar que na posición de cada cadrado da peza non 
         // haxa un cadrado dos que están depositados no chan.
-        return false;
+        
+
+        //encuentra el  mas alto de cada columna o x
+//        boolean[] exists = new boolean[8];
+//        for (int x = 0; x < MAX_X; x += SQUARE_SIDE) {
+//            
+//            for (int y = 0; y < MAX_Y; y += SQUARE_SIDE) {
+//
+//                boolean doExist= groundSquares.containsKey(0 + "," + y);
+//                if(doExist){
+//                exists[y/SQUARE_SIDE] = doExist;
+//                }
+//
+//            }
+//
+//        }
+
+boolean res = false;
+       for (int x = 0; x < 16; x += SQUARE_SIDE) {
+            
+            for (int y = 0; y < 2; y += SQUARE_SIDE) {
+
+                if (!isValidPosition(x, y)){
+                
+                res = true;
+                }
+
+            }
+
+        }
+
+
+
+        
+        
+        return res;
     }
 }
