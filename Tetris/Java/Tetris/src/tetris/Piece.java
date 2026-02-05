@@ -24,34 +24,19 @@ import java.util.Random;
  *
  * @author Profe de Programación
  */
-public class Piece {
+public abstract class Piece {
 
     /**
      * Referenza ao obxecto xogo
      */
-    private Game game;
+    protected Game game;
 
     /**
      * Referenzas aos catro cadrados que forman a peza
      */
-    private Square[] squares = new Square[4];
+    protected Square[] squares = new Square[4];
 
-    /**
-     * Construtor da clase, que crea os catro cadrados que forman a peza
-     *
-     * @param game Referenza á partida actual
-     */
-    public Piece(Game game) {
-        this.game = game;
-        
-        Color[] colorsToUse = {Color.MAGENTA, Color.ORANGE, Color.BLUE, Color.PINK, Color.CYAN};
-        int randIndex= new Random().nextInt(colorsToUse.length);
-        
-        squares[0] = new Square(Game.MAX_X / 2 - Game.SQUARE_SIDE, 0, colorsToUse[randIndex], game);
-        squares[1] = new Square(Game.MAX_X / 2, 0, colorsToUse[randIndex], game);
-        squares[2] = new Square(Game.MAX_X / 2 - Game.SQUARE_SIDE, Game.SQUARE_SIDE, colorsToUse[randIndex], game);
-        squares[3] = new Square(Game.MAX_X / 2, Game.SQUARE_SIDE, colorsToUse[randIndex], game);
-    }
+
 
     public Game getGame() {
         return game;
@@ -131,7 +116,6 @@ public class Piece {
             //es valido?
             if (game.isValidPosition(x - game.SQUARE_SIDE, squares[i].getY())) {
                 //se mueve   
-
                 counterValids++;
 
             }

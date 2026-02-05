@@ -278,7 +278,7 @@ public class Game {
      */
     private void deleteLine(int y) {
 
-        System.out.println("dentro de deleteLine....");
+
         for (int j = 0; j < MAX_X; j += SQUARE_SIDE) {
 
             System.out.println("borra");
@@ -325,14 +325,14 @@ public class Game {
         // haxa un cadrado dos que están depositados no chan.
         //encuentra el  mas alto de cada columna o x
         boolean res = false;
-        for (int x = 0; x < (MAX_X / SQUARE_SIDE) * SQUARE_SIDE; x += SQUARE_SIDE) {
-            for (int y = 0; y < 4 * SQUARE_SIDE; y += SQUARE_SIDE) {
-                if (!isValidPosition(x, y)) {
-
+        //obtengo los valores de la pieza actual mas altos de altura
+        for (Square square : currentPiece.getSquares()) {
+            //recorre el maximo de square side que puede tener una ficha
+                if (!isValidPosition(square.getX(), square.getY())) {
                     res = true;
                 }
 
-            }
+            //}
         }
         return res;
     }
