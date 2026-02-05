@@ -4,18 +4,36 @@
  */
 package tacebook;
 
+import java.util.Scanner;
+
 /**
  * vista
- * 
+ *
  * @author Araceli,Diego,Oscar
  */
 public class ProfileView {
-    
-    
-    public void printProfileDetails(String name, String status) {
-        System.out.println("perfil:.......");
-        System.out.println("nombre: " + name);
-        System.out.println("status: " + status);
+
+    private ProfileController myController;
+
+    private int postsShown = 10;
+
+    public int getPostsShown() {
+        return postsShown;
     }
-    
+
+    public void setPostsShown(int postsShown) {
+        this.postsShown = postsShown;
+    }
+
+    private void showProfileInfo(boolean ownProfile, Profile profile) {
+
+    }
+
+    private void changeStatus(boolean ownProfile, Scanner scanner, Profile profile) {
+    }
+
+    public void showProfileMenu(Profile profile) {
+    }
+
+
 }
