@@ -40,10 +40,10 @@ public class Post {
         this.date = date;
     }
 
-    public Post(int id, String text) {
+    public Post(int id, String text, Date date) {
         this.id = id;
         this.text = text;
+        this.date = date;
     }
-    
 
 }

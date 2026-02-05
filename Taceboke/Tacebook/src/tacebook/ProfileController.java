@@ -11,35 +11,41 @@ package tacebook;
  */
 public class ProfileController {
 
-    private Profile model;
+    private Profile sessionProfile;
     private ProfileView view;
 
-    public ProfileController(Profile model, ProfileView view) {
-        this.model = model;
+    public Profile getSessionProfile() {
+        return sessionProfile;
+    }
+
+    public void setSessionProfile(Profile sessionProfile) {
+        this.sessionProfile = sessionProfile;
+    }
+
+    public ProfileView getView() {
+        return view;
+    }
+
+    public void setView(ProfileView view) {
+        this.view = view;
+    }
+    
+
+    public ProfileController(Profile sessionProfile, ProfileView view) {
+        this.sessionProfile = sessionProfile;
         this.view = view;
     }
 
-    //no son los getters y setters predeterminados de netbeans
-    public void setProfileName(String name) {
-        model.setName(name);
-    }
-
-    public String getProfileName() {
-        return model.getName();
-    }
-
-    public void setProfileStatus(String status) {
-        model.setStatus(status);
-    }
-
-    public String getProfileStatus() {
-        return model.getStatus();
-    }
-    //fin-----------
 
     //actualiza los datos que se muestran
-    public void updateView() {
-        view.printProfileDetails(model.getName(), model.getStatus());
+    public void updateProfileStatus(String newStatus){}
+
+    public int getPostsShown() {
+        return 0;
     }
+    public void reloadProfile(){}
+    public void openSession(Profile sessionProfile){}
+    
+    
 
 }
