@@ -16,8 +16,8 @@ public class Tacebook {
 
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
-        TacebookDB dbTacebook = new TacebookDB();
-        ProfileDB dbProfiles = new ProfileDB();
+        
+        TacebookDB.getProfiles().add(new Profile("a","a","a"));
 
         //registrar e iniciar sesion usan las mismas preguntas
         System.out.println("ingresa nombre: ");
@@ -25,7 +25,7 @@ public class Tacebook {
         System.out.println("ingresa contraseña: ");
         String userPassword = scan.nextLine();
 
-        Profile loggedUser = dbProfiles.findByNameAndPassword(dbTacebook, userName, userPassword, 0);
+        Profile loggedUser = ProfileDB.findByNameAndPassword( userName, userPassword, 0);
 
         if (loggedUser == null) {
             System.out.println("usuario no encontrado en bd");

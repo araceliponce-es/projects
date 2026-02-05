@@ -16,4 +16,34 @@ public class Post {
     private String text;
     private Date date = new Date();
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public Post(int id, String text) {
+        this.id = id;
+        this.text = text;
+    }
+    
+
 }

@@ -4,57 +4,49 @@
  */
 package tacebook;
 
-import java.util.ArrayList;
-
 /**
- * todo: como hacer global el TacebookDB db???
- * 
+ * todo: como hacer global el TacebookDB db??? Clase que implementa la
+ * persistencia (almacena) de los perfiles de nuestra red social.
+ *
  * @author Araceli,Diego,Oscar
  */
 public class ProfileDB {
 
-    private String name;
-    private String password;
-    private String status;
-    private int numberOfPosts;
-
     /**
-     * encuentra un Profile usando el nombre de usuario y el numero de posts
-     * 
-     * usa Tacebookdb como param para poder usar metodos de clase
+     * Encuentra un Profile usando el nombre de usuario y el numero de posts y
+     * lo devuelve, si no lo encunetra devuelve null
      *
      * @param name
      * @param numberOfPosts
-     * @return objeto Profile encontrado, o null
+     * @return Objeto Profile encontrado, o null
      */
-    public static Profile findByName(TacebookDB db, String name, int numberOfPosts) {
-
+    public static Profile findByName(String name, int numberOfPosts) {
         Profile res = null;
 
-        for (Profile person : db.getProfiles()) {
+        for (Profile person : TacebookDB.getProfiles()) {
 
             if (person.getName().equals(name)) {
                 //usuario encontrado por nombre, numero de posts aun no implementado
                 res = person;
             }
+
         }
         return res;
     }
 
     /**
-     * encuentra un Profile usando el nombre de usuario, la contraseña y el numero de posts
-     * @param db
+     * Encuentra un Profile usando el nombre de usuario, la contraseña y el
+     * numero de posts y lo devuelve, si no lo encunetra devuelve null
+     *
      * @param name
      * @param password
      * @param numberOfPosts
-     * @return 
+     * @return Perfil de usuario encontrado, o null
      */
-    public static Profile findByNameAndPassword(TacebookDB db, String name, String password, int numberOfPosts) {
-
+    public static Profile findByNameAndPassword(String name, String password, int numberOfPosts) {
         Profile res = null;
 
-        for (Profile person : db.getProfiles()) {
-
+        for (Profile person : TacebookDB.getProfiles()) {
             if (person.getName().equals(name) && person.getPassword().equals(password)) {
                 res = person;
             }
@@ -62,15 +54,18 @@ public class ProfileDB {
         return res;
     }
 
-    public static void save(TacebookDB db,Profile profile) {
-        ArrayList<Profile> currentProfiles = db.getProfiles();
-        currentProfiles.add(profile);
-        
-        System.out.println("db profiles:-------------");
-        for (Profile person : db.getProfiles()) {
-            System.out.print(person+" ");
-        }
-        System.out.println("------------------");
+    public static void save(Profile profile) {
+        TacebookDB.profiles.add(profile);
+
+        //¿¿¿¿¿POR QUÉ??????
+//        ArrayList<Profile> currentProfiles = db.getProfiles();
+//        currentProfiles.add(profile);
+//        
+//        System.out.println("db profiles:-------------");
+//        for (Profile person : db.getProfiles()) {
+//            System.out.print(person+" ");
+//        }
+//        System.out.println("------------------");
     }
 
     public static void update(Profile profile) {

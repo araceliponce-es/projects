@@ -5,9 +5,10 @@
 package tacebook;
 
 /**
- *
+ *Clase que muestra las opciones del menú inical y recoge los datos introducidos.
  * @author Araceli,Diego,Oscar
  */
 public class InitMenuView {
+     InitMenuController myController=new InitMenuController();
     
 }

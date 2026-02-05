@@ -13,30 +13,13 @@ import java.util.List;
  */
 public class TacebookDB {
 
-    public ArrayList<Message> messages = new ArrayList<>();
-    public ArrayList<Profile> profiles = new ArrayList<>();
+    public static ArrayList<Profile> profiles = new ArrayList<>();
 
-    public TacebookDB() {
-        
-            profiles.add(new Profile("a","a","a"));
-
-    }
-
-    
-    
-    public ArrayList<Message> getMessages() {
-        return messages;
-    }
-
-    public void setMessages(ArrayList<Message> messages) {
-        this.messages = messages;
-    }
-
-    public ArrayList<Profile> getProfiles() {
+    public static ArrayList<Profile> getProfiles() {
         return profiles;
     }
 
-    public void setProfiles(ArrayList<Profile> profiles) {
-        this.profiles = profiles;
+    public static void setProfiles(ArrayList<Profile> profiles) {
+        TacebookDB.profiles = profiles;
     }
 }
