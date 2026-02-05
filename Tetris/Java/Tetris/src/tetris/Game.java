@@ -278,7 +278,7 @@ public class Game {
      */
     private void deleteLine(int y) {
 
-
+        
         for (int j = 0; j < MAX_X; j += SQUARE_SIDE) {
 
             System.out.println("borra");
