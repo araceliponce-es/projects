@@ -36,8 +36,6 @@ public abstract class Piece {
      */
     protected Square[] squares = new Square[4];
 
-
-
     public Game getGame() {
         return game;
     }
@@ -65,7 +63,7 @@ public abstract class Piece {
     public boolean moveRight() {
 
         boolean canMove = false;
-        
+
         // x sera igual al valor mas grande de los 4 squares
         int x = Integer.MIN_VALUE;
         for (int i = 0; i < squares.length; i++) {
@@ -74,7 +72,6 @@ public abstract class Piece {
             }
         }
 
-   
         int counterValids = 0;
 
         for (int i = 0; i < squares.length; i++) {
@@ -112,8 +109,8 @@ public abstract class Piece {
                 x = squares[i].getX();
             }
         }
-        
-       int counterValids = 0;
+
+        int counterValids = 0;
 
         for (int i = 0; i < squares.length; i++) {
             //es valido?
@@ -141,34 +138,19 @@ public abstract class Piece {
      */
     public boolean moveDown() {
 
-        boolean canMove = false;
+        for (Square sq : squares) {
+            if (!game.isValidPosition(sq.getX(), sq.getY() + game.SQUARE_SIDE)) {
+                return false;
+            }
+        }
+
         // y sera igual al valor mas grande de los 4 squares
-        int y = Integer.MIN_VALUE;
-        //recorre el array y encuentra el y mas grande
-        for (int i = 0; i < squares.length; i++) {
-            if (squares[i].getY() > y) {
-                y = squares[i].getY();
-            }
-        }
-
         //solo .moveDown() necesita que todos los cuadrados sean validos. usa un counter
-        int counterValids = 0;
-        // revisa cada square
-        for (int i = 0; i < squares.length; i++) {
-            //es valido?
-            if (game.isValidPosition(squares[i].getX(), y + game.SQUARE_SIDE)) {
-
-                counterValids++;
-            }
+        for (int i=0;i<squares.length;i++) {
+            squares[i].setY(squares[i].getY()+game.SQUARE_SIDE);
         }
 
-        if (counterValids == squares.length) {
-            canMove = true;
-            for (int j = 0; j < squares.length; j++) {
-                squares[j].setY(squares[j].getY() + game.SQUARE_SIDE);
-            }
-        }
-        return canMove;
+        return true;
     }
 
     /**
