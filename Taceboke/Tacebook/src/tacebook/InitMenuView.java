@@ -39,13 +39,32 @@ public class InitMenuView {
     }
 
     public void showLoginErrorMessage() {
+        System.out.println("Usuario y contraseña incorrectos, probablemente sólo uno esté mal, pero no te voy a decir cuál");
     }
 
     public void showRegisterMenu() {
+        Scanner scan=new Scanner(System.in);
+        System.out.println("Escribe un nombre de usuario:");
+        String name=scan.nextLine();
+        System.out.println("Escribe una contraseña:");
+        String contraseña=scan.nextLine();
+        System.out.println("Escríbela otra vez, que no me quedó clara");
+        String segundaContraseña=scan.nextLine();
+        if(contraseña.equals(segundaContraseña)){
+            String password=segundaContraseña;
+            System.out.println("Dime el estado de tu perfil:");
+            String status=scan.nextLine();
+            myController.createProfile(name, password, status);
+        }else{
+            System.out.println("Las contraseñas no coinciden");
+        } 
     }
 
     public String showNewNameMenu() {
-        return null;
+        Scanner scan=new Scanner(System.in);
+        System.out.println("Nombe de usuario no disponible, por favor introduce uno nuevo:");
+        String newName=scan.nextLine();
+        return newName;
     }
 
 }
