@@ -194,7 +194,18 @@ public class Game {
      * Crea unha nova peza e a establece como peza actual do xogo
      */
     private void createNewPiece() {
-        Piece piece = new Piece(Game.this);
+        int pieceType = new java.util.Random().nextInt(4);
+        Piece piece;
+        
+        if (pieceType == 0) {
+            piece = new SquarePiece(Game.this);
+        } else if (pieceType == 1) {
+            piece = new LPiece(Game.this);
+        } else if (pieceType == 2) {
+            piece = new BarPiece(Game.this);
+        } else {
+            piece = new TPiece(Game.this);
+        }
         this.currentPiece = piece;
     }
 
@@ -278,7 +289,6 @@ public class Game {
      */
     private void deleteLine(int y) {
 
-        
         for (int j = 0; j < MAX_X; j += SQUARE_SIDE) {
 
             System.out.println("borra");
@@ -328,9 +338,9 @@ public class Game {
         //obtengo los valores de la pieza actual mas altos de altura
         for (Square square : currentPiece.getSquares()) {
             //recorre el maximo de square side que puede tener una ficha
-                if (!isValidPosition(square.getX(), square.getY())) {
-                    res = true;
-                }
+            if (!isValidPosition(square.getX(), square.getY())) {
+                res = true;
+            }
 
             //}
         }

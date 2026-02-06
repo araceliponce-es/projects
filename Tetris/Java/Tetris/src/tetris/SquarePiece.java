@@ -12,16 +12,20 @@ import java.util.Random;
  * @author daw1al13
  */
 public class SquarePiece extends Piece {
+    
     private Color color = Color.BLUE;
+    
     public SquarePiece(Game game) {
         this.game = game;
-        
-
-        
         squares[0] = new Square(Game.MAX_X / 2 - Game.SQUARE_SIDE, 0,color, game);
         squares[1] = new Square(Game.MAX_X / 2, 0, color, game);
         squares[2] = new Square(Game.MAX_X / 2 - Game.SQUARE_SIDE, Game.SQUARE_SIDE, color, game);
         squares[3] = new Square(Game.MAX_X / 2, Game.SQUARE_SIDE, color, game);
+    }
+
+    @Override
+    public boolean rotate() {
+        return super.rotate(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
     }
     
 }

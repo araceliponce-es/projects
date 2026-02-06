@@ -46,6 +46,9 @@ public abstract class Piece {
         this.game = game;
     }
 
+    public Piece() {
+    }
+
     public Square[] getSquares() {
         return squares;
     }

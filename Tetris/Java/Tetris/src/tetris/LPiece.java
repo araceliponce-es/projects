@@ -20,9 +20,9 @@ public class LPiece extends Piece {
 
         
         squares[0] = new Square(Game.MAX_X / 2 - Game.SQUARE_SIDE, 0,color, game);
-        squares[1] = new Square(Game.MAX_X / 2, 0, color, game);
-        squares[2] = new Square(Game.MAX_X / 2 - Game.SQUARE_SIDE, Game.SQUARE_SIDE, color, game);
-        squares[3] = new Square(Game.MAX_X / 2, Game.SQUARE_SIDE, color, game);
+        squares[1] = new Square(Game.MAX_X / 2 - Game.SQUARE_SIDE, Game.SQUARE_SIDE, color, game);
+        squares[2] = new Square(Game.MAX_X / 2 - Game.SQUARE_SIDE, 2*Game.SQUARE_SIDE, color, game);
+        squares[3] = new Square(Game.MAX_X / 2, 2*Game.SQUARE_SIDE, color, game);
     }
     
 }
