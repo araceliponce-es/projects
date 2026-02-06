@@ -51,7 +51,12 @@ public class InitMenuController {
         //cerrar la sesion te envia de regreso al menu inicial
     }
     
-    private void init(){}
+    private void init(){
+        do{
+            myView.showLoginMenu(); 
+        }while(!myView.showLoginMenu());
+        
+    }
     public void login (String name, String password){}
     public void register(){}
     public void createProfile(String name, String password, String status){}
