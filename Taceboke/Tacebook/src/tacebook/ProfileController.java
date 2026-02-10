@@ -48,6 +48,11 @@ public class ProfileController {
         ProfileDB.update(sessionProfile);
     }
 
+    public ProfileController(Profile sessionProfile, ProfileView myView) {
+        this.sessionProfile = sessionProfile;
+        this.myView = myView;
+    }
+
     /**
      * Abre unha sesión con un perfil, almacenando o obxecto 
      * "sessionProfile" no seu atributo e chamando ao método "showProfileMenu()" 
