@@ -14,7 +14,7 @@ import java.util.Random;
 public class BarPiece extends Piece {
 
  
-    private Color color = Color.RED;
+    private Color color = Color.BLUE;
     public BarPiece(Game game) {
         this.game = game;
         squares[0] = new Square(Game.MAX_X / 2, 0,color, game);
