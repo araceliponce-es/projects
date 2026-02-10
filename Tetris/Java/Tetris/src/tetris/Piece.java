@@ -158,10 +158,9 @@ public abstract class Piece {
      *
      * @return true se o movemento da ficha é posible, se non false
      */
-    public boolean rotate() {
+    public abstract boolean rotate();
         // A rotación da ficha cadrada non supón ningunha variación na ficha,
         // por iso simplemente devolvemos true
-        return true;
-    }
+    
 
 }

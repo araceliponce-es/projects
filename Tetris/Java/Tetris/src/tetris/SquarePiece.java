@@ -22,10 +22,16 @@ public class SquarePiece extends Piece {
         squares[2] = new Square(Game.MAX_X / 2 - Game.SQUARE_SIDE, Game.SQUARE_SIDE, color, game);
         squares[3] = new Square(Game.MAX_X / 2, Game.SQUARE_SIDE, color, game);
     }
-
+    
+    /**
+     * Metodo sobrescrito que como no rota devuelve true
+     * @return 
+     */
     @Override
     public boolean rotate() {
-        return super.rotate(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+        // A rotación da ficha cadrada non supón ningunha variación na ficha,
+        // por iso simplemente devolvemos true
+        return true;
     }
     
 }
