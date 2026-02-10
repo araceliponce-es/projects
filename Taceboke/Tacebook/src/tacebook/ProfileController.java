@@ -12,7 +12,7 @@ package tacebook;
 public class ProfileController {
 
     private Profile sessionProfile;
-    private ProfileView view;
+    private ProfileView myView;
 
     public Profile getSessionProfile() {
         return sessionProfile;
@@ -22,30 +22,64 @@ public class ProfileController {
         this.sessionProfile = sessionProfile;
     }
 
-    public ProfileView getView() {
-        return view;
+    public ProfileView getMyView() {
+        return myView;
     }
 
-    public void setView(ProfileView view) {
-        this.view = view;
-    }
-    
-
-    public ProfileController(Profile sessionProfile, ProfileView view) {
-        this.sessionProfile = sessionProfile;
-        this.view = view;
+    public void setMyView(ProfileView myView) {
+        this.myView = myView;
     }
 
-
-    //actualiza los datos que se muestran
-    public void updateProfileStatus(String newStatus){}
-
+    /**
+     * obtiene el numero de publicaciones a mostrar
+     *
+     * @return
+     */
     public int getPostsShown() {
-        return 0;
+        return myView.getPostsShown();
     }
-    public void reloadProfile(){}
-    public void openSession(Profile sessionProfile){}
-    
-    
+
+    /**
+     * obtiene el perfil de la sesion usando ProfileDB
+     *
+     * @param db
+     */
+    public void reloadProfile() {
+        ProfileDB.update(sessionProfile);
+    }
+
+    public ProfileController(Profile sessionProfile, ProfileView myView) {
+        this.sessionProfile = sessionProfile;
+        this.myView = myView;
+    }
+
+    /**
+     * Abre unha sesión con un perfil, almacenando o obxecto 
+     * "sessionProfile" no seu atributo e chamando ao método "showProfileMenu()" 
+     * do obxecto vista.
+     * 
+     * almacenando el objeto "sessionProfile" recibido como abributp y llama a show profile menu
+     *
+     * openSession() ≠ login solo recibe un perfil válido y lo usa como el
+     * perfil actual o activo
+     *
+     * @param sessionProfile
+     */
+    public void openSession(Profile sessionProfile) {
+        this.sessionProfile = sessionProfile;
+        myView.showProfileMenu(sessionProfile); //muestra opciones de cambiar de sesion o cerrar sesion
+
+    }
+
+    /**
+     * actualiza los datos que se muestran
+     *
+     * @param newStatus
+     */
+    public void updateProfileStatus(String newStatus) {
+        sessionProfile.setStatus(newStatus);
+        ProfileDB.update(sessionProfile);
+        reloadProfile();
+    }
 
 }
