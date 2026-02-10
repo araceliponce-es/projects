@@ -30,24 +30,24 @@ public class LPiece extends Piece {
         int countPiececanRotate = 0;
         //Si el bloque esta en la posicion indicada en el if siginifica que esta
         //en la posicion 0
-        if (squares[1].getY() == squares[0].getY() - Game.SQUARE_SIDE) {
+        if (squares[1].getY() == squares[0].getY() + Game.SQUARE_SIDE) {
             //Se resorre los cuadrado
-            if(
-                    game.isValidPosition(squares[0].getX()-Game.SQUARE_SIDE,squares[0].getY()-Game.SQUARE_SIDE
-                    )&
-                     game.isValidPosition(squares[0].getX()-Game.SQUARE_SIDE,squares[0].getY()-Game.SQUARE_SIDE
-                     )&{
+            if (game.isValidPosition(squares[0].getX() - Game.SQUARE_SIDE, squares[0].getY() + Game.SQUARE_SIDE)
+                    && game.isValidPosition(squares[1].getX(), squares[1].getY())
+                    && game.isValidPosition(squares[2].getX() + Game.SQUARE_SIDE, squares[2].getY() - Game.SQUARE_SIDE)
+                    && game.isValidPosition(squares[3].getX(), squares[3].getY() - Game.SQUARE_SIDE * 2)) 
+            {
                 
+                canRotate = true;
+                squares[0].setX(squares[0].getX() - Game.SQUARE_SIDE);
+                squares[0].setY(squares[0].getY() + Game.SQUARE_SIDE);
+                squares[2].setX(squares[2].getX() + Game.SQUARE_SIDE);
+                squares[2].setY(squares[2].getY() - Game.SQUARE_SIDE);
+                squares[3].setY(squares[3].getY() - Game.SQUARE_SIDE * 2);
             }
-
-                squares[1] = new Square(Game.MAX_X / 2 - Game.SQUARE_SIDE, Game.SQUARE_SIDE, color, game);
-                squares[2] = new Square(Game.MAX_X / 2 - Game.SQUARE_SIDE, 2 * Game.SQUARE_SIDE, color, game);
-                squares[3] = new Square(Game.MAX_X / 2, 2 * Game.SQUARE_SIDE, color, game);
-
-            
-
         }
         return canRotate;
+
     }
 
 }
