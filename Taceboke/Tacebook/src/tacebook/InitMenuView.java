@@ -16,6 +16,15 @@ public class InitMenuView {
 
     InitMenuController myController = new InitMenuController();
 
+    /**
+     * muestra el menu de inicio de sesion
+     * 
+     * menu tiene 3 opciones : login, signup, escape
+     * 
+     * si quiere iniciar sesion o registrarse llama a myController
+     * 
+     * @return true si usuario quiere salir de app
+     */
     public boolean showLoginMenu() {
         System.out.println("¿Iniciar sesión(1), registrarse(2) o salir(3)?");
         Scanner scan=new Scanner(System.in);
@@ -38,10 +47,22 @@ public class InitMenuView {
         return false;
     }
 
+    /**
+     * muestra mensaje en caso de error en login
+     */
     public void showLoginErrorMessage() {
         System.out.println("Usuario y contraseña incorrectos, probablemente sólo uno esté mal, pero no te voy a decir cuál");
     }
 
+    /**
+     * muestra el menu de registro
+     * 
+     * le pide: nombre de usuario, contraseña y repetir contraseña
+     * 
+     * si provee la informacion llama a myController
+     * 
+     * @return
+     */
     public void showRegisterMenu() {
         Scanner scan=new Scanner(System.in);
         System.out.println("Escribe un nombre de usuario:");
@@ -60,6 +81,11 @@ public class InitMenuView {
         } 
     }
 
+    /**
+     * muestra el menu para cambiar nombre , porque el que coloco antes ya estaba en uso
+     * 
+     * @return el nuevo nombre introducido
+     */
     public String showNewNameMenu() {
         Scanner scan=new Scanner(System.in);
         System.out.println("Nombe de usuario no disponible, por favor introduce uno nuevo:");
