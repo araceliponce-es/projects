@@ -5,8 +5,8 @@
 package tacebook;
 
 /**
- * todo: como hacer global el TacebookDB db??? Clase que implementa la
- * persistencia (almacena) de los perfiles de nuestra red social.
+ * Clase que implementa la persistencia (almacenamiento) de los perfiles de la
+ * aplicación
  *
  * @author Araceli,Diego,Oscar
  */
@@ -54,20 +54,20 @@ public class ProfileDB {
         return res;
     }
 
+    /**
+     * Almacena el perfil en la BD
+     *
+     * @param profile
+     */
     public static void save(Profile profile) {
         TacebookDB.profiles.add(profile);
-
-        //¿¿¿¿¿POR QUÉ??????
-//        ArrayList<Profile> currentProfiles = db.getProfiles();
-//        currentProfiles.add(profile);
-//        
-//        System.out.println("db profiles:-------------");
-//        for (Profile person : db.getProfiles()) {
-//            System.out.print(person+" ");
-//        }
-//        System.out.println("------------------");
     }
 
+    /**
+     * Actualiza el perfil en la BD (de momento no hace nada)
+     *
+     * @param profile
+     */
     public static void update(Profile profile) {
     }
 }
