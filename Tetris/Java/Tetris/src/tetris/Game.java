@@ -194,18 +194,18 @@ public class Game {
      * Crea unha nova peza e a establece como peza actual do xogo
      */
     private void createNewPiece() {
-//        int pieceType = new java.util.Random().nextInt(4);
+        int pieceType = new java.util.Random().nextInt(4);
         Piece piece;
-        piece = new LPiece(Game.this);
-//        if (pieceType == 0) {
-//            piece = new SquarePiece(Game.this);
-//        } else if (pieceType == 1) {
-//            piece = new LPiece(Game.this);
-//        } else if (pieceType == 2) {
-//            piece = new BarPiece(Game.this);
-//        } else {
-//            piece = new TPiece(Game.this);
-//        }
+
+        if (pieceType == 0) {
+            piece = new SquarePiece(Game.this);
+        } else if (pieceType == 1) {
+            piece = new LPiece(Game.this);
+        } else if (pieceType == 2) {
+            piece = new BarPiece(Game.this);
+        } else {
+            piece = new TPiece(Game.this);
+        }
         this.currentPiece = piece;
     }
 
