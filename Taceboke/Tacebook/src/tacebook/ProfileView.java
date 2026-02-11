@@ -17,14 +17,30 @@ public class ProfileView {
 
     private int postsShown = 10;
 
+    /**
+     * obtiene el numero de posts mostrados
+     * 
+     * @return
+     */
     public int getPostsShown() {
         return postsShown;
     }
 
+    /**
+     * establece el numero de posts mostrados
+     * 
+     * @param postsShown
+     */
     public void setPostsShown(int postsShown) {
         this.postsShown = postsShown;
     }
 
+    /**
+     * muestra la info del perfil, solo si es el perfil del mismo usuario logueado
+     * 
+     * @param ownProfile
+     * @param profile 
+     */
     private void showProfileInfo(boolean ownProfile, Profile profile) {
         ownProfile = true;
         System.out.println("Nombre: " + profile.getName());
@@ -32,6 +48,14 @@ public class ProfileView {
         System.out.println("Estado: " + profile.getStatus());
 
     }
+    
+    /**
+     * cambia el status del perfil, solo si es el perfil del mismo usuario logueado
+     * 
+     * @param ownProfile
+     * @param scanner
+     * @param profile 
+     */
 
     private void changeStatus(boolean ownProfile, Scanner scanner, Profile profile) {
         if (ownProfile) {
@@ -44,6 +68,11 @@ public class ProfileView {
         }
     }
 
+    /**
+     * muestra el menu al usuario logueado, de cambiar de perfil o cerrar sesion
+     * 
+     * @param profile
+     */
     public void showProfileMenu(Profile profile) {
         showProfileInfo(true, profile);
         System.out.println("¿Cabiar el perfil(1) o cerrar sesión(2)?");

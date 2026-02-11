@@ -5,7 +5,8 @@
 package tacebook;
 
 /**
- * controlador
+ * Clase controlador del perfil con un atributo ProfileView y Profile, controla
+ * las acciones del menú principal
  *
  * @author Araceli,Diego,Oscar
  */
@@ -14,54 +15,71 @@ public class ProfileController {
     private Profile sessionProfile;
     private ProfileView myView;
 
+    /**
+     * Obtiene el perfil con el que se abre sesión
+     *
+     * @return
+     */
     public Profile getSessionProfile() {
         return sessionProfile;
     }
 
+    /**
+     * Establece el perfil con el que se abre sesión
+     *
+     * @param sessionProfile
+     */
     public void setSessionProfile(Profile sessionProfile) {
         this.sessionProfile = sessionProfile;
     }
 
+    /**
+     * Obtiene la vista del perfil con el que se abre sesión
+     *
+     * @return
+     */
     public ProfileView getMyView() {
         return myView;
     }
 
+    /**
+     * Establece la vista del perfil con el que se abre sesión
+     *
+     * @param myView
+     */
     public void setMyView(ProfileView myView) {
         this.myView = myView;
     }
 
     /**
-     * obtiene el numero de publicaciones a mostrar
+     * Obtiene el numero de publicaciones a mostrar
      *
-     * @return
+     * @return Numero de posts
      */
     public int getPostsShown() {
         return myView.getPostsShown();
     }
 
     /**
-     * obtiene el perfil de la sesion usando ProfileDB
-     *
-     * @param db
+     * Obtiene el perfil de la sesion usando ProfileDB y muestra su menú
      */
     public void reloadProfile() {
         ProfileDB.update(sessionProfile);
     }
 
+    /**
+     * Constructor que recibe los atributos como parámetro
+     *
+     * @param sessionProfile
+     * @param myView
+     */
     public ProfileController(Profile sessionProfile, ProfileView myView) {
         this.sessionProfile = sessionProfile;
         this.myView = myView;
     }
 
     /**
-     * Abre unha sesión con un perfil, almacenando o obxecto 
-     * "sessionProfile" no seu atributo e chamando ao método "showProfileMenu()" 
-     * do obxecto vista.
-     * 
-     * almacenando el objeto "sessionProfile" recibido como abributp y llama a show profile menu
-     *
-     * openSession() ≠ login solo recibe un perfil válido y lo usa como el
-     * perfil actual o activo
+     * Abre una sesión con un perfil y muestra su menú de opciones.
      *
      * @param sessionProfile
      */
@@ -72,7 +90,8 @@ public class ProfileController {
     }
 
     /**
-     * actualiza los datos que se muestran
+     * Actualiza y guarda los datos del perfil, luego recarga el perfil y lo
+     * muestra con los datos actualizados.
      *
      * @param newStatus
      */

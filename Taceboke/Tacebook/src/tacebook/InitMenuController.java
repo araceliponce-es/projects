@@ -4,9 +4,9 @@
  */
 package tacebook;
 
-import java.util.Scanner;
-
 /**
+ * Clase controlador del menú de inicio con un atributo de la clase
+ * InitMenuView, contiene el main. De momento el main no hace nada
  *
  * @author Araceli,Diego,Oscar
  */
@@ -14,43 +14,19 @@ public class InitMenuController {
 
     InitMenuView myView;
 
+    /**
+     * Método que creará un controlador e invocará al método "init"
+     *
+     * @param args
+     */
     public static void main(String[] args) {
-        Scanner scan = new Scanner(System.in);
 
-        TacebookDB.getProfiles().add(new Profile("a", "a", "a"));
-
-        //registrar e iniciar sesion usan las mismas preguntas
-        System.out.println("ingresa nombre: ");
-        String userName = scan.nextLine();
-        System.out.println("ingresa contraseña: ");
-        String userPassword = scan.nextLine();
-
-        Profile loggedUser = ProfileDB.findByNameAndPassword(userName, userPassword, 0);
-
-        if (loggedUser == null) {
-            System.out.println("usuario no encontrado en bd");
-            System.out.println("puedes registrarte...");
-
-        } else {
-
-            System.out.println("not null");
-            Profile model = loggedUser;
-            ProfileView view = new ProfileView();
-            ProfileController controller = new ProfileController(model, view);
-
-            //actualiza datos del profile
-            controller.updateProfileStatus(userName);
-
-            //le muestra opciones como 0:cambiar status, 1: revisar notificaciones, publicar, etc...
-        }
-
-        //para registrar el nombre no puede ser repetido
-        //para registrar debe escribir la misma contraseña 2 veces (repite la contraseña)
-        //----------------------------
-        //cambiar el estado de perfil
-        //cerrar la sesion te envia de regreso al menu inicial
     }
 
+    /**
+     * Método que llama al método "showLoginMenu" hasta que devuelva true,
+     * inicia el tacebook hasta que el usuario salga
+     */
     private void init() {
         do {
             myView.showLoginMenu();
@@ -58,26 +34,46 @@ public class InitMenuController {
 
     }
 
+    /**
+     * Método que inicia sesión en el tacebook comprobando que el nombre y la
+     * contraseña introducidos son correctos (existen en la BD), si no existen
+     * mostrará un error, si existen abrirá la sesión del perfil introducido
+     *
+     * @param name
+     * @param password
+     */
     public void login(String name, String password) {
         ProfileController pc = null;
-        if(ProfileDB.findByNameAndPassword(name, password, 0)==null){
-        myView.showLoginErrorMessage();
-        }else{
-        pc.openSession(ProfileDB.findByNameAndPassword(name, password, 0));
+        if (ProfileDB.findByNameAndPassword(name, password, 0) == null) {
+            myView.showLoginErrorMessage();
+        } else {
+            pc.openSession(ProfileDB.findByNameAndPassword(name, password, 0));
         }
     }
 
+    /**
+     * Método que registra un nuevo usuario mostrando el menú para registrarse
+     */
     public void register() {
         myView.showRegisterMenu();
     }
 
+    /**
+     * Método que crea un nuevo perfil comprobando que el nombre no existiera
+     * antes (si ya existía pedirá uno nuevo), lo almacena en la BD e inicia
+     * sesión con él
+     *
+     * @param name
+     * @param password
+     * @param status
+     */
     public void createProfile(String name, String password, String status) {
-        Profile nuevoPerfil=new Profile(name, password, status);    
-        for(Profile perfil:TacebookDB.profiles){
-            if(perfil==nuevoPerfil){
+        Profile nuevoPerfil = new Profile(name, password, status);
+        for (Profile perfil : TacebookDB.profiles) {
+            if (perfil == nuevoPerfil) {
                 System.out.println("Ese nombre ya está en uso, elige otro:");
                 myView.showNewNameMenu();
-            }else{
+            } else {
                 ProfileDB.save(nuevoPerfil);
                 ProfileController abrirSesion = null;
                 abrirSesion.openSession(nuevoPerfil);
