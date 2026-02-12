@@ -14,8 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package tetris;
+package model;
 
+import model.Game;
 import java.awt.Color;
 import java.util.Random;
 
@@ -62,36 +63,20 @@ public abstract class Piece {
      */
     public boolean moveRight() {
 
-        boolean canMove = false;
 
-        // x sera igual al valor mas grande de los 4 squares
-        int x = Integer.MIN_VALUE;
-        for (int i = 0; i < squares.length; i++) {
-            if (squares[i].getX() > x) {
-                x = squares[i].getX();
+           for (Square sq : squares) {
+            if (!game.isValidPosition(sq.getX()+ game.SQUARE_SIDE, sq.getY() )) {
+                return false;
             }
         }
 
-        int counterValids = 0;
-
-        for (int i = 0; i < squares.length; i++) {
-            //es valido?
-            if (game.isValidPosition(x + game.SQUARE_SIDE, squares[i].getY())) {
-                //se mueve   
-
-                counterValids++;
-
-            }
+        // y sera igual al valor mas grande de los 4 squares
+        //solo .moveDown() necesita que todos los cuadrados sean validos. usa un counter
+        for (int i=0;i<squares.length;i++) {
+            squares[i].setX(squares[i].getX()+game.SQUARE_SIDE);
         }
 
-        if (counterValids == squares.length) {
-            for (int j = 0; j < squares.length; j++) {
-                squares[j].setX(squares[j].getX() + game.SQUARE_SIDE);
-
-            }
-        }
-
-        return canMove;
+        return true;
     }
 
     /**
@@ -100,35 +85,21 @@ public abstract class Piece {
      * @return true se o movemento da ficha é posible, se non false
      */
     public boolean moveLeft() {
-        boolean canMove = false;
 
-        // x sera igual al valor mas pequeño de los 4 squares
-        int x = Integer.MAX_VALUE;
-        for (int i = 0; i < squares.length; i++) {
-            if (squares[i].getX() < x) {
-                x = squares[i].getX();
+
+           for (Square sq : squares) {
+            if (!game.isValidPosition(sq.getX()- game.SQUARE_SIDE, sq.getY() )) {
+                return false;
             }
         }
 
-        int counterValids = 0;
-
-        for (int i = 0; i < squares.length; i++) {
-            //es valido?
-            if (game.isValidPosition(x - game.SQUARE_SIDE, squares[i].getY())) {
-                //se mueve   
-                counterValids++;
-
-            }
+        // y sera igual al valor mas grande de los 4 squares
+        //solo .moveDown() necesita que todos los cuadrados sean validos. usa un counter
+        for (int i=0;i<squares.length;i++) {
+            squares[i].setX(squares[i].getX()-game.SQUARE_SIDE);
         }
 
-        if (counterValids == squares.length) {
-            for (int j = 0; j < squares.length; j++) {
-                squares[j].setX(squares[j].getX() - game.SQUARE_SIDE);
-
-            }
-        }
-
-        return canMove;
+        return true;
     }
 
     /**

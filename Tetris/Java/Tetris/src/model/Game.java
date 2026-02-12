@@ -14,12 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package tetris;
+package model;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JLabel;
+import view.MainWindow;
 
 /**
  * Clase que implementa o comportamento do xogo do Tetris
@@ -158,6 +159,7 @@ public class Game {
             this.addPieceToGround();
             this.createNewPiece();
             if (this.hitPieceTheGround()) {
+                this.numberOfLines=0;
                 this.mainWindow.showGameOver();
             }
         }
@@ -268,10 +270,12 @@ public class Game {
 
                     //cuando se vuelve true
                     if (doDelete) {
-
+                        
                         //Metodo que se encarga de borrar una linea
                         deleteLine(lineToDelete);
-
+                        //Muestra las lineas eliminadas
+                        numberOfLines+=1;
+                        mainWindow.showNumberOfLines(numberOfLines);
                     }
                 }
             }
@@ -288,6 +292,7 @@ public class Game {
      * @param y Coordenada y da liña a borrar
      */
     private void deleteLine(int y) {
+        
 
         for (int j = 0; j < MAX_X; j += SQUARE_SIDE) {
 
