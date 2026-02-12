@@ -14,7 +14,11 @@ import java.util.Scanner;
  */
 public class InitMenuView {
 
-    InitMenuController myController = new InitMenuController();
+    InitMenuController myController;
+
+    public InitMenuView(InitMenuController controller) {
+        myController= controller;
+    }
 
     /**
      * muestra el menu de inicio de sesion
@@ -30,6 +34,7 @@ public class InitMenuView {
         Scanner scan=new Scanner(System.in);
         switch (scan.nextInt()) {
             case 1:
+                scan.nextLine(); //despues de numero
                 System.out.println("Escribe tu nombre de usuario: ");
                 String name=scan.nextLine();
                 System.out.println("Escribe tu contraseña: ");

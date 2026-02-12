@@ -12,7 +12,7 @@ package tacebook;
  */
 public class InitMenuController {
 
-    InitMenuView myView;
+    InitMenuView myView = new InitMenuView(this);
 
     /**
      * Método que creará un controlador e invocará al método "init"
@@ -20,6 +20,9 @@ public class InitMenuController {
      * @param args
      */
     public static void main(String[] args) {
+
+        InitMenuController controller = new InitMenuController();
+        controller.init();
 
     }
 
@@ -56,6 +59,9 @@ public class InitMenuController {
      */
     public void register() {
         myView.showRegisterMenu();
+        //todo: guardar nuevo usuario en profilesdb
+        ProfileDB.save(profile);
+        
     }
 
     /**
