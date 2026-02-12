@@ -12,7 +12,12 @@ package tacebook;
  */
 public class InitMenuController {
 
-    InitMenuView myView = new InitMenuView(this);
+    InitMenuView myView;
+
+    public InitMenuController() {
+        
+         myView = new InitMenuView(this);
+    }
 
     /**
      * Método que creará un controlador e invocará al método "init"
@@ -51,6 +56,9 @@ public class InitMenuController {
             myView.showLoginErrorMessage();
         } else {
             pc.openSession(ProfileDB.findByNameAndPassword(name, password, 0));
+           
+            
+            
         }
     }
 
@@ -59,9 +67,7 @@ public class InitMenuController {
      */
     public void register() {
         myView.showRegisterMenu();
-        //todo: guardar nuevo usuario en profilesdb
-        ProfileDB.save(profile);
-        
+              
     }
 
     /**
@@ -81,8 +87,9 @@ public class InitMenuController {
                 myView.showNewNameMenu();
             } else {
                 ProfileDB.save(nuevoPerfil);
-                ProfileController abrirSesion = null;
-                abrirSesion.openSession(nuevoPerfil);
+               
+                ProfileController profileController = new ProfileController();
+                profileController.openSession(nuevoPerfil);
             }
         }
     }

@@ -71,6 +71,7 @@ public class InitMenuView {
     public void showRegisterMenu() {
         Scanner scan=new Scanner(System.in);
         System.out.println("Escribe un nombre de usuario:");
+                
         String name=scan.nextLine();
         System.out.println("Escribe una contraseña:");
         String contraseña=scan.nextLine();
@@ -81,6 +82,7 @@ public class InitMenuView {
             System.out.println("Dime el estado de tu perfil:");
             String status=scan.nextLine();
             myController.createProfile(name, password, status);
+            
         }else{
             System.out.println("Las contraseñas no coinciden");
         } 

@@ -15,6 +15,11 @@ public class ProfileController {
     private Profile sessionProfile;
     private ProfileView myView;
 
+   
+   public ProfileController() {
+         myView = new ProfileView(this);
+    }
+
     /**
      * Obtiene el perfil con el que se abre sesión
      *
@@ -67,16 +72,7 @@ public class ProfileController {
         ProfileDB.update(sessionProfile);
     }
 
-    /**
-     * Constructor que recibe los atributos como parámetro
-     *
-     * @param sessionProfile
-     * @param myView
-     */
-    public ProfileController(Profile sessionProfile, ProfileView myView) {
-        this.sessionProfile = sessionProfile;
-        this.myView = myView;
-    }
+ 
 
     /**
      * Abre una sesión con un perfil y muestra su menú de opciones.

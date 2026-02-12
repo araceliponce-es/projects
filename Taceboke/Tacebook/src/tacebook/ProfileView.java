@@ -17,9 +17,13 @@ public class ProfileView {
 
     private int postsShown = 10;
 
+    public ProfileView(ProfileController myController) {
+        this.myController = myController;
+    }
+
     /**
      * obtiene el numero de posts mostrados
-     * 
+     *
      * @return
      */
     public int getPostsShown() {
@@ -28,7 +32,7 @@ public class ProfileView {
 
     /**
      * establece el numero de posts mostrados
-     * 
+     *
      * @param postsShown
      */
     public void setPostsShown(int postsShown) {
@@ -36,10 +40,11 @@ public class ProfileView {
     }
 
     /**
-     * muestra la info del perfil, solo si es el perfil del mismo usuario logueado
-     * 
+     * muestra la info del perfil, solo si es el perfil del mismo usuario
+     * logueado
+     *
      * @param ownProfile
-     * @param profile 
+     * @param profile
      */
     private void showProfileInfo(boolean ownProfile, Profile profile) {
         ownProfile = true;
@@ -48,15 +53,15 @@ public class ProfileView {
         System.out.println("Estado: " + profile.getStatus());
 
     }
-    
+
     /**
-     * cambia el status del perfil, solo si es el perfil del mismo usuario logueado
-     * 
+     * cambia el status del perfil, solo si es el perfil del mismo usuario
+     * logueado
+     *
      * @param ownProfile
      * @param scanner
-     * @param profile 
+     * @param profile
      */
-
     private void changeStatus(boolean ownProfile, Scanner scanner, Profile profile) {
         if (ownProfile) {
             System.out.println("Ingresa un nuevo estado:");
@@ -70,13 +75,13 @@ public class ProfileView {
 
     /**
      * muestra el menu al usuario logueado, de cambiar de perfil o cerrar sesion
-     * 
+     *
      * @param profile
      */
     public void showProfileMenu(Profile profile) {
         showProfileInfo(true, profile);
         System.out.println("¿Cabiar el perfil(1) o cerrar sesión(2)?");
-        Scanner scan=new Scanner(System.in);
+        Scanner scan = new Scanner(System.in);
         switch (scan.nextInt()) {
             case 1:
                 changeStatus(true, scan, profile);
