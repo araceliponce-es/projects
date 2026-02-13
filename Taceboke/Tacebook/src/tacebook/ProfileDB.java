@@ -16,8 +16,8 @@ public class ProfileDB {
      * Encuentra un Profile usando el nombre de usuario y el numero de posts y
      * lo devuelve, si no lo encunetra devuelve null
      *
-     * @param name
-     * @param numberOfPosts
+     * @param name Nombre del usuario que quieres buscar
+     * @param numberOfPosts Número de posts que se quieren recuperar
      * @return Objeto Profile encontrado, o null
      */
     public static Profile findByName(String name, int numberOfPosts) {

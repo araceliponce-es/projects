@@ -15,8 +15,8 @@ public class InitMenuController {
     InitMenuView myView;
 
     public InitMenuController() {
-        
-         myView = new InitMenuView(this);
+
+        myView = new InitMenuView(this);
     }
 
     /**
@@ -56,9 +56,7 @@ public class InitMenuController {
             myView.showLoginErrorMessage();
         } else {
             pc.openSession(ProfileDB.findByNameAndPassword(name, password, 0));
-           
-            
-            
+
         }
     }
 
@@ -67,7 +65,7 @@ public class InitMenuController {
      */
     public void register() {
         myView.showRegisterMenu();
-              
+
     }
 
     /**
@@ -80,18 +78,16 @@ public class InitMenuController {
      * @param status
      */
     public void createProfile(String name, String password, String status) {
-        Profile nuevoPerfil = new Profile(name, password, status);
-        for (Profile perfil : TacebookDB.profiles) {
-            if (perfil == nuevoPerfil) {
-                System.out.println("Ese nombre ya está en uso, elige otro:");
-                myView.showNewNameMenu();
-            } else {
-                ProfileDB.save(nuevoPerfil);
-               
-                ProfileController profileController = new ProfileController();
-                profileController.openSession(nuevoPerfil);
-            }
+        // Comprobamos que no existe un perfil con ese nombre
+        System.out.println("Ping");
+        if (ProfileDB.findByName(name, 0) == null) {
+            // creamos y guardamos el perfil
+            Profile nuevoPerfil = new Profile(name, password, status);
+            ProfileDB.save(nuevoPerfil);
+            ProfileController profileController = new ProfileController();
+            profileController.openSession(nuevoPerfil);
         }
+
     }
 
 }
