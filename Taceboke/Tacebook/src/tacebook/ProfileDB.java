@@ -70,4 +70,12 @@ public class ProfileDB {
      */
     public static void update(Profile profile) {
     }
+    /**
+     * 
+     * @param destProfile
+     * @param sourceProfile 
+     */
+    public void saveFrineshipRequest(Profile destProfile,Profile sourceProfile){
+        
+    }
 }
