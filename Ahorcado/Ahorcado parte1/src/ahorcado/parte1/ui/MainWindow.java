@@ -4,11 +4,15 @@
  */
 package ahorcado.parte1.ui;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author daw1al11
  */
 public class MainWindow extends javax.swing.JFrame {
+    Icon[] imagenes = new Icon[6];
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MainWindow.class.getName());
 
@@ -34,13 +38,20 @@ public class MainWindow extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanelS = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         jPanelW = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
         jPanelE = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
+        jLImage_Ahorcado = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -52,7 +63,7 @@ public class MainWindow extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.insets = new java.awt.Insets(82, 69, 82, 395);
+        gridBagConstraints.insets = new java.awt.Insets(20, 0, 0, 0);
         jPanel3.add(jLabel1, gridBagConstraints);
 
         jPanelN.add(jPanel3, java.awt.BorderLayout.CENTER);
@@ -63,13 +74,15 @@ public class MainWindow extends javax.swing.JFrame {
 
         jPanel5.setLayout(new java.awt.GridBagLayout());
 
-        jLabel2.setText("jLabel2");
+        jButton2.setText("jButton2");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(42, 29, 42, 30);
-        jPanel5.add(jLabel2, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 20, 5);
+        jPanel5.add(jButton2, gridBagConstraints);
+
+        jButton3.setText("jButton3");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 20, 0);
+        jPanel5.add(jButton3, gridBagConstraints);
 
         jPanelS.add(jPanel5, java.awt.BorderLayout.CENTER);
 
@@ -79,13 +92,51 @@ public class MainWindow extends javax.swing.JFrame {
 
         jPanel2.setLayout(new java.awt.GridBagLayout());
 
-        jLabel3.setText("jLabel3");
+        jLabel3.setText("OESTE");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(56, 50, 242, 21);
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
         jPanel2.add(jLabel3, gridBagConstraints);
+
+        jLabel5.setText("jLabel5");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        jPanel2.add(jLabel5, gridBagConstraints);
+
+        jLabel6.setText("jLabel6");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        jPanel2.add(jLabel6, gridBagConstraints);
+
+        jLabel7.setText("jLabel7");
+        jPanel2.add(jLabel7, new java.awt.GridBagConstraints());
+
+        jLabel8.setText("jLabel8");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        jPanel2.add(jLabel8, gridBagConstraints);
+
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 2;
+        jPanel2.add(jButton1, gridBagConstraints);
+
+        jTextField1.setText("jTextField1");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        jPanel2.add(jTextField1, gridBagConstraints);
 
         jPanelW.add(jPanel2, java.awt.BorderLayout.CENTER);
 
@@ -93,10 +144,10 @@ public class MainWindow extends javax.swing.JFrame {
 
         jPanelE.setLayout(new java.awt.BorderLayout());
 
-        jPanel4.setLayout(new java.awt.GridLayout());
+        jPanel4.setLayout(new java.awt.GridLayout(1, 0));
 
-        jLabel4.setText("jLabel4");
-        jPanel4.add(jLabel4);
+        jLImage_Ahorcado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ahorcado/parte1/hangmanimages/Hangman-0.png"))); // NOI18N
+        jPanel4.add(jLImage_Ahorcado);
 
         jPanelE.add(jPanel4, java.awt.BorderLayout.CENTER);
 
@@ -104,6 +155,11 @@ public class MainWindow extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        imagenes[1] = new ImageIcon(getClass().getResource("Hangman-1.png"));
+        jLImage_Ahorcado.setIcon(imagenes[1]);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -129,12 +185,18 @@ public class MainWindow extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new MainWindow().setVisible(true));
     }
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JLabel jLImage_Ahorcado;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -143,5 +205,6 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelN;
     private javax.swing.JPanel jPanelS;
     private javax.swing.JPanel jPanelW;
+    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }
