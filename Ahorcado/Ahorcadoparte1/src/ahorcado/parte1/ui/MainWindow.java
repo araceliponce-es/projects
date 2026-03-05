@@ -12,8 +12,15 @@ import javax.swing.ImageIcon;
  * @author daw1al11
  */
 public class MainWindow extends javax.swing.JFrame {
+
     Icon[] imagenes = new Icon[6];
-    
+
+    public void iconInicializer() {
+        for (int i=0;i<imagenes.length;i++){
+             imagenes[i] = new javax.swing.ImageIcon(getClass().getResource("/ahorcado/parte1/hangmanimages/Hangman-"+i+".png"));
+        }
+    }
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MainWindow.class.getName());
 
     /**
@@ -21,6 +28,8 @@ public class MainWindow extends javax.swing.JFrame {
      */
     public MainWindow() {
         initComponents();
+        iconInicializer();
+
     }
 
     /**
@@ -157,8 +166,8 @@ public class MainWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        imagenes[1] = new ImageIcon(getClass().getResource("Hangman-1.png"));
-        jLImage_Ahorcado.setIcon(imagenes[1]);
+        // Nota que usamos "/" en lugar de "\\" y empezamos desde la raíz del paquete
+        this.jLImage_Ahorcado.setIcon(imagenes[4]);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -185,7 +194,7 @@ public class MainWindow extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new MainWindow().setVisible(true));
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
