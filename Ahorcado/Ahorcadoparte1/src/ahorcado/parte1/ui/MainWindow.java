@@ -4,6 +4,7 @@
  */
 package ahorcado.parte1.ui;
 
+import controller.HangManController;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
@@ -16,8 +17,8 @@ public class MainWindow extends javax.swing.JFrame {
     Icon[] imagenes = new Icon[6];
 
     public void iconInicializer() {
-        for (int i=0;i<imagenes.length;i++){
-             imagenes[i] = new javax.swing.ImageIcon(getClass().getResource("/ahorcado/parte1/hangmanimages/Hangman-"+i+".png"));
+        for (int i = 0; i < imagenes.length; i++) {
+            imagenes[i] = new javax.swing.ImageIcon(getClass().getResource("/ahorcado/parte1/hangmanimages/Hangman-" + i + ".png"));
         }
     }
 
@@ -26,10 +27,24 @@ public class MainWindow extends javax.swing.JFrame {
     /**
      * Creates new form MainWindow
      */
-    public MainWindow() {
+//    public MainWindow() {
+//        initComponents();
+//        iconInicializer();
+//
+//    }
+    private HangManController myController;
+
+    public MainWindow(HangManController controller) {
+        myController = controller;
+
+    }
+
+    public void init() {
+
         initComponents();
         iconInicializer();
 
+        this.setVisible(true);
     }
 
     /**
@@ -63,6 +78,7 @@ public class MainWindow extends javax.swing.JFrame {
         jLImage_Ahorcado = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(600, 400));
 
         jPanelN.setLayout(new java.awt.BorderLayout());
 
@@ -192,7 +208,15 @@ public class MainWindow extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new MainWindow().setVisible(true));
+//        java.awt.EventQueue.invokeLater(() -> new MainWindow().setVisible(true));
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+
+                HangManController myController = new HangManController();
+                new MainWindow(myController);
+
+            }
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

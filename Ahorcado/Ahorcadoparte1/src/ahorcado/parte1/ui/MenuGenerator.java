@@ -5,6 +5,7 @@
 package ahorcado.parte1.ui;
 
 import ahorcado.parte1.model.HangMan;
+import controller.HangManController;
 import java.util.Scanner;
 
 /**
@@ -23,6 +24,10 @@ public class MenuGenerator {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        
+        HangManController myController = new HangManController();
+        myController.init();
+        
         MenuGenerator menuGenerator = new MenuGenerator();
         do {
             try {
