@@ -18,37 +18,40 @@ public class Post {
     private Date date = new Date();
     private Profile profile;
     private ArrayList<Profile> likeProfiles = new ArrayList<>();
+
     /**
      * Devuelve el profioe asignado al post
+     *
      * @return profile
      */
     public Profile getProfile() {
         return profile;
     }
+
     /**
      * Establece el perfil del post
-     * @param profile w` 
+     *
+     * @param profile w`
      */
     public void setProfile(Profile profile) {
         this.profile = profile;
     }
-    
-    
+
     /**
-     * Para construir un post se necesita un profile
-     * y una string que es el mensaje
+     * Para construir un post se necesita un profile y una string que es el
+     * mensaje
+     *
      * @param text
-     * @param profile 
+     * @param profile
      */
     public Post(String text, Profile profile) {
         this.text = text;
         this.profile = profile;
     }
-    
-    
+
     /**
      * obtiene el id del post
-     * 
+     *
      * @return
      */
     public int getId() {
@@ -57,20 +60,24 @@ public class Post {
 
     /**
      * establece el id del post
-     * 
+     *
      * @param id
      */
     public void setId(int id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @param text
+     */
     public Post(String text) {
         this.text = text;
     }
 
     /**
      * obtiene el texto del post
-     * 
+     *
      * @return
      */
     public String getText() {
@@ -79,7 +86,7 @@ public class Post {
 
     /**
      * establece el texto del post
-     * 
+     *
      * @param text
      */
     public void setText(String text) {
@@ -88,7 +95,7 @@ public class Post {
 
     /**
      * obtiene la fecha del post
-     * 
+     *
      * @return
      */
     public Date getDate() {
@@ -97,7 +104,7 @@ public class Post {
 
     /**
      * establece la fecha del post
-     * 
+     *
      * @param date
      */
     public void setDate(Date date) {
@@ -106,7 +113,7 @@ public class Post {
 
     /**
      * constructor del post
-     * 
+     *
      * @param id
      * @param text
      * @param date
@@ -115,6 +122,25 @@ public class Post {
         this.id = id;
         this.text = text;
         this.date = date;
+    }
+
+    /**
+     * A quien haya creado el array de likeProfile: le faltó el get/set, muy mal
+     * hecho
+     *
+     * @return Perfiles que dieron like
+     */
+    public ArrayList<Profile> getLikeProfiles() {
+        return likeProfiles;
+    }
+
+    /**
+     * Establece los perfiles que le dieron like a una publicación
+     *
+     * @param likeProfiles
+     */
+    public void setLikeProfiles(ArrayList<Profile> likeProfiles) {
+        this.likeProfiles = likeProfiles;
     }
 
 }
