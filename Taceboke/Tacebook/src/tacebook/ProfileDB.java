@@ -71,11 +71,46 @@ public class ProfileDB {
     public static void update(Profile profile) {
     }
     /**
-     * 
+     *  Añade en el array @friendshipRequest
+     *  del destProfile el sourceProfile
+     *  
      * @param destProfile
      * @param sourceProfile 
      */
     public void saveFrineshipRequest(Profile destProfile,Profile sourceProfile){
-        
+        // Compara los profiles con nulo para saber si existen
+        if(destProfile != null && sourceProfile != null){
+            // Si los profiles existen obtiene el arrayList de solicitudes del
+            // perfil destino y le añade el perfil del que viene la solicitud
+            destProfile.getFriendshipRequest().add(sourceProfile);           
+        }
     }
+     /**
+     *  Elimina en el array @friendshipRequest
+     *  del destProfile el sourceProfile
+     *  
+     * @param destProfile
+     * @param sourceProfile 
+     */
+    public static void removeFrienshipRequest(Profile destProfile, Profile sourceProfile){
+         if(destProfile != null && sourceProfile != null){
+            // Si los profiles existen obtiene el arrayList de solicitudes del
+            // perfil destino y elimina el perfil del que viene la solicitud
+            destProfile.getFriendshipRequest().remove(sourceProfile);           
+        }
+    }
+    /**
+     * Guarda el profile 1 en el arrayList de friends del profile 2
+     * y viceversa
+     * 
+     * @param profile1
+     * @param profile2 
+     */
+    public static void saveFriendship(Profile profile1, Profile profile2){
+        if (profile1 != null && profile2 != null){
+            profile1.getFriends().add(profile2);
+            profile1.getFriends().add(profile2);        
+        }
+    }
+    
 }

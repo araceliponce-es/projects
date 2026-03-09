@@ -15,6 +15,38 @@ public class Profile {
     
     private String name, password, status;
     public ArrayList<Message> messages = new ArrayList<>();
+    public ArrayList<Profile> friendshipRequest = new ArrayList<>();
+    public ArrayList<Profile> friends = new ArrayList<>();
+    public ArrayList<Post> posts = new ArrayList<>();
+    
+    /**
+     * Obtiene el array list de post que tiene ese 
+     * 
+     * @return ArrayList<Post>
+     */
+    public ArrayList<Post> getPosts() {
+        return posts;
+    }
+    
+    
+    /**
+     * Obtiene el array list de profiles quee tiene establecidos como
+     *  friends
+     * @return ArrayList<Profile>
+     */
+    public ArrayList<Profile> getFriends() {
+        return friends;
+    }
+    
+    /**
+     * Obtiene las un array de solicitudes de amistad
+     * que corresponda a el perfil
+     * 
+     * @return ArrayList<Profile>
+     */
+    public ArrayList<Profile> getFriendshipRequest() {
+        return friendshipRequest;
+    }
 
     /**
      * constructor del perfil

@@ -4,6 +4,7 @@
  */
 package tacebook;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -15,7 +16,36 @@ public class Post {
     private int id;
     private String text;
     private Date date = new Date();
-
+    private Profile profile;
+    private ArrayList<Profile> likeProfiles = new ArrayList<>();
+    /**
+     * Devuelve el profioe asignado al post
+     * @return profile
+     */
+    public Profile getProfile() {
+        return profile;
+    }
+    /**
+     * Establece el perfil del post
+     * @param profile w` 
+     */
+    public void setProfile(Profile profile) {
+        this.profile = profile;
+    }
+    
+    
+    /**
+     * Para construir un post se necesita un profile
+     * y una string que es el mensaje
+     * @param text
+     * @param profile 
+     */
+    public Post(String text, Profile profile) {
+        this.text = text;
+        this.profile = profile;
+    }
+    
+    
     /**
      * obtiene el id del post
      * 
@@ -32,6 +62,10 @@ public class Post {
      */
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Post(String text) {
+        this.text = text;
     }
 
     /**
