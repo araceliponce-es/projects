@@ -15,9 +15,10 @@ public class ProfileController {
     private Profile sessionProfile;
     private ProfileView myView;
 
-   
-   public ProfileController() {
-         myView = new ProfileView(this);
+    private Profile shownProfile; //almacena el perfil visualizandose actualmentte (puede coincidir o no con el usuario actual
+
+    public ProfileController() {
+        myView = new ProfileView(this);
     }
 
     /**
@@ -66,21 +67,44 @@ public class ProfileController {
     }
 
     /**
-     * Obtiene el perfil de la sesion usando ProfileDB y muestra su menú
+     * Obtiene el perfil que se visualiza
+     *
+     * @return
      */
-    public void reloadProfile() {
-        ProfileDB.update(sessionProfile);
+    public Profile getShownProfile() {
+        return shownProfile;
     }
 
- 
+    /**
+     * Establece el perfil que se visualiza y ademas recarga el perfil que se
+     * muestra
+     *
+     * @param shownProfile
+     */
+    public void setShownProfile(Profile shownProfile) {
+        this.shownProfile = shownProfile;
+        this.reloadProfile();
+    }
+
+    /**
+     * Obtiene el perfil de la sesion usando ProfileDB y muestra su menú
+     *
+     * fase 2: shownProfile en lugar de sessionProfile
+     */
+    public void reloadProfile() {
+        ProfileDB.update(shownProfile);
+    }
 
     /**
      * Abre una sesión con un perfil y muestra su menú de opciones.
+     *
+     * fase 2: al iniciar sesion, shownprofile es el perfil propio
      *
      * @param sessionProfile
      */
     public void openSession(Profile sessionProfile) {
         this.sessionProfile = sessionProfile;
+        this.shownProfile = sessionProfile;
         myView.showProfileMenu(sessionProfile); //muestra opciones de cambiar de sesion o cerrar sesion
 
     }
@@ -97,4 +121,108 @@ public class ProfileController {
         reloadProfile();
     }
 
+    // FASE 2 -METODOS:
+    /**
+     * Crea un novo obxecto "Post", chama á clase "PostDB" para gardalo e chama
+     * ao método "reloadProfile" para refrescar a información do perfil.
+     *
+     * @param text
+     * @param destProfile
+     */
+    public void newPost(String text, Profile destProfile) {
+
+    }
+
+    /**
+     * Crea un novo obxecto "Comment", chama á clase "CommentDB" para gardalo e
+     * chama ao método "reloadProfile" para refrescar a información do perfil.
+     *
+     * @param post
+     * @param commentText
+     */
+    public void newComment(Post post, String commentText) {
+    }
+
+    /**
+     * Comproba que o perfil da sesión non sexa o autor da publicación e non
+     * fixera xa Like sobre a publicación recibida. Se non é así, chama á clase
+     * "PostDB" para gardar o Like. En todo caso, refresca a información do
+     * perfil chamando a "reloadProfile".
+     *
+     * @param post
+     */
+    public void newLike(Post post) {
+    }
+
+    /**
+     * Comproba que exista un perfil co nome recibido como parámetro, que ese
+     * perfil non teña xa amizade co perfil da sesión, e que non haxa xa unha
+     * solicitude dese perfil ao perfil da sesión e viceversa. Se non ocorre
+     * nada diso, chama á clase "ProfileDB" para gardar a solicitude de amizade.
+     * En todo caso, refresca a información do perfil chamando a
+     * "reloadProfile".
+     *
+     * @param profileName
+     */
+    public void newFriendshipRequest(String profileName) {
+    }
+
+    /**
+     * Chama á clase "ProfileDB" para borrar a solicitude de amizade e gravar a
+     * amizade entre o perfil de orixe e o perfil da sesión. Despois chama ao
+     * método "reloadProfile" para refrescar a información do perfil.
+     *
+     * @param sourceProfile
+     */
+    public void acceptFriendshipRequest(Profile sourceProfile) {
+    }
+
+    /**
+     * Chama á clase "ProfileDB" para borrar a solicitude de amizade. Despois
+     * chama ao método "reloadProfile" para refrescar a información do perfil.
+     *
+     * @param sourceProfile
+     */
+    public void rejectFriendshipRequest(Profile sourceProfile) {
+    }
+
+    /**
+     * Crea un novo obxecto "Message", chama á clase "MessageDB" para gardalo e
+     * chama ao método "reloadProfile" para refrescar a información do perfil.
+     *
+     * @param destProfile
+     * @param text
+     */
+    public void newMessage(Profile destProfile, String text) {
+    }
+
+    /**
+     * Chama á clase "MessageDB" para borrar a mensaxe e chama ao método
+     * "reloadProfile" para refrescar a información do perfil.
+     *
+     * @param message
+     */
+    public void deleteMessage(Message message) {
+    }
+
+    /**
+     * Cambia o valor do atributo "read" da mensaxe e true, chama á clase
+     * "MessageDB" para actualizar a mensaxe e chama ao método "reloadProfile"
+     * para refrescar a información do perfil.
+     *
+     * @param message
+     */
+    public void markMessageAsRead(Message message) {
+    }
+
+    /**
+     * Cambia o valor do atributo "read" da mensaxe e true, chama á clase
+     * "MessageDB" para actualizar a mensaxe e chama ao método "newMessage" para
+     * enviar a mensaxe de resposta e recargar o perfil.
+     *
+     * @param message
+     * @param text
+     */
+    public void replyMessage(Message message, String text) {
+    }
 }
