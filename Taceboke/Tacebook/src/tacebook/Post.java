@@ -18,6 +18,8 @@ public class Post {
     private Date date = new Date();
     private Profile profile;
     private ArrayList<Profile> likeProfiles = new ArrayList<>();
+    private ArrayList<Comment> comments = new ArrayList<>();
+    private Profile author;
 
     /**
      * Devuelve el profioe asignado al post
