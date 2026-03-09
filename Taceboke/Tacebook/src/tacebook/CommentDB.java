@@ -9,5 +9,8 @@ package tacebook;
  * @author Araceli,Diego,Oscar
  */
 public class CommentDB {
-    
+
+    public static void save(Comment comment) {
+        
+    }
 }

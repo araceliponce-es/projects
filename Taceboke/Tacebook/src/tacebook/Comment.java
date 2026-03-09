@@ -11,13 +11,17 @@ import java.util.Date;
  * @author Araceli,Diego,Oscar
  */
 public class Comment {
+
     private int id;
     private Date date;
     private String text;
+    private Post post;
+    private Profile sourceProfile;
 
     /**
      * obtiene el id del comentario
-     * @return 
+     *
+     * @return
      */
     public int getId() {
         return id;
@@ -25,7 +29,8 @@ public class Comment {
 
     /**
      * establece el id del comentario
-     * @param id 
+     *
+     * @param id
      */
     public void setId(int id) {
         this.id = id;
@@ -33,7 +38,8 @@ public class Comment {
 
     /**
      * obtiene la fecha del comentario
-     * @return 
+     *
+     * @return
      */
     public Date getDate() {
         return date;
@@ -41,7 +47,8 @@ public class Comment {
 
     /**
      * establece la fecha del comentario
-     * @param date 
+     *
+     * @param date
      */
     public void setDate(Date date) {
         this.date = date;
@@ -49,7 +56,8 @@ public class Comment {
 
     /**
      * obtiene el texto del comentario
-     * @return 
+     *
+     * @return
      */
     public String getText() {
         return text;
@@ -57,7 +65,8 @@ public class Comment {
 
     /**
      * establece el texto del comentario
-     * @param text 
+     *
+     * @param text
      */
     public void setText(String text) {
         this.text = text;
@@ -65,9 +74,10 @@ public class Comment {
 
     /**
      * constructor del comentario
+     *
      * @param id
      * @param date
-     * @param text 
+     * @param text
      */
     public Comment(int id, Date date, String text) {
         this.id = id;
@@ -75,8 +85,40 @@ public class Comment {
         this.text = text;
     }
 
-    
-    
-    
-    
+    /**
+     * Obtiene el post sobre el que se hizo el comentario
+     *
+     * @return El post sobre el que se comentó
+     */
+    public Post getPost() {
+        return post;
+    }
+
+    /**
+     * Establece el post sobre el que se hizo el comentario
+     *
+     * @param post
+     */
+    public void setPost(Post post) {
+        this.post = post;
+    }
+
+    /**
+     * Obtiene el perfil que hizo el comentario
+     *
+     * @return El perfil que hizo el comentario
+     */
+    public Profile getSourceProfile() {
+        return sourceProfile;
+    }
+
+    /**
+     * Establece el perfil que hizo el comentario
+     *
+     * @param sourceProfile
+     */
+    public void setSourceProfile(Profile sourceProfile) {
+        this.sourceProfile = sourceProfile;
+    }
+
 }
