@@ -16,7 +16,16 @@ public class Message {
     private String text;
     private Date date = new Date();
     private boolean read;
+
+    /**
+     *¿Por qué están public estas cosas?
+     * 
+     */
     public Profile destProfile; 
+
+    /**
+     *
+     */
     public Profile sourceProfile;
 
     /**

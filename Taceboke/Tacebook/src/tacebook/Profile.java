@@ -14,14 +14,30 @@ import java.util.ArrayList;
 public class Profile {
     
     private String name, password, status;
+
+    /**
+     *En serio, ¿Por qué hacer todo esto public si hay getters y setters?
+     */
     public ArrayList<Message> messages = new ArrayList<>();
+
+    /**
+     *
+     */
     public ArrayList<Profile> friendshipRequest = new ArrayList<>();
+
+    /**
+     *
+     */
     public ArrayList<Profile> friends = new ArrayList<>();
+
+    /**
+     *
+     */
     public ArrayList<Post> posts = new ArrayList<>();
     
     /**
      * Obtiene el array list de post que tiene ese 
-     * 
+     * ¿Quién puso estos return? No ayudan, los tendré que cambiar si no lo hace alguien antes
      * @return ArrayList<Post>
      */
     public ArrayList<Post> getPosts() {
@@ -49,7 +65,7 @@ public class Profile {
     }
 
     /**
-     * constructor del perfil
+     * Constructor del perfil
      * @param name
      * @param password
      * @param status

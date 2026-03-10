@@ -145,4 +145,40 @@ public class Post {
         this.likeProfiles = likeProfiles;
     }
 
+    /**
+     * Obtiene el array de comentarios hechos sobre el post
+     *
+     * @return Comentarios del post
+     */
+    public ArrayList<Comment> getComments() {
+        return comments;
+    }
+
+    /**
+     * Establece el array de comentarios hechos sobre el post
+     *
+     * @param comments
+     */
+    public void setComments(ArrayList<Comment> comments) {
+        this.comments = comments;
+    }
+
+    /**
+     * Obtiene el autor del post
+     *
+     * @return Perfil que hizo el post
+     */
+    public Profile getAuthor() {
+        return author;
+    }
+
+    /**
+     * Establece el autor del post
+     *
+     * @param author
+     */
+    public void setAuthor(Profile author) {
+        this.author = author;
+    }
+
 }
