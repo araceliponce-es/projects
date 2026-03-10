@@ -66,11 +66,11 @@ public class MainWindow extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jPanelW = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
+        JLhiddenWordTx = new javax.swing.JLabel();
+        jLfailLettersTx = new javax.swing.JLabel();
+        jLintLetterTx = new javax.swing.JLabel();
+        jLhiddenWordOut = new javax.swing.JLabel();
+        jLfailLetterOut = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jPanelE = new javax.swing.JPanel();
@@ -117,36 +117,36 @@ public class MainWindow extends javax.swing.JFrame {
 
         jPanel2.setLayout(new java.awt.GridBagLayout());
 
-        jLabel3.setText("OESTE");
+        JLhiddenWordTx.setText("Palabra a adiviñar :");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
-        jPanel2.add(jLabel3, gridBagConstraints);
+        jPanel2.add(JLhiddenWordTx, gridBagConstraints);
 
-        jLabel5.setText("jLabel5");
+        jLfailLettersTx.setText("Letras falladas :");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        jPanel2.add(jLabel5, gridBagConstraints);
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
+        jPanel2.add(jLfailLettersTx, gridBagConstraints);
 
-        jLabel6.setText("jLabel6");
+        jLintLetterTx.setText("Introduce unha letra :");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
-        jPanel2.add(jLabel6, gridBagConstraints);
-
-        jLabel7.setText("jLabel7");
-        jPanel2.add(jLabel7, new java.awt.GridBagConstraints());
-
-        jLabel8.setText("jLabel8");
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
+        jPanel2.add(jLintLetterTx, gridBagConstraints);
+        jPanel2.add(jLhiddenWordOut, new java.awt.GridBagConstraints());
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
-        jPanel2.add(jLabel8, gridBagConstraints);
+        jPanel2.add(jLfailLetterOut, gridBagConstraints);
 
-        jButton1.setText("jButton1");
+        jButton1.setText("Probar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -157,7 +157,7 @@ public class MainWindow extends javax.swing.JFrame {
         gridBagConstraints.gridy = 2;
         jPanel2.add(jButton1, gridBagConstraints);
 
-        jTextField1.setText("jTextField1");
+        jTextField1.setMinimumSize(new java.awt.Dimension(80, 30));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
@@ -220,16 +220,16 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel JLhiddenWordTx;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLImage_Ahorcado;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLfailLetterOut;
+    private javax.swing.JLabel jLfailLettersTx;
+    private javax.swing.JLabel jLhiddenWordOut;
+    private javax.swing.JLabel jLintLetterTx;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
