@@ -129,5 +129,21 @@ public class Profile {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    /**
+     *Obtiene el array de mensajes escritos por un perfil, el más reciente va primero
+     * @return Los mensajes de un perfil
+     */
+    public ArrayList<Message> getMessages() {
+        return messages;
+    }
+
+    /**
+     *Establece el array de mensajes escritos por un perfil, el más reciente va primero
+     * @param messages
+     */
+    public void setMessages(ArrayList<Message> messages) {
+        this.messages = messages;
+    }
     
 }
