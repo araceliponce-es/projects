@@ -16,7 +16,6 @@ public class Message {
     private String text;
     private Date date = new Date();
     private boolean read;
-    //TODO: Explicar a Diego donde pone que hay que meter esto aquí
     public Profile destProfile; 
     public Profile sourceProfile;
 
