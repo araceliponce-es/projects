@@ -62,8 +62,8 @@ public class MainWindow extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanelS = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        jBNovaPartida = new javax.swing.JButton();
+        jBExit = new javax.swing.JButton();
         jPanelW = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         JLhiddenWordTx = new javax.swing.JLabel();
@@ -82,9 +82,12 @@ public class MainWindow extends javax.swing.JFrame {
 
         jPanelN.setLayout(new java.awt.BorderLayout());
 
+        jPanel3.setMinimumSize(new java.awt.Dimension(44, 50));
+        jPanel3.setPreferredSize(new java.awt.Dimension(44, 50));
         jPanel3.setLayout(new java.awt.GridBagLayout());
 
-        jLabel1.setText("NORTE");
+        jLabel1.setFont(new java.awt.Font("Liberation Sans", 0, 24)); // NOI18N
+        jLabel1.setText("O Xogo do Aforcado");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -99,15 +102,15 @@ public class MainWindow extends javax.swing.JFrame {
 
         jPanel5.setLayout(new java.awt.GridBagLayout());
 
-        jButton2.setText("jButton2");
+        jBNovaPartida.setText("Nova Partida");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 20, 5);
-        jPanel5.add(jButton2, gridBagConstraints);
+        jPanel5.add(jBNovaPartida, gridBagConstraints);
 
-        jButton3.setText("jButton3");
+        jBExit.setText("Exit");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.insets = new java.awt.Insets(0, 5, 20, 0);
-        jPanel5.add(jButton3, gridBagConstraints);
+        jPanel5.add(jBExit, gridBagConstraints);
 
         jPanelS.add(jPanel5, java.awt.BorderLayout.CENTER);
 
@@ -115,6 +118,8 @@ public class MainWindow extends javax.swing.JFrame {
 
         jPanelW.setLayout(new java.awt.BorderLayout());
 
+        jPanel2.setMinimumSize(new java.awt.Dimension(300, 62));
+        jPanel2.setPreferredSize(new java.awt.Dimension(300, 62));
         jPanel2.setLayout(new java.awt.GridBagLayout());
 
         JLhiddenWordTx.setText("Palabra a adiviñar :");
@@ -122,7 +127,7 @@ public class MainWindow extends javax.swing.JFrame {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(2, 20, 2, 0);
         jPanel2.add(JLhiddenWordTx, gridBagConstraints);
 
         jLfailLettersTx.setText("Letras falladas :");
@@ -130,16 +135,18 @@ public class MainWindow extends javax.swing.JFrame {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(2, 20, 2, 0);
         jPanel2.add(jLfailLettersTx, gridBagConstraints);
 
-        jLintLetterTx.setText("Introduce unha letra :");
+        jLintLetterTx.setText("Introduce unha letra : ");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
         jPanel2.add(jLintLetterTx, gridBagConstraints);
+
+        jLhiddenWordOut.setName(""); // NOI18N
         jPanel2.add(jLhiddenWordOut, new java.awt.GridBagConstraints());
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -161,6 +168,9 @@ public class MainWindow extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.RELATIVE;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 2.0;
         jPanel2.add(jTextField1, gridBagConstraints);
 
         jPanelW.add(jPanel2, java.awt.BorderLayout.CENTER);
@@ -221,9 +231,9 @@ public class MainWindow extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JLhiddenWordTx;
+    private javax.swing.JButton jBExit;
+    private javax.swing.JButton jBNovaPartida;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLImage_Ahorcado;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLfailLetterOut;
