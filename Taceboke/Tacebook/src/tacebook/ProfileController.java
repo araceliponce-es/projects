@@ -4,6 +4,8 @@
  */
 package tacebook;
 
+import java.util.Date;
+
 /**
  * Clase controlador del perfil con un atributo ProfileView y Profile, controla
  * las acciones del menú principal
@@ -130,6 +132,12 @@ public class ProfileController {
      * @param destProfile
      */
     public void newPost(String text, Profile destProfile) {
+        //crea nuevo post y lo guarda en bd
+        Post post = new Post(text, destProfile);
+        PostDB.save(post);
+        
+        //recarga perfil
+        reloadProfile();
 
     }
 
@@ -141,6 +149,8 @@ public class ProfileController {
      * @param commentText
      */
     public void newComment(Post post, String commentText) {
+        Date today = new Date();
+        Comment comment = new Comment(post.getComments().size(),today, post, commentText);
     }
 
     /**
