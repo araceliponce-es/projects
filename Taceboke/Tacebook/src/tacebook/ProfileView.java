@@ -4,6 +4,7 @@
  */
 package tacebook;
 
+import java.text.SimpleDateFormat;
 import java.util.Scanner;
 
 /**
@@ -14,6 +15,7 @@ import java.util.Scanner;
 public class ProfileView {
 
     private ProfileController myController;
+    SimpleDateFormat formatter;
 
     private int postsShown = 10;
 
@@ -51,6 +53,17 @@ public class ProfileView {
         System.out.println("Nombre: " + profile.getName());
         System.out.println();
         System.out.println("Estado: " + profile.getStatus());
+        System.out.println();
+        System.out.println("Publicaciones: "+profile.getPosts());
+        System.out.println();
+        //No hay un metodo en profile para recoger los mensajes y no encuentro donde lo pone en las partes del proyecto
+        System.out.println("Comentarios: ");
+        System.out.println();
+        System.out.println("Solicitudes de amistad: "+profile.getFriendshipRequest());
+        System.out.println();
+        System.out.println("Amistades: "+profile.getFriends());
+        System.out.println();
+        System.out.println("");
 
     }
 
