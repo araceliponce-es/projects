@@ -79,10 +79,12 @@ public class Comment {
      * @param date
      * @param text
      */
-    public Comment(int id, Date date, String text) {
+    public Comment(int id, Date date, String text, Post post, Profile sourceProfile) {   
         this.id = id;
         this.date = date;
         this.text = text;
+        this.post = post;
+        this.sourceProfile = sourceProfile;
     }
 
     /**

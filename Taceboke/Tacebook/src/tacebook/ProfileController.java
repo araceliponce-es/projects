@@ -150,8 +150,11 @@ public class ProfileController {
      */
     public void newComment(Post post, String commentText) {
         Date today = new Date();
-        Comment comment = new Comment(post.getComments().size(),today, post, commentText);
+        Comment comment = new Comment(post.getComments().size(),today, commentText, post, sessionProfile);
+        CommentDB.save(comment);
     }
+    
+    //RESTO ESTAN PENDIENTES
 
     /**
      * Comproba que o perfil da sesión non sexa o autor da publicación e non
