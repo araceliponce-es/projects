@@ -13,6 +13,26 @@ package tacebook;
 public class ProfileDB {
 
     /**
+     * ? metodo para encontrar profile por el name, sin otro parametro
+     *
+     * @param name
+     * @return
+     */
+    public static Profile findByName(String name) {
+        Profile res = null;
+
+        for (Profile person : TacebookDB.getProfiles()) {
+
+            if (person.getName().equals(name)) {
+                //usuario encontrado por nombre, numero de posts aun no implementado
+                res = person;
+            }
+
+        }
+        return res;
+    }
+
+    /**
      * Encuentra un Profile usando el nombre de usuario y el numero de posts y
      * lo devuelve, si no lo encunetra devuelve null
      *
@@ -70,47 +90,47 @@ public class ProfileDB {
      */
     public static void update(Profile profile) {
     }
+
     /**
-     *  Añade en el array @friendshipRequest
-     *  del destProfile el sourceProfile
-     *  
+     * Añade en el array @friendshipRequest del destProfile el sourceProfile
+     *
      * @param destProfile
-     * @param sourceProfile 
+     * @param sourceProfile
      */
-    public void saveFrineshipRequest(Profile destProfile,Profile sourceProfile){
+    public static void saveFriendshipRequest(Profile destProfile, Profile sourceProfile) {
         // Compara los profiles con nulo para saber si existen
-        if(destProfile != null && sourceProfile != null){
+        if (destProfile != null && sourceProfile != null) {
             // Si los profiles existen obtiene el arrayList de solicitudes del
             // perfil destino y le añade el perfil del que viene la solicitud
-            destProfile.getFriendshipRequest().add(sourceProfile);           
+            destProfile.getFriendshipRequest().add(sourceProfile);
         }
     }
-     /**
-     *  Elimina en el array @friendshipRequest
-     *  del destProfile el sourceProfile
-     *  
+
+    /**
+     * Elimina en el array @friendshipRequest del destProfile el sourceProfile
+     *
      * @param destProfile
-     * @param sourceProfile 
+     * @param sourceProfile
      */
-    public static void removeFrienshipRequest(Profile destProfile, Profile sourceProfile){
-         if(destProfile != null && sourceProfile != null){
+    public static void removeFriendshipRequest(Profile destProfile, Profile sourceProfile) {
+        if (destProfile != null && sourceProfile != null) {
             // Si los profiles existen obtiene el arrayList de solicitudes del
             // perfil destino y elimina el perfil del que viene la solicitud
-            destProfile.getFriendshipRequest().remove(sourceProfile);           
+            destProfile.getFriendshipRequest().remove(sourceProfile);
         }
     }
+
     /**
-     * Guarda el profile 1 en el arrayList de friends del profile 2
-     * y viceversa
-     * 
+     * Guarda el profile 1 en el arrayList de friends del profile 2 y viceversa
+     *
      * @param profile1
-     * @param profile2 
+     * @param profile2
      */
-    public static void saveFriendship(Profile profile1, Profile profile2){
-        if (profile1 != null && profile2 != null){
+    public static void saveFriendship(Profile profile1, Profile profile2) {
+        if (profile1 != null && profile2 != null) {
             profile1.getFriends().add(profile2);
-            profile1.getFriends().add(profile2);        
+            profile1.getFriends().add(profile2);
         }
     }
-    
+
 }

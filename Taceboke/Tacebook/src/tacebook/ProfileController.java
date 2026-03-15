@@ -4,7 +4,9 @@
  */
 package tacebook;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Map;
 
 /**
  * Clase controlador del perfil con un atributo ProfileView y Profile, controla
@@ -135,7 +137,7 @@ public class ProfileController {
         //crea nuevo post y lo guarda en bd
         Post post = new Post(text, destProfile);
         PostDB.save(post);
-        
+
         //recarga perfil
         reloadProfile();
 
@@ -150,12 +152,11 @@ public class ProfileController {
      */
     public void newComment(Post post, String commentText) {
         Date today = new Date();
-        Comment comment = new Comment(post.getComments().size(),today, commentText, post, sessionProfile);
+        Comment comment = new Comment(post.getComments().size(), today, commentText, post, sessionProfile);
         CommentDB.save(comment);
     }
-    
-    //RESTO ESTAN PENDIENTES
 
+    //RESTO ESTAN PENDIENTES
     /**
      * Comproba que o perfil da sesión non sexa o autor da publicación e non
      * fixera xa Like sobre a publicación recibida. Se non é así, chama á clase
@@ -165,6 +166,14 @@ public class ProfileController {
      * @param post
      */
     public void newLike(Post post) {
+        // guarda el like, solo si el nombre del autor del post NO ES IGUAL al nombre del usuario actual
+
+        if (!post.getAuthor().getName().equalsIgnoreCase(sessionProfile.getName())) {
+            PostDB.saveLike(post, shownProfile);
+        }
+
+        // en cualquier caso, recargar profile
+        reloadProfile();
     }
 
     /**
@@ -178,6 +187,53 @@ public class ProfileController {
      * @param profileName
      */
     public void newFriendshipRequest(String profileName) {
+
+        // session profile = quiene envia la solicitud = usuario A
+        // shown profile = quien recibe la solicitud de amistad = usuario B
+        boolean exists = false;
+
+        //comprueba que el perfil del shownprofile existe
+        if (ProfileDB.findByName(profileName) != null) {
+
+            //obtiene los amigos del A
+            ArrayList<Profile> friends = sessionProfile.getFriends();
+            //obtiene las solicitudes de amistad de A
+            ArrayList<Profile> pendingRequests = sessionProfile.getFriendshipRequest();
+            //obtiene las solicitudes de amistad de B (el futuro amigo)
+            ArrayList<Profile> pendingFutureFriendRequests = shownProfile.getFriendshipRequest();
+
+            //si B ya es amigo de A
+            for (Profile friend : friends) {
+                if (friend.getName().equals(profileName)) {
+                    exists = true;
+                    break;
+                }
+            }
+            //si B esta en la lista de solicitudes de amistad de A
+            for (Profile request : pendingRequests) {
+                if (request.getName().equals(profileName)) {
+                    exists = true;
+                    break;
+                }
+            }
+
+            //si A esta en la lista de solicitudes de amistad de B
+            for (Profile request : pendingFutureFriendRequests) {
+                if (request.getName().equals(shownProfile)) {
+                    exists = true;
+                    break;
+                }
+            }
+
+            // si ningun caso anterior se cumple, guarda la solicitud de amistad
+            if (!exists) {
+                ProfileDB.saveFriendshipRequest(shownProfile, sessionProfile);
+            }
+        }
+
+        //en cualquier caso, recarga el perfil
+        reloadProfile();
+
     }
 
     /**
@@ -185,9 +241,18 @@ public class ProfileController {
      * amizade entre o perfil de orixe e o perfil da sesión. Despois chama ao
      * método "reloadProfile" para refrescar a información do perfil.
      *
+     * TODO: QUIEN ES EL PERFIL DE ORIGEN Y QUIEN EL PERFIL DE SESION?
+     *
      * @param sourceProfile
      */
     public void acceptFriendshipRequest(Profile sourceProfile) {
+
+        ProfileDB.removeFriendshipRequest(shownProfile, sourceProfile);
+
+        ProfileDB.saveFriendship(shownProfile, sourceProfile);
+
+        //recarga el perfil
+        reloadProfile();
     }
 
     /**
@@ -197,6 +262,12 @@ public class ProfileController {
      * @param sourceProfile
      */
     public void rejectFriendshipRequest(Profile sourceProfile) {
+
+        //elimina la solicitud de amistad
+        ProfileDB.removeFriendshipRequest(shownProfile, sourceProfile);
+
+        //recarga el perfil
+        reloadProfile();
     }
 
     /**
@@ -207,6 +278,15 @@ public class ProfileController {
      * @param text
      */
     public void newMessage(Profile destProfile, String text) {
+        // public Message(int id, String text, boolean read, Profile destProfile, Profile sourceProfile) {
+        // id del mensaje = cantidad de mensajes del destinatario
+        Message message = new Message(destProfile.getMessages().size(), text, false, destProfile, shownProfile);
+
+        // metodo que añade al inicio del arraylist
+        MessageDB.save(message);
+
+        //recarga el perfil
+        reloadProfile();
     }
 
     /**
@@ -216,6 +296,10 @@ public class ProfileController {
      * @param message
      */
     public void deleteMessage(Message message) {
+        MessageDB.remove(message);
+
+        //recarga el perfil
+        reloadProfile();
     }
 
     /**
@@ -226,6 +310,12 @@ public class ProfileController {
      * @param message
      */
     public void markMessageAsRead(Message message) {
+
+        message.setRead(true);
+        MessageDB.update(message);
+
+        //recarga el perfil
+        reloadProfile();
     }
 
     /**
@@ -237,5 +327,16 @@ public class ProfileController {
      * @param text
      */
     public void replyMessage(Message message, String text) {
+
+        // message = original message object        
+        // text = text for reply
+        message.setRead(true);
+        MessageDB.update(message);
+
+        // la repuesta va dirigida al que envio el previo mensaje
+        newMessage(message.getSourceProfile(), text);
+
+        //recarga el perfil
+        reloadProfile();
     }
 }
