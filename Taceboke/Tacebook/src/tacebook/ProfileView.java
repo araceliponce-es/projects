@@ -53,21 +53,23 @@ public class ProfileView {
      * @param profile
      */
     private void showProfileInfo(boolean ownProfile, Profile profile) {
-        ownProfile = true;
-        System.out.println("Nombre: " + profile.getName());
-        System.out.println();
-        System.out.println("Estado: " + profile.getStatus());
-        System.out.println();
-        System.out.println("Publicaciones: "+profile.getPosts());
-        System.out.println();
-        //No hay un metodo en profile para recoger los mensajes y no encuentro donde lo pone en las partes del proyecto
-        System.out.println("Comentarios: ");
-        System.out.println();
-        System.out.println("Solicitudes de amistad: "+profile.getFriendshipRequest());
-        System.out.println();
-        System.out.println("Amistades: "+profile.getFriends());
-        System.out.println();
-        System.out.println("");
+
+        if (ownProfile = true) {
+
+            System.out.println("Nombre: " + profile.getName());
+            System.out.println();
+            System.out.println("Estado: " + profile.getStatus());
+            System.out.println();
+            System.out.println("Publicaciones: " + profile.getPosts());
+            System.out.println();
+            //No hay un metodo en profile para recoger los mensajes y no encuentro donde lo pone en las partes del proyecto
+            System.out.println("Comentarios: ");
+            System.out.println();
+            System.out.println("Solicitudes de amistad: " + profile.getFriendshipRequest());
+            System.out.println();
+            System.out.println("Amistades: " + profile.getFriends());
+            System.out.println();
+            System.out.println("");
 
         }
 
@@ -98,9 +100,6 @@ public class ProfileView {
      * @param profile
      */
     public void showProfileMenu(Profile profile) {
-        //Diego:El enuinciado dice que hay que añadir opciones de cosas 
-        //pero no sé cuales son exactamente, si alguien sabe que lo haga adjunto enunciado:
-        //"showProfileMenu" para que mostre todas as opcións e chame a un método distinto para cada opción que se escolla.
         showProfileInfo(true, profile);
         System.out.println("¿Cabiar el perfil(1) o cerrar sesión(2)?");
         Scanner scan = new Scanner(System.in);
@@ -115,22 +114,6 @@ public class ProfileView {
                 break;
         }
     }
-    
-    private int selectElement(String text, int maxNumber, Scanner scanner){
-        Scanner scan = new Scanner(System.in);
-        int Elemento=scan.nextInt();
-        int i=0;
-        while(i<1){
-        if(Elemento<maxNumber && Elemento>=0){
-            i+=1;
-        return Elemento;
-        
-        }else{
-            System.out.println("No existe ese elemento, prueba con un número ");
-        }
-        }   
-    }
-    
 
     // FASE 2.6- METODOS
     /**
