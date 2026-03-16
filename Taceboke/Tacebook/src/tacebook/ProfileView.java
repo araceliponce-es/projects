@@ -19,6 +19,10 @@ public class ProfileView {
 
     private int postsShown = 10;
 
+    /**
+     *
+     * @param myController
+     */
     public ProfileView(ProfileController myController) {
         this.myController = myController;
     }
@@ -49,21 +53,25 @@ public class ProfileView {
      * @param profile
      */
     private void showProfileInfo(boolean ownProfile, Profile profile) {
-        ownProfile = true;
-        System.out.println("Nombre: " + profile.getName());
-        System.out.println();
-        System.out.println("Estado: " + profile.getStatus());
-        System.out.println();
-        System.out.println("Publicaciones: "+profile.getPosts());
-        System.out.println();
-        //No hay un metodo en profile para recoger los mensajes y no encuentro donde lo pone en las partes del proyecto
-        System.out.println("Comentarios: ");
-        System.out.println();
-        System.out.println("Solicitudes de amistad: "+profile.getFriendshipRequest());
-        System.out.println();
-        System.out.println("Amistades: "+profile.getFriends());
-        System.out.println();
-        System.out.println("");
+
+        if (ownProfile = true) {
+
+            System.out.println("Nombre: " + profile.getName());
+            System.out.println();
+            System.out.println("Estado: " + profile.getStatus());
+            System.out.println();
+            System.out.println("Publicaciones: " + profile.getPosts());
+            System.out.println();
+            //No hay un metodo en profile para recoger los mensajes y no encuentro donde lo pone en las partes del proyecto
+            System.out.println("Comentarios: ");
+            System.out.println();
+            System.out.println("Solicitudes de amistad: " + profile.getFriendshipRequest());
+            System.out.println();
+            System.out.println("Amistades: " + profile.getFriends());
+            System.out.println();
+            System.out.println("");
+
+        }
 
     }
 
@@ -105,6 +113,196 @@ public class ProfileView {
                 System.out.println("Sólo hay dos opciones 1 o 2, no es tan difícil");
                 break;
         }
+    }
+
+    // FASE 2.6- METODOS
+    /**
+     * Este método utilizarase cando se pida ao usuario que introduza un número
+     * para seleccionar un elemento dunha lista (de publicacións, de mensaxes,
+     * de amizades, etc.). Encárgase de pedir un número ao usuario mostrando o
+     * texto que recibe en "text", lelo usando o "scanner" e volvelo a pedir
+     * repetidamente ata que o valor introducido estea entre 0 e "maxNumber-1".
+     * Devolve o número introducido polo usuario. *
+     */
+    private int selectElement(String text, int maxNumber, Scanner scanner) {
+        int numberUser = 0;
+
+        do {
+
+            //pregunta por consola un texto
+            System.out.println(text);
+            //recibe un numero
+            numberUser = scanner.nextInt();
+            scanner.nextLine();
+
+        } while (numberUser > 0 && numberUser < maxNumber - 1);
+
+        return numberUser;
+    }
+
+    /**
+     * Pide o texto para crear unha nova publicación e chama ao controlador para
+     * creala. *
+     */
+    private void writeNewPost(Scanner scanner, Profile profile) {
+        // pide el texto?
+        System.out.println("ingresa el texto para tu post:");
+
+        //guarda el texto obtenido y crea nuevo post
+        String postText = scanner.nextLine();
+        myController.newPost(postText, profile);
+    }
+
+    /**
+     * Pide ao usuario que seleccione unha publicación e que introduza un texto,
+     * e chama ao controlador para crear un comentario con ese texto. *
+     */
+    private void commentPost(Scanner scanner, Profile profile) {
+
+        //selecciona la publicacion del perfil usando el index
+        System.out.println("selecciona una publicacion");
+        int selectedIndex = scanner.nextInt();
+        scanner.nextLine();
+        Post selectedPost = profile.getPosts().get(selectedIndex);
+
+        System.out.println("cual es tu comentario?");
+        String commentText = scanner.nextLine();
+
+        myController.newComment(selectedPost, commentText);
+    }
+
+    /**
+     * Pide ao usuario que seleccione unha publicación e chama ao controlador
+     * para facer like sobre ela. *
+     */
+    private void addLike(Scanner scanner, Profile profile) {
+
+        //selecciona la publicacion del perfil usando el index
+        System.out.println("selecciona una publicacion");
+        int selectedIndex = scanner.nextInt();
+        scanner.nextLine();
+        Post selectedPost = profile.getPosts().get(selectedIndex);
+
+        //Da like        
+        myController.newLike(selectedPost);
+    }
+
+    /**
+     * Se estamos vendo o propio perfil, pide ao usuario seleccionar unha
+     * amizade para establecer ese perfil como perfil a mostrar (chamando ao
+     * controlador), e senón volve a poñer o perfil da sesión como perfil a
+     * mostrar. O parámetro "ownProfile" é o que indica se estamos vendo o
+     * propio perfil da sesión ou o perfil dunha amizade. *
+     */
+    private void showBiography(boolean ownProfile, Scanner scanner, Profile profile) {
+        //si usuario esta en su propio perfil, le pide que eliga a uno de sus amigos para mostrar el perfil de est@
+
+        if (ownProfile) {
+            System.out.println("elige el perfil de cual amigo quieres ver");
+            String userText= scanner.nextLine();
+            profile = ProfileDB.findByName(userText);
+
+        }
+
+        //si no está en su perfil
+        myController.setShownProfile(profile);
+    }
+
+    /**
+     * Pide o nome dun perfil e chama ao controlador para enviarlle unha
+     * solicitude de amizade. *
+     */
+    private void sendFriendshipRequest(boolean ownProfile, Scanner scanner, Profile profile) {
+    }
+
+    /**
+     * Pide o número dunha solicitude de amizade e chama ao controlador para
+     * aceptala ou rexeitala, en función do que se indique no parámetro
+     * "accept". *
+     */
+    private void proccessFriendshipRequest(boolean ownProfile, Scanner scanner, Profile profile, boolean accept) {
+    }
+
+    /**
+     * Se estamos vendo o propio perfil, pide ao usuario selecciona un amigo e o
+     * texto da mensaxe e chama ao controlador para enviar unha mensaxe. Se
+     * estamos vendo o perfil dunha amizade, pide o texto para enviarlle unha
+     * mensaxe a ese perfil. *
+     */
+    private void sendPrivateMessage(boolean ownProfile, Scanner scanner, Profile profile) {
+    }
+
+    /**
+     * Pide ao usuario que seleccione unha mensaxe e a mostra completa, dando as
+     * opcións de respondela, eliminala ou simplemente volver á biografia
+     * marcando a mensaxe como lida, chamando ao controlador para executar as
+     * distintas accións. *
+     */
+    private void readPrivateMessage(boolean ownProfile, Scanner scanner, Profile profile) {
+    }
+
+    /**
+     * Pide ao usuario que seleccione unha mensaxe e chama ao controlador para
+     * borrala. *
+     */
+    private void deletePrivateMessage(boolean ownProfile, Scanner scanner, Profile profile) {
+    }
+
+    /**
+     * Pide o número de publicacións que se queren visualizar e chamar ao
+     * controlador para recargar o perfil. *
+     */
+    private void showOldPosts(Scanner scanner, Profile profile) {
+    }
+
+    /**
+     * Os métodos que se inclúen a partir de aquí, simplemente mostran mensaxes
+     * por pantalla e chámanse dende o controlador para informar ao usuario de
+     * circunstancias que poden provocar que unha acción non se poida realizar.
+     * Neste caso, que un perfil non se atopou (Úsase cando se quere enviar unha
+     * solicitude de amizade). *
+     */
+    public void showProfileNotFoundMessage() {
+    }
+
+    /**
+     * Informa de que non se pode facer like sobre unha publicación propia. *
+     */
+    public void showCannotLikeOwnPostMessage() {
+    }
+
+    /**
+     * Informa de que non se pode facer like sobre unha publicación sobre a que
+     * xa se fixo like. *
+     */
+    public void showAlreadyLikedPostMessage() {
+    }
+
+    /**
+     * Informa de que xa tes amizade con ese perfil.
+     *
+     *
+     * @param profileName
+     */
+    public void showIsAlreadyFriendMessage(String profileName) {
+    }
+
+    /**
+     * Informa de que ese perfil xa ten unha solicitude de amizade contigo.
+     *
+     *
+     * @param profileName
+     */
+    public void showExistsFrienshipRequestMessage(String profileName) {
+    }
+
+    /**
+     * Informa de que xa tes unha solicitude de amizade con ese perfil.
+     *
+     *
+     * @param profileName
+     */
+    public void showDuplicateFrienshipRequestMessage(String profileName) {
     }
 
 }
