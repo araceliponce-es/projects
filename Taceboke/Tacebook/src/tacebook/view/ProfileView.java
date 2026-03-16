@@ -2,10 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package tacebook;
+package tacebook.view;
 
+import tacebook.persistence.ProfileDB;
 import java.text.SimpleDateFormat;
 import java.util.Scanner;
+import tacebook.model.Post;
+import tacebook.model.Profile;
+import tacebook.controller.ProfileController;
 
 /**
  * vista
@@ -312,6 +316,5 @@ public class ProfileView {
     public void showDuplicateFrienshipRequestMessage(String profileName) {
     }
     
-    //pjeoufvdubndg
 
 }

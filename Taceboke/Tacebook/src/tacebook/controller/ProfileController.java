@@ -2,11 +2,20 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package tacebook;
+package tacebook.controller;
 
+import tacebook.view.ProfileView;
+import tacebook.persistence.ProfileDB;
+import tacebook.persistence.PostDB;
+import tacebook.persistence.MessageDB;
+import tacebook.persistence.CommentDB;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
+import tacebook.model.Comment;
+import tacebook.model.Message;
+import tacebook.model.Post;
+import tacebook.model.Profile;
 
 /**
  * Clase controlador del perfil con un atributo ProfileView y Profile, controla

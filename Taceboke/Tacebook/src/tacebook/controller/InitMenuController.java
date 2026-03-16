@@ -2,7 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package tacebook;
+package tacebook.controller;
+
+import tacebook.model.Profile;
+import tacebook.view.InitMenuView;
+import tacebook.persistence.ProfileDB;
 
 /**
  * Clase controlador del menú de inicio con un atributo de la clase
