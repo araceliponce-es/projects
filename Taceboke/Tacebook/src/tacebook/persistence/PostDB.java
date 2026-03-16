@@ -17,9 +17,9 @@ public class PostDB {
     /**
      *
      * @param post
-     * @throws java.sql.SQLException
+     * @throws tacebook.persistence.PersistenceException
      */
-    public static void save(Post post) throws java.sql.SQLException{
+    public static void save(Post post) throws PersistenceException{
         if (post != null && post.getProfile() != null) {
             // 1. Identificamos o perfil autor que vai "dentro" do post
             Profile autor = post.getProfile();
@@ -35,9 +35,9 @@ public class PostDB {
      *
      * @param post
      * @param profile
-     * @throws SQLException
+     * @throws tacebook.persistence.PersistenceException
      */
-    public static void saveLike(Post post, Profile profile) throws java.sql.SQLException{
+    public static void saveLike(Post post, Profile profile) throws PersistenceException{
         post.getLikeProfiles().add(profile);
     }
 }
