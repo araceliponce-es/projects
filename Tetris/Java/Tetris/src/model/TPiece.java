@@ -4,15 +4,11 @@
  */
 package model;
 
-import model.Square;
-import model.Piece;
-import model.Game;
 import java.awt.Color;
-import java.util.Random;
 
 /**
  *
- * @author daw1al13
+ * @author Araceli,Diego,Oscar
  */
 public class TPiece extends Piece {
 

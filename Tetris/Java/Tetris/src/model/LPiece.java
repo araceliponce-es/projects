@@ -4,20 +4,16 @@
  */
 package model;
 
-import model.Square;
-import model.Piece;
-import model.Game;
 import java.awt.Color;
-import java.util.Random;
 
 /**
  *
- * @author daw1al13
+ * @author Araceli,Diego,Oscar
  */
 public class LPiece extends Piece {
 
     private Color color = Color.MAGENTA;
-    private int rotationIndex = 0;
+
 
     public LPiece(Game game) {
         this.game = game;
@@ -79,10 +75,10 @@ public class LPiece extends Piece {
             }
             //Posicion 3
         }else if (squares[1].getX() == squares[0].getX() - Game.SQUARE_SIDE) {
-            //Se resorre los cuadrado
+            //Se recorre los cuadrados
             if (game.isValidPosition(squares[0].getX() - Game.SQUARE_SIDE, squares[0].getY() - Game.SQUARE_SIDE)
                     && game.isValidPosition(squares[1].getX(), squares[1].getY())
-                    && game.isValidPosition(squares[2].getX() - Game.SQUARE_SIDE, squares[2].getY() + Game.SQUARE_SIDE)
+                    && game.isValidPosition(squares[2].getX() + Game.SQUARE_SIDE, squares[2].getY() + Game.SQUARE_SIDE)
                     && game.isValidPosition(squares[3].getX() + Game.SQUARE_SIDE * 2, squares[3].getY())) {
                 //Dice que puede rotar y rota todos
                 canRotate = true;

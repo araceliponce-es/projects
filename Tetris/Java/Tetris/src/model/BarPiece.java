@@ -4,15 +4,11 @@
  */
 package model;
 
-import model.Square;
-import model.Piece;
-import model.Game;
 import java.awt.Color;
-import java.util.Random;
 
 /**
  *
- * @author daw1al13
+ * @author Araceli,Diego,Oscar
  */
 public class BarPiece extends Piece {
 
@@ -32,7 +28,7 @@ public class BarPiece extends Piece {
         //Si el bloque esta en la posicion indicada en el if siginifica que esta
         //en la posicion 0
         if (squares[0].getY() == squares[1].getY() - Game.SQUARE_SIDE) {
-            //Se resorre los cuadrado
+            //Se recorre los cuadrado
             if (game.isValidPosition(squares[0].getX() - Game.SQUARE_SIDE, squares[0].getY() + Game.SQUARE_SIDE)
                     && game.isValidPosition(squares[1].getX(), squares[1].getY())
                     && game.isValidPosition(squares[2].getX() + Game.SQUARE_SIDE, squares[2].getY() - Game.SQUARE_SIDE)
@@ -48,7 +44,7 @@ public class BarPiece extends Piece {
             }
             //Posicion 1
         } else if (squares[0].getX() == squares[1].getX() - Game.SQUARE_SIDE) {
-            //Se resorre los cuadrado
+            //Se recorre los cuadrado
             if (game.isValidPosition(squares[0].getX() + Game.SQUARE_SIDE, squares[0].getY() - Game.SQUARE_SIDE)
                     && game.isValidPosition(squares[1].getX(), squares[1].getY())
                     && game.isValidPosition(squares[2].getX() - Game.SQUARE_SIDE, squares[2].getY() + Game.SQUARE_SIDE)

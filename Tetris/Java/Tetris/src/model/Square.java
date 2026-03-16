@@ -16,7 +16,6 @@
  */
 package model;
 
-import model.Game;
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.BorderFactory;

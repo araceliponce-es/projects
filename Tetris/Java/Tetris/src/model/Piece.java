@@ -16,10 +16,6 @@
  */
 package model;
 
-import model.Game;
-import java.awt.Color;
-import java.util.Random;
-
 /**
  * Clase que implementa a peza cadrada do xogo do Tetris
  *

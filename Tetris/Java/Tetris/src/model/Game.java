@@ -16,10 +16,8 @@
  */
 package model;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import javax.swing.JLabel;
 import view.MainWindow;
 
 /**
@@ -39,7 +37,7 @@ public class Game {
     public final static int MAX_X = 160;
 
     /**
-     * Constante que define o valor minimo en la cordenada y en el panel de
+     * Constante que define o valor máximo en la cordenada y en el panel de
      * cadradros
      */
     public final static int MAX_Y = 200;
@@ -178,7 +176,7 @@ public class Game {
      * @return true se esa posición é válida, se non false
      */
     public boolean isValidPosition(int x, int y) {
-        boolean res = true;
+        boolean valid = true;
         // si x sobrepasa alguno de los maximos o es menor que cero
         // o
         // si y sobrepasa alguno de los maximos o es menor que cero
@@ -186,10 +184,10 @@ public class Game {
         // si el x y y a evaluar coinciden con un key existente en groundSquares
         // retorna falso
         if (((x == MAX_X) || (x < 0) || (y == MAX_Y) || (y < 0)) || groundSquares.containsKey(x + "," + y)) {
-            res = false;
+            valid = false;
         }
 
-        return res;
+        return valid;
     }
 
     /**
@@ -224,12 +222,12 @@ public class Game {
             String coordinates = squares[j].getCoordinates();
             //coloca cada square dentro de groundSquares. coordenadas seran el id
             this.groundSquares.put(coordinates, squares[j]);
-            System.out.println(groundSquares.size()); //verifica que sí se agregan squares al piso
-            System.out.println("values de groundsquares:");
-            for (Square valor : groundSquares.values()) {
-                System.out.print("anadiendo--- ");
-                System.out.print(valor.getCoordinates() + "  ");
-            }
+//            System.out.println(groundSquares.size()); //verifica que sí se agregan squares al piso
+//            System.out.println("values de groundsquares:");
+//            for (Square valor : groundSquares.values()) {
+//                System.out.print("anadiendo--- ");
+//                System.out.print(valor.getCoordinates() + "  ");
+//            }
 
         }
 
@@ -347,7 +345,7 @@ public class Game {
                 res = true;
             }
 
-            //}
+            
         }
         return res;
     }
