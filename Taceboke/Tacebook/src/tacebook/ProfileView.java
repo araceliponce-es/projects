@@ -198,7 +198,7 @@ public class ProfileView {
         //si usuario esta en su propio perfil, le pide que eliga a uno de sus amigos para mostrar el perfil de est@
 
         if (ownProfile) {
-            System.out.println("elige el perfil de cual amigo quieres ver");
+            System.out.println("Elige el perfil de cual amigo quieres ver");
             String userText= scanner.nextLine();
             profile = ProfileDB.findByName(userText);
 
@@ -213,7 +213,14 @@ public class ProfileView {
      * solicitude de amizade. *
      */
     private void sendFriendshipRequest(boolean ownProfile, Scanner scanner, Profile profile) {
-    }
+            if (ownProfile) {
+            System.out.println("Dime el nombre del perfil que quieres agregar : ");
+            String userText= scanner.nextLine();
+            profile = ProfileDB.findByName(userText);
+            myController.newFriendshipRequest(userText);
+            }
+
+        }
 
     /**
      * Pide o número dunha solicitude de amizade e chama ao controlador para
