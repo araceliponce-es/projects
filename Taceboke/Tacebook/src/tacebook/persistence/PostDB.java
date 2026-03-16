@@ -4,6 +4,7 @@
  */
 package tacebook.persistence;
 
+import java.sql.SQLException;
 import tacebook.model.Post;
 import tacebook.model.Profile;
 
@@ -16,8 +17,9 @@ public class PostDB {
     /**
      *
      * @param post
+     * @throws java.sql.SQLException
      */
-    public static void save(Post post) {
+    public static void save(Post post) throws java.sql.SQLException{
         if (post != null && post.getProfile() != null) {
             // 1. Identificamos o perfil autor que vai "dentro" do post
             Profile autor = post.getProfile();
@@ -29,7 +31,13 @@ public class PostDB {
 
     }
 
-    public static void saveLike(Post post, Profile profile) {
+    /**
+     *
+     * @param post
+     * @param profile
+     * @throws SQLException
+     */
+    public static void saveLike(Post post, Profile profile) throws java.sql.SQLException{
         post.getLikeProfiles().add(profile);
     }
 }

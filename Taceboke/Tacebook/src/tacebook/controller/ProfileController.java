@@ -4,6 +4,7 @@
  */
 package tacebook.controller;
 
+import java.sql.SQLException;
 import tacebook.view.ProfileView;
 import tacebook.persistence.ProfileDB;
 import tacebook.persistence.PostDB;
@@ -11,7 +12,6 @@ import tacebook.persistence.MessageDB;
 import tacebook.persistence.CommentDB;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Map;
 import tacebook.model.Comment;
 import tacebook.model.Message;
 import tacebook.model.Post;
@@ -103,8 +103,9 @@ public class ProfileController {
      * Obtiene el perfil de la sesion usando ProfileDB y muestra su menú
      *
      * fase 2: shownProfile en lugar de sessionProfile
+     * @throws java.sql.SQLException
      */
-    public void reloadProfile() {
+    public void reloadProfile() throws SQLException {
         ProfileDB.update(shownProfile);
     }
 
@@ -127,8 +128,9 @@ public class ProfileController {
      * muestra con los datos actualizados.
      *
      * @param newStatus
+     * @throws java.sql.SQLException
      */
-    public void updateProfileStatus(String newStatus) {
+    public void updateProfileStatus(String newStatus) throws SQLException {
         sessionProfile.setStatus(newStatus);
         ProfileDB.update(sessionProfile);
         reloadProfile();
@@ -141,8 +143,9 @@ public class ProfileController {
      *
      * @param text
      * @param destProfile
+     * @throws java.sql.SQLException
      */
-    public void newPost(String text, Profile destProfile) {
+    public void newPost(String text, Profile destProfile) throws SQLException {
         //crea nuevo post y lo guarda en bd
         Post post = new Post(text, destProfile);
         PostDB.save(post);
@@ -158,8 +161,9 @@ public class ProfileController {
      *
      * @param post
      * @param commentText
+     * @throws java.sql.SQLException
      */
-    public void newComment(Post post, String commentText) {
+    public void newComment(Post post, String commentText) throws SQLException {
         Date today = new Date();
         Comment comment = new Comment(post.getComments().size(), today, commentText, post, sessionProfile);
         CommentDB.save(comment);
@@ -173,8 +177,9 @@ public class ProfileController {
      * perfil chamando a "reloadProfile".
      *
      * @param post
+     * @throws java.sql.SQLException
      */
-    public void newLike(Post post) {
+    public void newLike(Post post) throws SQLException {
         // guarda el like, solo si el nombre del autor del post NO ES IGUAL al nombre del usuario actual
 
         if (!post.getAuthor().getName().equalsIgnoreCase(sessionProfile.getName())) {
@@ -194,8 +199,9 @@ public class ProfileController {
      * "reloadProfile".
      *
      * @param profileName
+     * @throws java.sql.SQLException
      */
-    public void newFriendshipRequest(String profileName) {
+    public void newFriendshipRequest(String profileName) throws SQLException {
 
         // session profile = quiene envia la solicitud = usuario A
         // shown profile = quien recibe la solicitud de amistad = usuario B
@@ -253,8 +259,9 @@ public class ProfileController {
      * TODO: QUIEN ES EL PERFIL DE ORIGEN Y QUIEN EL PERFIL DE SESION?
      *
      * @param sourceProfile
+     * @throws java.sql.SQLException
      */
-    public void acceptFriendshipRequest(Profile sourceProfile) {
+    public void acceptFriendshipRequest(Profile sourceProfile) throws SQLException {
 
         ProfileDB.removeFriendshipRequest(shownProfile, sourceProfile);
 
@@ -269,8 +276,9 @@ public class ProfileController {
      * chama ao método "reloadProfile" para refrescar a información do perfil.
      *
      * @param sourceProfile
+     * @throws java.sql.SQLException
      */
-    public void rejectFriendshipRequest(Profile sourceProfile) {
+    public void rejectFriendshipRequest(Profile sourceProfile) throws SQLException {
 
         //elimina la solicitud de amistad
         ProfileDB.removeFriendshipRequest(shownProfile, sourceProfile);
@@ -285,8 +293,9 @@ public class ProfileController {
      *
      * @param destProfile
      * @param text
+     * @throws java.sql.SQLException
      */
-    public void newMessage(Profile destProfile, String text) {
+    public void newMessage(Profile destProfile, String text) throws SQLException {
         // public Message(int id, String text, boolean read, Profile destProfile, Profile sourceProfile) {
         // id del mensaje = cantidad de mensajes del destinatario
         Message message = new Message(destProfile.getMessages().size(), text, false, destProfile, shownProfile);
@@ -303,8 +312,9 @@ public class ProfileController {
      * "reloadProfile" para refrescar a información do perfil.
      *
      * @param message
+     * @throws java.sql.SQLException
      */
-    public void deleteMessage(Message message) {
+    public void deleteMessage(Message message) throws SQLException {
         MessageDB.remove(message);
 
         //recarga el perfil
@@ -317,8 +327,9 @@ public class ProfileController {
      * para refrescar a información do perfil.
      *
      * @param message
+     * @throws java.sql.SQLException
      */
-    public void markMessageAsRead(Message message) {
+    public void markMessageAsRead(Message message) throws SQLException {
 
         message.setRead(true);
         MessageDB.update(message);
@@ -334,8 +345,9 @@ public class ProfileController {
      *
      * @param message
      * @param text
+     * @throws java.sql.SQLException
      */
-    public void replyMessage(Message message, String text) {
+    public void replyMessage(Message message, String text) throws SQLException {
 
         // message = original message object        
         // text = text for reply
