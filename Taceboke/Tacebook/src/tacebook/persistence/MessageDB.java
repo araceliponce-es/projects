@@ -17,8 +17,9 @@ public class MessageDB {
      * del usuario destino
      *
      * @param message Mensaje para un perfil
+     * @throws java.sql.SQLException
      */
-    public static void save(Message message) {
+    public static void save(Message message) throws java.sql.SQLException{
         message.destProfile.messages.addFirst(message);
     }
 
@@ -26,8 +27,9 @@ public class MessageDB {
      * En la parte 2 eso no hace nada, luego ya veremos
      *
      * @param message Mensaje para un perfil
+     * @throws java.sql.SQLException
      */
-    public static void update(Message message) {
+    public static void update(Message message) throws java.sql.SQLException{
 
     }
 
@@ -36,8 +38,9 @@ public class MessageDB {
      * destino
      *
      * @param message Mensaje para un perfil
+     * @throws java.sql.SQLException
      */
-    public static void remove(Message message) {
+    public static void remove(Message message) throws java.sql.SQLException{
         message.destProfile.messages.remove(message);
     }
 }

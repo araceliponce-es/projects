@@ -15,8 +15,9 @@ public class CommentDB {
     /**
      *Método que almacena el comentario en el array de comentarios del post al que iba dirigido, en la primera posición.
      * @param comment Comentario hecho al post
+     * @throws java.sql.SQLException
      */
-    public static void save(Comment comment) {
+    public static void save(Comment comment) throws java.sql.SQLException{
         comment.getPost().getComments().addFirst(comment);
     }
 }
