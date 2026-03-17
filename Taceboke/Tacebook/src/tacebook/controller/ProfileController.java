@@ -93,9 +93,8 @@ public class ProfileController {
      * muestra
      *
      * @param shownProfile
-     * @throws tacebook.persistence.PersistenceException
      */
-    public void setShownProfile(Profile shownProfile) throws PersistenceException {
+    public void setShownProfile(Profile shownProfile) {
         this.shownProfile = shownProfile;
         this.reloadProfile();
     }
@@ -104,10 +103,13 @@ public class ProfileController {
      * Obtiene el perfil de la sesion usando ProfileDB y muestra su menú
      *
      * fase 2: shownProfile en lugar de sessionProfile
-     * @throws tacebook.persistence.PersistenceException
      */
-    public void reloadProfile() throws PersistenceException {
-        ProfileDB.update(shownProfile);
+    public void reloadProfile()  {
+        try {
+            ProfileDB.update(shownProfile);
+        } catch (PersistenceException ex) {
+            System.getLogger(ProfileController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
     }
 
     /**
@@ -129,11 +131,14 @@ public class ProfileController {
      * muestra con los datos actualizados.
      *
      * @param newStatus
-     * @throws tacebook.persistence.PersistenceException
      */
-    public void updateProfileStatus(String newStatus) throws PersistenceException {
+    public void updateProfileStatus(String newStatus)   {
         sessionProfile.setStatus(newStatus);
-        ProfileDB.update(sessionProfile);
+        try {
+            ProfileDB.update(sessionProfile);
+        } catch (PersistenceException ex) {
+            System.getLogger(ProfileController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
         reloadProfile();
     }
 
@@ -144,12 +149,15 @@ public class ProfileController {
      *
      * @param text
      * @param destProfile
-     * @throws tacebook.persistence.PersistenceException
      */
-    public void newPost(String text, Profile destProfile) throws PersistenceException {
+    public void newPost(String text, Profile destProfile)  {
         //crea nuevo post y lo guarda en bd
         Post post = new Post(text, destProfile);
-        PostDB.save(post);
+        try {
+            PostDB.save(post);
+        } catch (PersistenceException ex) {
+            System.getLogger(ProfileController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
 
         //recarga perfil
         reloadProfile();
@@ -162,12 +170,15 @@ public class ProfileController {
      *
      * @param post
      * @param commentText
-     * @throws tacebook.persistence.PersistenceException
      */
-    public void newComment(Post post, String commentText) throws PersistenceException {
+    public void newComment(Post post, String commentText)  {
         Date today = new Date();
         Comment comment = new Comment(post.getComments().size(), today, commentText, post, sessionProfile);
-        CommentDB.save(comment);
+        try {
+            CommentDB.save(comment);
+        } catch (PersistenceException ex) {
+            System.getLogger(ProfileController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
     }
 
     //RESTO ESTAN PENDIENTES
@@ -178,13 +189,16 @@ public class ProfileController {
      * perfil chamando a "reloadProfile".
      *
      * @param post
-     * @throws tacebook.persistence.PersistenceException
      */
-    public void newLike(Post post) throws PersistenceException {
+    public void newLike(Post post)  {
         // guarda el like, solo si el nombre del autor del post NO ES IGUAL al nombre del usuario actual
 
         if (!post.getAuthor().getName().equalsIgnoreCase(sessionProfile.getName())) {
-            PostDB.saveLike(post, shownProfile);
+            try {
+                PostDB.saveLike(post, shownProfile);
+            } catch (PersistenceException ex) {
+                System.getLogger(ProfileController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            }
         }
 
         // en cualquier caso, recargar profile
@@ -200,51 +214,54 @@ public class ProfileController {
      * "reloadProfile".
      *
      * @param profileName
-     * @throws tacebook.persistence.PersistenceException
      */
-    public void newFriendshipRequest(String profileName) throws PersistenceException {
+    public void newFriendshipRequest(String profileName)  {
 
         // session profile = quiene envia la solicitud = usuario A
         // shown profile = quien recibe la solicitud de amistad = usuario B
         boolean exists = false;
 
-        //comprueba que el perfil del shownprofile existe
-        if (ProfileDB.findByName(profileName) != null) {
-
-            //obtiene los amigos del A
-            ArrayList<Profile> friends = sessionProfile.getFriends();
-            //obtiene las solicitudes de amistad de A
-            ArrayList<Profile> pendingRequests = sessionProfile.getFriendshipRequest();
-            //obtiene las solicitudes de amistad de B (el futuro amigo)
-            ArrayList<Profile> pendingFutureFriendRequests = shownProfile.getFriendshipRequest();
-
-            //si B ya es amigo de A
-            for (Profile friend : friends) {
-                if (friend.getName().equals(profileName)) {
-                    exists = true;
-                    break;
+        try {
+            //comprueba que el perfil del shownprofile existe
+            if (ProfileDB.findByName(profileName) != null) {
+                
+                //obtiene los amigos del A
+                ArrayList<Profile> friends = sessionProfile.getFriends();
+                //obtiene las solicitudes de amistad de A
+                ArrayList<Profile> pendingRequests = sessionProfile.getFriendshipRequest();
+                //obtiene las solicitudes de amistad de B (el futuro amigo)
+                ArrayList<Profile> pendingFutureFriendRequests = shownProfile.getFriendshipRequest();
+                
+                //si B ya es amigo de A
+                for (Profile friend : friends) {
+                    if (friend.getName().equals(profileName)) {
+                        exists = true;
+                        break;
+                    }
+                }
+                //si B esta en la lista de solicitudes de amistad de A
+                for (Profile request : pendingRequests) {
+                    if (request.getName().equals(profileName)) {
+                        exists = true;
+                        break;
+                    }
+                }
+                
+                //si A esta en la lista de solicitudes de amistad de B
+                for (Profile request : pendingFutureFriendRequests) {
+                    if (request.getName().equals(shownProfile)) {
+                        exists = true;
+                        break;
+                    }
+                }
+                
+                // si ningun caso anterior se cumple, guarda la solicitud de amistad
+                if (!exists) {
+                    ProfileDB.saveFriendshipRequest(shownProfile, sessionProfile);
                 }
             }
-            //si B esta en la lista de solicitudes de amistad de A
-            for (Profile request : pendingRequests) {
-                if (request.getName().equals(profileName)) {
-                    exists = true;
-                    break;
-                }
-            }
-
-            //si A esta en la lista de solicitudes de amistad de B
-            for (Profile request : pendingFutureFriendRequests) {
-                if (request.getName().equals(shownProfile)) {
-                    exists = true;
-                    break;
-                }
-            }
-
-            // si ningun caso anterior se cumple, guarda la solicitud de amistad
-            if (!exists) {
-                ProfileDB.saveFriendshipRequest(shownProfile, sessionProfile);
-            }
+        } catch (PersistenceException ex) {
+            System.getLogger(ProfileController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
 
         //en cualquier caso, recarga el perfil
@@ -260,16 +277,19 @@ public class ProfileController {
      * TODO: QUIEN ES EL PERFIL DE ORIGEN Y QUIEN EL PERFIL DE SESION?
      *
      * @param sourceProfile
-     * @throws tacebook.persistence.PersistenceException
      */
-    public void acceptFriendshipRequest(Profile sourceProfile) throws PersistenceException {
+    public void acceptFriendshipRequest(Profile sourceProfile) {
 
-        ProfileDB.removeFriendshipRequest(shownProfile, sourceProfile);
-
-        ProfileDB.saveFriendship(shownProfile, sourceProfile);
-
-        //recarga el perfil
-        reloadProfile();
+        try {
+            ProfileDB.removeFriendshipRequest(shownProfile, sourceProfile);
+            
+            ProfileDB.saveFriendship(shownProfile, sourceProfile);
+            
+            //recarga el perfil
+            reloadProfile();
+        } catch (PersistenceException ex) {
+            System.getLogger(ProfileController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
     }
 
     /**
@@ -277,12 +297,15 @@ public class ProfileController {
      * chama ao método "reloadProfile" para refrescar a información do perfil.
      *
      * @param sourceProfile
-     * @throws tacebook.persistence.PersistenceException
      */
-    public void rejectFriendshipRequest(Profile sourceProfile) throws PersistenceException {
+    public void rejectFriendshipRequest(Profile sourceProfile)  {
 
-        //elimina la solicitud de amistad
-        ProfileDB.removeFriendshipRequest(shownProfile, sourceProfile);
+        try {
+            //elimina la solicitud de amistad
+            ProfileDB.removeFriendshipRequest(shownProfile, sourceProfile);
+        } catch (PersistenceException ex) {
+            System.getLogger(ProfileController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
 
         //recarga el perfil
         reloadProfile();
@@ -294,15 +317,18 @@ public class ProfileController {
      *
      * @param destProfile
      * @param text
-     * @throws tacebook.persistence.PersistenceException
      */
-    public void newMessage(Profile destProfile, String text) throws PersistenceException {
+    public void newMessage(Profile destProfile, String text)  {
         // public Message(int id, String text, boolean read, Profile destProfile, Profile sourceProfile) {
         // id del mensaje = cantidad de mensajes del destinatario
         Message message = new Message(destProfile.getMessages().size(), text, false, destProfile, shownProfile);
 
-        // metodo que añade al inicio del arraylist
-        MessageDB.save(message);
+        try {
+            // metodo que añade al inicio del arraylist
+            MessageDB.save(message);
+        } catch (PersistenceException ex) {
+            System.getLogger(ProfileController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
 
         //recarga el perfil
         reloadProfile();
@@ -313,10 +339,13 @@ public class ProfileController {
      * "reloadProfile" para refrescar a información do perfil.
      *
      * @param message
-     * @throws tacebook.persistence.PersistenceException
      */
-    public void deleteMessage(Message message) throws PersistenceException {
-        MessageDB.remove(message);
+    public void deleteMessage(Message message)  {
+        try {
+            MessageDB.remove(message);
+        } catch (PersistenceException ex) {
+            System.getLogger(ProfileController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
 
         //recarga el perfil
         reloadProfile();
@@ -328,12 +357,15 @@ public class ProfileController {
      * para refrescar a información do perfil.
      *
      * @param message
-     * @throws tacebook.persistence.PersistenceException
      */
-    public void markMessageAsRead(Message message) throws PersistenceException {
+    public void markMessageAsRead(Message message) {
 
         message.setRead(true);
-        MessageDB.update(message);
+        try {
+            MessageDB.update(message);
+        } catch (PersistenceException ex) {
+            System.getLogger(ProfileController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
 
         //recarga el perfil
         reloadProfile();
@@ -346,14 +378,17 @@ public class ProfileController {
      *
      * @param message
      * @param text
-     * @throws tacebook.persistence.PersistenceException
      */
-    public void replyMessage(Message message, String text) throws PersistenceException {
+    public void replyMessage(Message message, String text)  {
 
         // message = original message object        
         // text = text for reply
         message.setRead(true);
-        MessageDB.update(message);
+        try {
+            MessageDB.update(message);
+        } catch (PersistenceException ex) {
+            System.getLogger(ProfileController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
 
         // la repuesta va dirigida al que envio el previo mensaje
         newMessage(message.getSourceProfile(), text);
