@@ -4,9 +4,12 @@
  */
 package ahorcado.parte1.ui;
 
+import ahorcado.parte1.model.HangMan;
 import controller.HangManController;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -33,18 +36,30 @@ public class MainWindow extends javax.swing.JFrame {
 //
 //    }
     private HangManController myController;
-
+    private HangMan hangMan;
     public MainWindow(HangManController controller) {
         myController = controller;
 
     }
-
+    public void startNewGame(){
+                Object seleccion = JOptionPane.showInputDialog(
+                this,
+                "Modo de xogo",
+                "Selecciona un modo de xogo",
+                JOptionPane.QUESTION_MESSAGE,
+                null, // null para icono defecto
+                new Object[]{"Clásico", "Competitivo"},
+                "");
+    }
     public void init() {
 
         initComponents();
         iconInicializer();
 
         this.setVisible(true);
+        startNewGame();
+
+
     }
 
     /**
