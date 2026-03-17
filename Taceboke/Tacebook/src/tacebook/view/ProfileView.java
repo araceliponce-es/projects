@@ -6,6 +6,7 @@ package tacebook.view;
 
 import tacebook.persistence.ProfileDB;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Scanner;
 import tacebook.model.Post;
 import tacebook.model.Profile;
@@ -203,9 +204,8 @@ public class ProfileView {
 
         if (ownProfile) {
             System.out.println("Elige el perfil de cual amigo quieres ver");
-            String userText= scanner.nextLine();
+            String userText = scanner.nextLine();
             profile = ProfileDB.findByName(userText);
-
         }
 
         //si no está en su perfil
@@ -217,14 +217,14 @@ public class ProfileView {
      * solicitude de amizade. *
      */
     private void sendFriendshipRequest(boolean ownProfile, Scanner scanner, Profile profile) {
-            if (ownProfile) {
+        if (ownProfile) {
             System.out.println("Dime el nombre del perfil que quieres agregar : ");
-            String userText= scanner.nextLine();
+            String userText = scanner.nextLine();
             profile = ProfileDB.findByName(userText);
             myController.newFriendshipRequest(userText);
-            }
-
         }
+
+    }
 
     /**
      * Pide o número dunha solicitude de amizade e chama ao controlador para
@@ -232,6 +232,21 @@ public class ProfileView {
      * "accept". *
      */
     private void proccessFriendshipRequest(boolean ownProfile, Scanner scanner, Profile profile, boolean accept) {
+        if (ownProfile) {
+            ArrayList<Profile> requestProfiles = profile.getFriendshipRequest();
+            for (int i = 0; i < requestProfiles.size(); i++) {
+                System.out.println("El perfil numero " + i + 1 + "llamado " + requestProfiles.get(i).getName() + " quiere ser tu amigo");
+            }
+            System.out.println("Que numero de solicitud quieres atender : ");
+            int userInt = scanner.nextInt();
+            Profile profileFriendRequest = requestProfiles.get(userInt);
+            if (accept) {
+                myController.acceptFriendshipRequest(profileFriendRequest);
+            } else {
+                myController.rejectFriendshipRequest(profileFriendRequest);
+            }
+
+        }
     }
 
     /**
@@ -241,6 +256,18 @@ public class ProfileView {
      * mensaxe a ese perfil. *
      */
     private void sendPrivateMessage(boolean ownProfile, Scanner scanner, Profile profile) {
+        if (ownProfile) {
+            System.out.println("Seleciona un amigo : ");
+            String userText = scanner.nextLine();
+            System.out.println("Escribe el mensaje para tu amigo : ");
+            String msg = scanner.nextLine();
+            profile = ProfileDB.findByName(userText);
+            myController.newMessage(profile, msg);
+        } else {
+            System.out.println("Escribe el mensaje para tu amigo : ");
+            String msg = scanner.nextLine();
+            myController.newMessage(profile, msg);
+        }
     }
 
     /**
@@ -250,8 +277,10 @@ public class ProfileView {
      * distintas accións. *
      */
     private void readPrivateMessage(boolean ownProfile, Scanner scanner, Profile profile) {
+        if (ownProfile) {
+            ArrayList<Profile> mesage = profile.getFriendshipRequest();
+        } 
     }
-
     /**
      * Pide ao usuario que seleccione unha mensaxe e chama ao controlador para
      * borrala. *
@@ -315,6 +344,5 @@ public class ProfileView {
      */
     public void showDuplicateFrienshipRequestMessage(String profileName) {
     }
-    
 
 }

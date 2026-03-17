@@ -27,7 +27,7 @@ public class ProfileController {
 
     private Profile sessionProfile;
     private ProfileView myView;
-
+    private ProfileDB myDB;
     private Profile shownProfile; //almacena el perfil visualizandose actualmentte (puede coincidir o no con el usuario actual
 
     public ProfileController() {
