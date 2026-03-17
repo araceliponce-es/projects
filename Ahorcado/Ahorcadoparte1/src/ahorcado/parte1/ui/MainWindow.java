@@ -37,28 +37,34 @@ public class MainWindow extends javax.swing.JFrame {
 //    }
     private HangManController myController;
     private HangMan hangMan;
+
     public MainWindow(HangManController controller) {
         myController = controller;
 
     }
-    public void startNewGame(){
-                Object seleccion = JOptionPane.showInputDialog(
+
+    public void startNewGame  throws GenerateWordException(){
+        Object seleccion = JOptionPane.showInputDialog(
                 this,
                 "Modo de xogo",
                 "Selecciona un modo de xogo",
                 JOptionPane.QUESTION_MESSAGE,
                 null, // null para icono defecto
-                new Object[]{"Clásico", "Competitivo"},
+                new Object[]{"Clásico,generando palabra al azar", "Competitivo,metiendo la palabra por keyboard"},
                 "");
+        if (seleccion.equals("Clásico,generando palabra al azar")) {
+            ArrayWordGenerator palabraSecr = new ArrayWordGenerator();
+            palabraSecr.generateWord();
+        }
     }
+
     public void init() {
 
         initComponents();
         iconInicializer();
-
-        this.setVisible(true);
         startNewGame();
 
+        this.setVisible(true);
 
     }
 
