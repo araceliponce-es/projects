@@ -6,6 +6,7 @@ package tacebook.controller;
 
 import java.sql.SQLException;
 import tacebook.model.Profile;
+import tacebook.persistence.PersistenceException;
 import tacebook.view.InitMenuView;
 import tacebook.persistence.ProfileDB;
 
@@ -54,9 +55,9 @@ public class InitMenuController {
      *
      * @param name
      * @param password
-     * @throws java.sql.SQLException
+     * @throws tacebook.persistence.PersistenceException
      */
-    public void login(String name, String password) throws SQLException {
+    public void login(String name, String password) throws PersistenceException {
         ProfileController pc = null;
         if (ProfileDB.findByNameAndPassword(name, password, 0) == null) {
             myView.showLoginErrorMessage();
@@ -82,9 +83,9 @@ public class InitMenuController {
      * @param name
      * @param password
      * @param status
-     * @throws java.sql.SQLException
+     * @throws tacebook.persistence.PersistenceException
      */
-    public void createProfile(String name, String password, String status) throws SQLException {
+    public void createProfile(String name, String password, String status) throws PersistenceException {
         // Comprobamos que no existe un perfil con ese nombre
         System.out.println("Ping");
         if (ProfileDB.findByName(name, 0) == null) {

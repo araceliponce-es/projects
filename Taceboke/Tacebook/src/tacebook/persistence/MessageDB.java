@@ -17,9 +17,9 @@ public class MessageDB {
      * del usuario destino
      *
      * @param message Mensaje para un perfil
-     * @throws java.sql.SQLException
+     * @throws tacebook.persistence.PersistenceException
      */
-    public static void save(Message message) throws java.sql.SQLException{
+    public static void save(Message message) throws PersistenceException{
         message.destProfile.messages.addFirst(message);
     }
 
@@ -27,9 +27,9 @@ public class MessageDB {
      * En la parte 2 eso no hace nada, luego ya veremos
      *
      * @param message Mensaje para un perfil
-     * @throws java.sql.SQLException
+     * @throws tacebook.persistence.PersistenceException
      */
-    public static void update(Message message) throws java.sql.SQLException{
+    public static void update(Message message) throws PersistenceException{
 
     }
 
@@ -38,9 +38,9 @@ public class MessageDB {
      * destino
      *
      * @param message Mensaje para un perfil
-     * @throws java.sql.SQLException
+     * @throws tacebook.persistence.PersistenceException
      */
-    public static void remove(Message message) throws java.sql.SQLException{
+    public static void remove(Message message) throws PersistenceException{
         message.destProfile.messages.remove(message);
     }
 }

@@ -23,9 +23,9 @@ public class TacebookDB {
      * Obtiene todos los perfiles de nuestra aplicación
      *
      * @return
-     * @throws java.sql.SQLException
+     * @throws tacebook.persistence.PersistenceException
      */
-    public static ArrayList<Profile> getProfiles() throws java.sql.SQLException{
+    public static ArrayList<Profile> getProfiles() throws PersistenceException{
         return profiles;
     }
 
@@ -33,9 +33,9 @@ public class TacebookDB {
      * Establece todos los perfiles de nuestra aplicación
      *
      * @param profiles
-     * @throws java.sql.SQLException
+     * @throws tacebook.persistence.PersistenceException
      */
-    public static void setProfiles(ArrayList<Profile> profiles) throws java.sql.SQLException{
+    public static void setProfiles(ArrayList<Profile> profiles) throws PersistenceException{
         TacebookDB.profiles = profiles;
     }
 }
