@@ -10,6 +10,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import ahorcado.parte1.ui.GenerateWordException;
 
 /**
  *
@@ -43,18 +44,30 @@ public class MainWindow extends javax.swing.JFrame {
 
     }
 
-    public void startNewGame  throws GenerateWordException(){
+    public void startNewGame(){
         Object seleccion = JOptionPane.showInputDialog(
                 this,
                 "Modo de xogo",
                 "Selecciona un modo de xogo",
                 JOptionPane.QUESTION_MESSAGE,
                 null, // null para icono defecto
-                new Object[]{"Clásico,generando palabra al azar", "Competitivo,metiendo la palabra por keyboard"},
+                new Object[]{"Clásico,generando palabra al azar","Competitivo,metiendo la palabra por keyboard" },
                 "");
         if (seleccion.equals("Clásico,generando palabra al azar")) {
-            ArrayWordGenerator palabraSecr = new ArrayWordGenerator();
-            palabraSecr.generateWord();
+            try {
+                ArrayWordGenerator palabraSecr = new ArrayWordGenerator();
+                palabraSecr.generateWord();
+            } catch (GenerateWordException ex) {
+                System.getLogger(MainWindow.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            }
+        }else if((seleccion.equals("Competitivo,metiendo la palabra por keyboard"))){
+             KeyboardWordGenerator palabraSecr = new KeyboardWordGenerator();
+            try {
+                palabraSecr.generateWord();
+            } catch (GenerateWordException ex) {
+                System.getLogger(MainWindow.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            }
+            
         }
     }
 
