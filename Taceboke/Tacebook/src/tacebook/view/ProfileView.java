@@ -206,6 +206,7 @@ public class ProfileView {
             System.out.println("Elige el perfil de cual amigo quieres ver");
             String userText = scanner.nextLine();
             profile = ProfileDB.findByName(userText);
+           
 
         }
 

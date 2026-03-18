@@ -44,31 +44,46 @@ public class MainWindow extends javax.swing.JFrame {
 
     }
 
-    public void startNewGame(){
+    public String startNewGame() {
+
         Object seleccion = JOptionPane.showInputDialog(
                 this,
                 "Modo de xogo",
                 "Selecciona un modo de xogo",
                 JOptionPane.QUESTION_MESSAGE,
                 null, // null para icono defecto
-                new Object[]{"Clásico,generando palabra al azar","Competitivo,metiendo la palabra por keyboard" },
+                new Object[]{"Clásico,generando palabra al azar", "Competitivo,metiendo la palabra por keyboard"},
                 "");
-        if (seleccion.equals("Clásico,generando palabra al azar")) {
+        if (seleccion == null) {
+            System.exit(0);
+        } else if (seleccion.equals("Clásico,generando palabra al azar")) {
             try {
                 ArrayWordGenerator palabraSecr = new ArrayWordGenerator();
-                palabraSecr.generateWord();
+                return palabraSecr.generateWord();
             } catch (GenerateWordException ex) {
                 System.getLogger(MainWindow.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
             }
-        }else if((seleccion.equals("Competitivo,metiendo la palabra por keyboard"))){
-             KeyboardWordGenerator palabraSecr = new KeyboardWordGenerator();
-            try {
-                palabraSecr.generateWord();
-            } catch (GenerateWordException ex) {
-                System.getLogger(MainWindow.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-            }
-            
+        } else if ((seleccion.equals("Competitivo,metiendo la palabra por keyboard"))) {
+            return secretWordCompetitive();
         }
+        return null;
+    }
+
+    public String secretWordCompetitive() {
+        // Con caja de texto
+        String seleccion = JOptionPane.showInputDialog(
+                this,"Introduce la palabra secreta",
+                "Palabra Secreta",
+                JOptionPane.QUESTION_MESSAGE);  // el icono sera un iterrogante
+        
+        // Si seleccion es null es que el usuario ha pulsado Cancelar.
+        GUIKeyboardWordGenerator palabraSecr = new GUIKeyboardWordGenerator(seleccion);
+        try {
+            return palabraSecr.generateWord();
+        } catch (GenerateWordException ex) {
+            return null;
+        }
+        
     }
 
     public void init() {
@@ -76,7 +91,6 @@ public class MainWindow extends javax.swing.JFrame {
         initComponents();
         iconInicializer();
         startNewGame();
-
         this.setVisible(true);
 
     }
