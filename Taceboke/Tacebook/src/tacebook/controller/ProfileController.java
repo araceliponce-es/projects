@@ -16,6 +16,8 @@ import tacebook.model.Message;
 import tacebook.model.Post;
 import tacebook.model.Profile;
 import tacebook.persistence.PersistenceException;
+import tacebook.view.GUIProfileView;
+import tacebook.view.TextProfileView;
 
 /**
  * Clase controlador del perfil con un atributo ProfileView y Profile, controla
@@ -29,9 +31,28 @@ public class ProfileController {
     private ProfileView myView;
     private ProfileDB myDB;
     private Profile shownProfile; //almacena el perfil visualizandose actualmentte (puede coincidir o no con el usuario actual
+    //Este atributo no tiene get ni set, indica si se activa el modo texto
+    private boolean textMode;
 
+    /**
+     * Constructor hasta la fase 2
+     */
     public ProfileController() {
         myView = new ProfileView(this);
+    }
+
+    /**
+     * Controlador de la fase 3 en adelante, como estamos en la fae 2 da errores
+     *
+     * @param textMode
+     */
+    public ProfileController(boolean textMode) {
+        this.textMode = textMode;
+        if (textMode) {
+            myView = new TextProfileView(this);
+        } else {
+            myView = new GUIProfileView(this);
+        }
     }
 
     /**
@@ -104,7 +125,7 @@ public class ProfileController {
      *
      * fase 2: shownProfile en lugar de sessionProfile
      */
-    public void reloadProfile()  {
+    public void reloadProfile() {
         try {
             ProfileDB.update(shownProfile);
         } catch (PersistenceException ex) {
@@ -132,7 +153,7 @@ public class ProfileController {
      *
      * @param newStatus
      */
-    public void updateProfileStatus(String newStatus)   {
+    public void updateProfileStatus(String newStatus) {
         sessionProfile.setStatus(newStatus);
         try {
             ProfileDB.update(sessionProfile);
@@ -150,7 +171,7 @@ public class ProfileController {
      * @param text
      * @param destProfile
      */
-    public void newPost(String text, Profile destProfile)  {
+    public void newPost(String text, Profile destProfile) {
         //crea nuevo post y lo guarda en bd
         Post post = new Post(text, destProfile);
         try {
@@ -171,7 +192,7 @@ public class ProfileController {
      * @param post
      * @param commentText
      */
-    public void newComment(Post post, String commentText)  {
+    public void newComment(Post post, String commentText) {
         Date today = new Date();
         Comment comment = new Comment(post.getComments().size(), today, commentText, post, sessionProfile);
         try {
@@ -190,7 +211,7 @@ public class ProfileController {
      *
      * @param post
      */
-    public void newLike(Post post)  {
+    public void newLike(Post post) {
         // guarda el like, solo si el nombre del autor del post NO ES IGUAL al nombre del usuario actual
 
         if (!post.getAuthor().getName().equalsIgnoreCase(sessionProfile.getName())) {
@@ -215,7 +236,7 @@ public class ProfileController {
      *
      * @param profileName
      */
-    public void newFriendshipRequest(String profileName)  {
+    public void newFriendshipRequest(String profileName) {
 
         // session profile = quiene envia la solicitud = usuario A
         // shown profile = quien recibe la solicitud de amistad = usuario B
@@ -224,14 +245,14 @@ public class ProfileController {
         try {
             //comprueba que el perfil del shownprofile existe
             if (ProfileDB.findByName(profileName) != null) {
-                
+
                 //obtiene los amigos del A
                 ArrayList<Profile> friends = sessionProfile.getFriends();
                 //obtiene las solicitudes de amistad de A
                 ArrayList<Profile> pendingRequests = sessionProfile.getFriendshipRequest();
                 //obtiene las solicitudes de amistad de B (el futuro amigo)
                 ArrayList<Profile> pendingFutureFriendRequests = shownProfile.getFriendshipRequest();
-                
+
                 //si B ya es amigo de A
                 for (Profile friend : friends) {
                     if (friend.getName().equals(profileName)) {
@@ -246,7 +267,7 @@ public class ProfileController {
                         break;
                     }
                 }
-                
+
                 //si A esta en la lista de solicitudes de amistad de B
                 for (Profile request : pendingFutureFriendRequests) {
                     if (request.getName().equals(shownProfile)) {
@@ -254,7 +275,7 @@ public class ProfileController {
                         break;
                     }
                 }
-                
+
                 // si ningun caso anterior se cumple, guarda la solicitud de amistad
                 if (!exists) {
                     ProfileDB.saveFriendshipRequest(shownProfile, sessionProfile);
@@ -282,9 +303,9 @@ public class ProfileController {
 
         try {
             ProfileDB.removeFriendshipRequest(shownProfile, sourceProfile);
-            
+
             ProfileDB.saveFriendship(shownProfile, sourceProfile);
-            
+
             //recarga el perfil
             reloadProfile();
         } catch (PersistenceException ex) {
@@ -298,7 +319,7 @@ public class ProfileController {
      *
      * @param sourceProfile
      */
-    public void rejectFriendshipRequest(Profile sourceProfile)  {
+    public void rejectFriendshipRequest(Profile sourceProfile) {
 
         try {
             //elimina la solicitud de amistad
@@ -318,7 +339,7 @@ public class ProfileController {
      * @param destProfile
      * @param text
      */
-    public void newMessage(Profile destProfile, String text)  {
+    public void newMessage(Profile destProfile, String text) {
         // public Message(int id, String text, boolean read, Profile destProfile, Profile sourceProfile) {
         // id del mensaje = cantidad de mensajes del destinatario
         Message message = new Message(destProfile.getMessages().size(), text, false, destProfile, shownProfile);
@@ -340,7 +361,7 @@ public class ProfileController {
      *
      * @param message
      */
-    public void deleteMessage(Message message)  {
+    public void deleteMessage(Message message) {
         try {
             MessageDB.remove(message);
         } catch (PersistenceException ex) {
@@ -379,7 +400,7 @@ public class ProfileController {
      * @param message
      * @param text
      */
-    public void replyMessage(Message message, String text)  {
+    public void replyMessage(Message message, String text) {
 
         // message = original message object        
         // text = text for reply
@@ -395,7 +416,7 @@ public class ProfileController {
 
         //recarga el perfil
         reloadProfile();
-        
+
         //Método que necestia la implementación de métodos para las vistas
         //private void proccessPersistenceException(PersistenceException ex){}  
     }

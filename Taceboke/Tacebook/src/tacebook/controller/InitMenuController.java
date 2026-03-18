@@ -4,11 +4,12 @@
  */
 package tacebook.controller;
 
-import java.sql.SQLException;
 import tacebook.model.Profile;
 import tacebook.persistence.PersistenceException;
 import tacebook.view.InitMenuView;
 import tacebook.persistence.ProfileDB;
+import tacebook.view.GUIInitMenuView;
+import tacebook.view.TextInitMenuView;
 
 /**
  * Clase controlador del menú de inicio con un atributo de la clase
@@ -18,11 +19,31 @@ import tacebook.persistence.ProfileDB;
  */
 public class InitMenuController {
 
+    //Este atributo no tiene get ni set, indica si se activa el modo texto
+    private boolean textMode;
+
     InitMenuView myView;
 
+    /**
+     * Controlador hasta la fase 2
+     */
     public InitMenuController() {
 
         myView = new InitMenuView(this);
+    }
+
+    /**
+     * Controlador de la fase 3 en adelante, como estamos en la fae 2 da errores
+     *
+     * @param textMode
+     */
+    public InitMenuController(boolean textMode) {
+        this.textMode = textMode;
+        if (textMode) {
+            this.myView = new TextInitMenuView(this);
+        } else {
+            this.myView = new GUIInitMenuView(this);
+        }
     }
 
     /**
@@ -56,14 +77,14 @@ public class InitMenuController {
      * @param name
      * @param password
      */
-    public void login(String name, String password)  {
+    public void login(String name, String password) {
         try {
             ProfileController pc = null;
             if (ProfileDB.findByNameAndPassword(name, password, 0) == null) {
                 myView.showLoginErrorMessage();
             } else {
                 pc.openSession(ProfileDB.findByNameAndPassword(name, password, 0));
-                
+
             }
         } catch (PersistenceException ex) {
             System.getLogger(InitMenuController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
@@ -87,7 +108,7 @@ public class InitMenuController {
      * @param password
      * @param status
      */
-    public void createProfile(String name, String password, String status)  {
+    public void createProfile(String name, String password, String status) {
         try {
             // Comprobamos que no existe un perfil con ese nombre
             System.out.println("Ping");
