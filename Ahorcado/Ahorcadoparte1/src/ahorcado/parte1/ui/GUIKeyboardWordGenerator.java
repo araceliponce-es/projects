@@ -4,6 +4,7 @@
  */
 package ahorcado.parte1.ui;
 
+import javax.swing.JOptionPane;
 import javax.swing.text.View;
 
 
@@ -17,9 +18,11 @@ public class GUIKeyboardWordGenerator implements WordGenerator {
     
     @Override
     public String generateWord() throws GenerateWordException {
-        StringBuilder sb = new StringBuilder();
-        sb.append(palabraSecret);
-        return sb.toString();
+        String seleccion = JOptionPane.showInputDialog(
+                null,"Introduce la palabra secreta",
+                "Palabra Secreta",
+                JOptionPane.QUESTION_MESSAGE);  // el icono sera un iterrogante
+        return seleccion;
     }
 
     public GUIKeyboardWordGenerator(String palabraSecret) {

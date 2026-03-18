@@ -205,9 +205,9 @@ public class ProfileView {
         if (ownProfile) {
             System.out.println("Elige el perfil de cual amigo quieres ver");
             String userText = scanner.nextLine();
-            profile = ProfileDB.findByName(userText);
-           
-
+            
+            int frienIndex = 0;
+            myController.setShownProfile(profile.getFriends().get(frienIndex));
         }
 
         //si no está en su perfil
@@ -222,7 +222,6 @@ public class ProfileView {
         if (ownProfile) {
             System.out.println("Dime el nombre del perfil que quieres agregar : ");
             String userText = scanner.nextLine();
-            profile = ProfileDB.findByName(userText);
             myController.newFriendshipRequest(userText);
         }
 
@@ -263,7 +262,7 @@ public class ProfileView {
             String userText = scanner.nextLine();
             System.out.println("Escribe el mensaje para tu amigo : ");
             String msg = scanner.nextLine();
-            profile = ProfileDB.findByName(userText);
+            //profile = ProfileDB.findByName(userText);
             myController.newMessage(profile, msg);
         } else {
             System.out.println("Escribe el mensaje para tu amigo : ");

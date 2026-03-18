@@ -22,7 +22,7 @@ public class InitMenuController {
     //Este atributo no tiene get ni set, indica si se activa el modo texto
     private boolean textMode;
 
-    InitMenuView myView;
+    private InitMenuView myView;
 
     /**
      * Controlador hasta la fase 2
@@ -37,14 +37,14 @@ public class InitMenuController {
      *
      * @param textMode
      */
-    public InitMenuController(boolean textMode) {
-        this.textMode = textMode;
-        if (textMode) {
-            this.myView = new TextInitMenuView(this);
-        } else {
-            this.myView = new GUIInitMenuView(this);
-        }
-    }
+//    public InitMenuController(boolean textMode) {
+//        this.textMode = textMode;
+//        if (textMode) {
+//            this.myView = new TextInitMenuView(this);
+//        } else {
+//            this.myView = new GUIInitMenuView(this);
+//        }
+//    }
 
     /**
      * Método que creará un controlador e invocará al método "init"
@@ -79,11 +79,12 @@ public class InitMenuController {
      */
     public void login(String name, String password) {
         try {
-            ProfileController pc = null;
-            if (ProfileDB.findByNameAndPassword(name, password, 0) == null) {
+            Profile p = ProfileDB.findByNameAndPassword(name, password, 0);
+            if (p == null) {
                 myView.showLoginErrorMessage();
             } else {
-                pc.openSession(ProfileDB.findByNameAndPassword(name, password, 0));
+                ProfileController pc = new ProfileController();
+                pc.openSession(p);
 
             }
         } catch (PersistenceException ex) {

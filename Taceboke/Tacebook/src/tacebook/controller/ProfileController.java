@@ -46,14 +46,14 @@ public class ProfileController {
      *
      * @param textMode
      */
-    public ProfileController(boolean textMode) {
-        this.textMode = textMode;
-        if (textMode) {
-            myView = new TextProfileView(this);
-        } else {
-            myView = new GUIProfileView(this);
-        }
-    }
+//    public ProfileController(boolean textMode) {
+//        this.textMode = textMode;
+//        if (textMode) {
+//            myView = new TextProfileView(this);
+//        } else {
+//            myView = new GUIProfileView(this);
+//        }
+//    }
 
     /**
      * Obtiene el perfil con el que se abre sesión
@@ -280,6 +280,8 @@ public class ProfileController {
                 if (!exists) {
                     ProfileDB.saveFriendshipRequest(shownProfile, sessionProfile);
                 }
+            } else {
+                myView.showProfileNotFoundMessage();
             }
         } catch (PersistenceException ex) {
             System.getLogger(ProfileController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);

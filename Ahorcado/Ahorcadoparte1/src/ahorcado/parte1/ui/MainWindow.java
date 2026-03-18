@@ -270,8 +270,10 @@ public class MainWindow extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
 
-                HangManController myController = new HangManController();
-                new MainWindow(myController);
+                //HangManController myController = new HangManController();
+                //myController.init();
+                MainWindow myWindow = new MainWindow(null);
+                myWindow.init();
 
             }
         });

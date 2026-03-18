@@ -5,6 +5,7 @@
 package ahorcado.parte1.ui;
 
 import ahorcado.parte1.model.HangMan;
+import ahorcado.parte1.ui.KeyboardWordGenerator;
 import controller.HangManController;
 import java.util.Scanner;
 
@@ -25,8 +26,8 @@ public class MenuGenerator {
      */
     public static void main(String[] args) {
         
-        HangManController myController = new HangManController();
-        myController.init();
+        //HangManController myController = new HangManController();
+        //myController.init();
         
         MenuGenerator menuGenerator = new MenuGenerator();
         do {
@@ -59,16 +60,19 @@ public class MenuGenerator {
         Scanner scan = new Scanner(System.in);
         System.out.println("Elige el modo de juego:Clásico(1)/Competitivo(2)");
         String eleccion = scan.nextLine();
+        WordGenerator myGenerator = null;
         if ("1".equalsIgnoreCase(eleccion)) {
-            ArrayWordGenerator palabraSecr = new ArrayWordGenerator();
-            return palabraSecr.generateWord();
+            myGenerator = new ArrayWordGenerator();
         } else if ("2".equalsIgnoreCase(eleccion)) {
-            KeyboardWordGenerator palabraSecr = new KeyboardWordGenerator();
-            return palabraSecr.generateWord();
+            myGenerator = new KeyboardWordGenerator();
+        } else if ("3".equalsIgnoreCase(eleccion)) {
+            myGenerator = new GUIKeyboardWordGenerator("csmh");
         } else {
             System.out.println("Modo no disponible");
+            return null;
         }
-        return null;
+        
+        return myGenerator.generateWord();
     }
 
     /**
