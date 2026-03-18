@@ -38,4 +38,9 @@ public class TacebookDB {
     public static void setProfiles(ArrayList<Profile> profiles) throws PersistenceException{
         TacebookDB.profiles = profiles;
     }
+    
+    /**
+     * Método que en la fase 3 no hace nada, cerrará la conexión con la database
+     */
+    public static void close(){}
 }

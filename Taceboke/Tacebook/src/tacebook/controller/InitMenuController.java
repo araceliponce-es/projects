@@ -55,15 +55,18 @@ public class InitMenuController {
      *
      * @param name
      * @param password
-     * @throws tacebook.persistence.PersistenceException
      */
-    public void login(String name, String password) throws PersistenceException {
-        ProfileController pc = null;
-        if (ProfileDB.findByNameAndPassword(name, password, 0) == null) {
-            myView.showLoginErrorMessage();
-        } else {
-            pc.openSession(ProfileDB.findByNameAndPassword(name, password, 0));
-
+    public void login(String name, String password)  {
+        try {
+            ProfileController pc = null;
+            if (ProfileDB.findByNameAndPassword(name, password, 0) == null) {
+                myView.showLoginErrorMessage();
+            } else {
+                pc.openSession(ProfileDB.findByNameAndPassword(name, password, 0));
+                
+            }
+        } catch (PersistenceException ex) {
+            System.getLogger(InitMenuController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
     }
 
@@ -83,20 +86,24 @@ public class InitMenuController {
      * @param name
      * @param password
      * @param status
-     * @throws tacebook.persistence.PersistenceException
      */
-    public void createProfile(String name, String password, String status) throws PersistenceException {
-        // Comprobamos que no existe un perfil con ese nombre
-        System.out.println("Ping");
-        if (ProfileDB.findByName(name, 0) == null) {
-            // creamos y guardamos el perfil
-            Profile nuevoPerfil = new Profile(name, password, status);
-            ProfileDB.save(nuevoPerfil);
-            ProfileController profileController = new ProfileController();
-            profileController.openSession(nuevoPerfil);
+    public void createProfile(String name, String password, String status)  {
+        try {
+            // Comprobamos que no existe un perfil con ese nombre
+            System.out.println("Ping");
+            if (ProfileDB.findByName(name, 0) == null) {
+                // creamos y guardamos el perfil
+                Profile nuevoPerfil = new Profile(name, password, status);
+                ProfileDB.save(nuevoPerfil);
+                ProfileController profileController = new ProfileController();
+                profileController.openSession(nuevoPerfil);
+            }
+        } catch (PersistenceException ex) {
+            System.getLogger(InitMenuController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
 
     }
-    //aver
+    //Método que necestia la implementación de métodos para las vistas
+    //private void proccessPersistenceException(PersistenceException ex){}
 
 }

@@ -395,5 +395,8 @@ public class ProfileController {
 
         //recarga el perfil
         reloadProfile();
+        
+        //Método que necestia la implementación de métodos para las vistas
+        //private void proccessPersistenceException(PersistenceException ex){}  
     }
 }
