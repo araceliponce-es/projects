@@ -127,7 +127,7 @@ public class ProfileController {
      */
     public void reloadProfile() {
         try {
-            ProfileDB.update(shownProfile);
+            ProfileDB.findByName(this.shownProfile.getName(), myView.getPostsShown());
         } catch (PersistenceException ex) {
             System.getLogger(ProfileController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }

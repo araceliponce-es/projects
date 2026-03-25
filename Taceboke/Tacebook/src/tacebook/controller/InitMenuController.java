@@ -63,9 +63,10 @@ public class InitMenuController {
      * inicia el tacebook hasta que el usuario salga
      */
     private void init() {
-        do {
+            
+        while (!myView.showLoginMenu()){
             myView.showLoginMenu();
-        } while (!myView.showLoginMenu());
+        }
 
     }
 

@@ -183,13 +183,10 @@ public class ProfileView {
     private void addLike(Scanner scanner, Profile profile) {
 
         //selecciona la publicacion del perfil usando el index
-        System.out.println("selecciona una publicacion");
+        System.out.println("Selecciona una publicacion");
         int selectedIndex = scanner.nextInt();
         scanner.nextLine();
-        Post selectedPost = profile.getPosts().get(selectedIndex);
-
-        //Da like        
-        myController.newLike(selectedPost);
+        myController.newLike(myController.getShownProfile().getPosts().get(selectedIndex));
     }
 
     /**
@@ -205,7 +202,7 @@ public class ProfileView {
         if (ownProfile) {
             System.out.println("Elige el perfil de cual amigo quieres ver");
             String userText = scanner.nextLine();
-            
+
             int frienIndex = 0;
             myController.setShownProfile(profile.getFriends().get(frienIndex));
         }
@@ -234,17 +231,13 @@ public class ProfileView {
      */
     private void proccessFriendshipRequest(boolean ownProfile, Scanner scanner, Profile profile, boolean accept) {
         if (ownProfile) {
-            ArrayList<Profile> requestProfiles = profile.getFriendshipRequest();
-            for (int i = 0; i < requestProfiles.size(); i++) {
-                System.out.println("El perfil numero " + i + 1 + "llamado " + requestProfiles.get(i).getName() + " quiere ser tu amigo");
-            }
             System.out.println("Que numero de solicitud quieres atender : ");
             int userInt = scanner.nextInt();
-            Profile profileFriendRequest = requestProfiles.get(userInt);
+
             if (accept) {
-                myController.acceptFriendshipRequest(profileFriendRequest);
+                myController.acceptFriendshipRequest(myController.getShownProfile().getFriendshipRequest().get(userInt));
             } else {
-                myController.rejectFriendshipRequest(profileFriendRequest);
+                myController.rejectFriendshipRequest(myController.getShownProfile().getFriendshipRequest().get(userInt));
             }
 
         }
@@ -258,13 +251,16 @@ public class ProfileView {
      */
     private void sendPrivateMessage(boolean ownProfile, Scanner scanner, Profile profile) {
         if (ownProfile) {
+            //Si estas en tu propio perfil obtiene el amigo con el index indicado
             System.out.println("Seleciona un amigo : ");
-            String userText = scanner.nextLine();
+            int userIndex = scanner.nextInt();
+            scanner.nextLine();
             System.out.println("Escribe el mensaje para tu amigo : ");
             String msg = scanner.nextLine();
-            //profile = ProfileDB.findByName(userText);
-            myController.newMessage(profile, msg);
+            Profile friend = myController.getShownProfile().getFriends().get(userIndex);
+            myController.newMessage(friend, msg);
         } else {
+            //Si ya estas sobre el perfil de un amigo entonces ya le mandas el mensaje
             System.out.println("Escribe el mensaje para tu amigo : ");
             String msg = scanner.nextLine();
             myController.newMessage(profile, msg);
@@ -279,14 +275,42 @@ public class ProfileView {
      */
     private void readPrivateMessage(boolean ownProfile, Scanner scanner, Profile profile) {
         if (ownProfile) {
-            ArrayList<Profile> mesage = profile.getFriendshipRequest();
-        } 
+            if (myController.getShownProfile().getMessages().isEmpty()) {
+                System.out.println("No tienes mensajes");
+            } else {
+                System.out.println("Que mensaje quieres leer : ");
+                int msgIndex = scanner.nextInt();
+                System.out.println(myController.getShownProfile().getMessages().get(msgIndex));
+                System.out.println("Que quieres hacer con el mensaje :");
+                System.out.println("1.Responder :");
+                System.out.println("2.Borrar mensaje :");
+                System.out.println("3.Volver al perfil :");
+                System.out.println("");
+                int selector = scanner.nextInt();
+                switch (selector) {
+                    case 1 ->
+                        sendPrivateMessage(ownProfile, scanner, myController.getShownProfile().getMessages().get(msgIndex).getSourceProfile());
+                    case 2 ->
+                        myController.deleteMessage(myController.getShownProfile().getMessages().get(msgIndex));
+                    case 3 ->
+                        myController.setShownProfile(profile);
+                    default -> {
+                        System.out.println("Mete un numero del menu");
+                    }
+                }
+            }
+
+        }
     }
+
     /**
      * Pide ao usuario que seleccione unha mensaxe e chama ao controlador para
      * borrala. *
      */
     private void deletePrivateMessage(boolean ownProfile, Scanner scanner, Profile profile) {
+        System.out.println("Que mensaje quieres borrar : ");
+        int msgIndex = scanner.nextInt();
+        myController.deleteMessage(myController.getShownProfile().getMessages().get(msgIndex));
     }
 
     /**
@@ -294,6 +318,11 @@ public class ProfileView {
      * controlador para recargar o perfil. *
      */
     private void showOldPosts(Scanner scanner, Profile profile) {
+        System.out.println("Cuantos post quieres mirar ???");
+        int numeroPosts = scanner.nextInt();
+        this.setPostsShown(numeroPosts);
+        setPostsShown(numeroPosts);
+        myController.reloadProfile();
     }
 
     /**
@@ -304,12 +333,14 @@ public class ProfileView {
      * solicitude de amizade). *
      */
     public void showProfileNotFoundMessage() {
+        System.out.println("No se encontro el perfil");
     }
 
     /**
      * Informa de que non se pode facer like sobre unha publicación propia. *
      */
     public void showCannotLikeOwnPostMessage() {
+        System.out.println("No te puedes dar like a ti mismo egolatra =)");
     }
 
     /**
@@ -317,6 +348,7 @@ public class ProfileView {
      * xa se fixo like. *
      */
     public void showAlreadyLikedPostMessage() {
+        System.out.println("No puedes dar like dos vezes");
     }
 
     /**
@@ -326,6 +358,7 @@ public class ProfileView {
      * @param profileName
      */
     public void showIsAlreadyFriendMessage(String profileName) {
+        System.out.println("Ya eres amigo de : "+profileName);
     }
 
     /**
@@ -335,6 +368,7 @@ public class ProfileView {
      * @param profileName
      */
     public void showExistsFrienshipRequestMessage(String profileName) {
+        System.out.println("Ya le enviaste una solicitud a  : "+profileName);
     }
 
     /**
