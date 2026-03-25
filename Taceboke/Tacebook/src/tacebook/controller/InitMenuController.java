@@ -83,9 +83,7 @@ public class InitMenuController {
             if (p == null) {
                 myView.showLoginErrorMessage();
             } else {
-                ProfileController pc = new ProfileController();
-                pc.openSession(p);
-
+                new ProfileController().openSession(p);
             }
         } catch (PersistenceException ex) {
             System.getLogger(InitMenuController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);

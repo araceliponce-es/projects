@@ -241,7 +241,7 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // Nota que usamos "/" en lugar de "\\" y empezamos desde la raíz del paquete
-        this.jLImage_Ahorcado.setIcon(imagenes[4]);
+        this.jLImage_Ahorcado.setIcon(imagenes[3]);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
