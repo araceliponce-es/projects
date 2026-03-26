@@ -1,17 +1,21 @@
+package tacebook.view;
 
+import java.awt.Color;
 import java.awt.Insets;
+import java.net.URL;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
 /**
  *
  * @author daw1al10
  */
 public class GuiFinal extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GuiFinal.class.getName());
 
     /**
@@ -19,12 +23,38 @@ public class GuiFinal extends javax.swing.JFrame {
      */
     public GuiFinal() {
         initComponents();
-        
-        
-           jButton27.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tacebook/view/img/check.png"))); 
-           jButton27.setMargin(new Insets(5,20,5,20));
-        
-      
+
+        btnPostCreate.setMargin(new Insets(5, 20, 5, 20));
+        btnPostCreate.setIcon(loadIcon("/tacebook/images/mas.png"));
+        btnPostCreate.setFocusPainted(false);
+        btnPostCreate.setBorderPainted(false);
+        btnPostCreate.setContentAreaFilled(false);
+        btnPostCreate.setOpaque(true);
+        btnPostCreate.setBackground(new Color(1, 155, 1));
+        btnPostCreate.setForeground(Color.WHITE);
+
+        jTabbedPane1.setIconAt(0, loadIcon("/tacebook/images/persona.png"));
+
+    }
+
+    /**
+     * carga icono y si no encuentra muestra mensaje en terminal
+     *
+     * usar clean y build para que netbeans copie los recursos a:
+     * build/classes/tacebook/img/nombre_imagen.png
+     *
+     * @param path
+     * @return
+     */
+    private ImageIcon loadIcon(String path) {
+        URL url = getClass().getResource(path);
+
+        if (url == null) {
+            System.err.println("No se encontro.... " + path);
+            return null;
+        }
+
+        return new ImageIcon(url);
     }
 
     /**
@@ -47,7 +77,7 @@ public class GuiFinal extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         jTable4 = new javax.swing.JTable();
         jPanel8 = new javax.swing.JPanel();
-        jButton7 = new javax.swing.JButton();
+        btnPostCreate = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
@@ -85,7 +115,6 @@ public class GuiFinal extends javax.swing.JFrame {
         jButton32 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(800, 600));
         setMinimumSize(new java.awt.Dimension(800, 600));
 
         jPanel1.setMaximumSize(new java.awt.Dimension(800, 600));
@@ -130,13 +159,13 @@ public class GuiFinal extends javax.swing.JFrame {
         jTable4.setPreferredSize(new java.awt.Dimension(800, 200));
         jScrollPane4.setViewportView(jTable4);
 
-        jButton7.setText("crear nueva publicacion");
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
+        btnPostCreate.setText("crear nueva publicacion");
+        btnPostCreate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
+                btnPostCreateActionPerformed(evt);
             }
         });
-        jPanel8.add(jButton7);
+        jPanel8.add(btnPostCreate);
 
         jButton8.setText("comentar");
         jButton8.addActionListener(new java.awt.event.ActionListener() {
@@ -554,9 +583,9 @@ public class GuiFinal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton5ActionPerformed
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+    private void btnPostCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPostCreateActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton7ActionPerformed
+    }//GEN-LAST:event_btnPostCreateActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // TODO add your handling code here:
@@ -647,6 +676,7 @@ public class GuiFinal extends javax.swing.JFrame {
     private javax.swing.JPanel SECOND6;
     private javax.swing.JPanel SECOND7;
     private javax.swing.JPanel SECOND8;
+    private javax.swing.JButton btnPostCreate;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton23;
     private javax.swing.JButton jButton24;
@@ -661,7 +691,6 @@ public class GuiFinal extends javax.swing.JFrame {
     private javax.swing.JButton jButton38;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;

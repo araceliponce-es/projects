@@ -91,3 +91,6 @@ $RECYCLE.BIN/
 # **manifest.mf
 # /Taceboke/Tacebook/nbproject/private/
 **/nbproject/private/ 
+
+# 96MB
+ffmpeg
