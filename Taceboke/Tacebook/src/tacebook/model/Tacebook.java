@@ -15,5 +15,6 @@ import java.util.Scanner;
 public class Tacebook {
 
     //TODO:Borrar clase
+    // java -jar tacebook2.jar
 
 }
