@@ -254,15 +254,15 @@ public class ProfileController {
         try {
             //comprueba que el perfil del shownprofile existe
             if (ProfileDB.findByName(profileName) != null) {
-
+                Profile profileB = ProfileDB.findByName(profileName);
                 //obtiene los amigos del A
                 ArrayList<Profile> friends = sessionProfile.getFriends();
                 //obtiene las solicitudes de amistad de A
                 ArrayList<Profile> pendingRequests = sessionProfile.getFriendshipRequest();
                 //obtiene las solicitudes de amistad de B (el futuro amigo)
-                ArrayList<Profile> pendingFutureFriendRequests = ProfileDB.findByName(profileName).getFriendshipRequest();
+                ArrayList<Profile> pendingFutureFriendRequests = profileB.getFriendshipRequest();
 
-                //si B ya es amigo de A
+                //si A ya es amigo de B
                 for (Profile friend : friends) {
                     if (friend.getName().equals(profileName)) {
                         exists = true;

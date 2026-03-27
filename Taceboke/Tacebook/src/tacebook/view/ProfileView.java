@@ -358,7 +358,7 @@ public class ProfileView {
      * @param profileName
      */
     public void showIsAlreadyFriendMessage(String profileName) {
-        System.out.println("Ya eres amigo de : "+profileName);
+        System.out.println("Ya eres amigo de : " + profileName);
     }
 
     /**
@@ -368,7 +368,7 @@ public class ProfileView {
      * @param profileName
      */
     public void showExistsFrienshipRequestMessage(String profileName) {
-        System.out.println("Ya le enviaste una solicitud a  : "+profileName);
+        System.out.println("Ya le enviaste una solicitud a  : " + profileName);
     }
 
     /**
@@ -378,6 +378,7 @@ public class ProfileView {
      * @param profileName
      */
     public void showDuplicateFrienshipRequestMessage(String profileName) {
+        System.out.println("Ya le enviaste una solicitud a  : " + profileName);
     }
 
 }
