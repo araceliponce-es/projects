@@ -54,7 +54,6 @@ public class ProfileController {
 //            myView = new GUIProfileView(this);
 //        }
 //    }
-
     /**
      * Obtiene el perfil con el que se abre sesión
      *
@@ -213,8 +212,18 @@ public class ProfileController {
      */
     public void newLike(Post post) {
         // guarda el like, solo si el nombre del autor del post NO ES IGUAL al nombre del usuario actual
+        boolean alreadyLike = false;
+        for (int i = 0; i < post.getLikeProfiles().size(); i++) {
+            if (post.getLikeProfiles().get(i).getName().equalsIgnoreCase(sessionProfile.getName())) {
+                alreadyLike = true;
+            }
+        }
 
-        if (!post.getAuthor().getName().equalsIgnoreCase(sessionProfile.getName())) {
+        if (alreadyLike) {
+            myView.showAlreadyLikedPostMessage();
+        } else if (post.getAuthor().getName().equalsIgnoreCase(sessionProfile.getName())) {
+            myView.showCannotLikeOwnPostMessage();
+        } else {
             try {
                 PostDB.saveLike(post, shownProfile);
             } catch (PersistenceException ex) {
@@ -251,7 +260,7 @@ public class ProfileController {
                 //obtiene las solicitudes de amistad de A
                 ArrayList<Profile> pendingRequests = sessionProfile.getFriendshipRequest();
                 //obtiene las solicitudes de amistad de B (el futuro amigo)
-                ArrayList<Profile> pendingFutureFriendRequests = shownProfile.getFriendshipRequest();
+                ArrayList<Profile> pendingFutureFriendRequests = ProfileDB.findByName(profileName).getFriendshipRequest();
 
                 //si B ya es amigo de A
                 for (Profile friend : friends) {
