@@ -3,9 +3,9 @@
 set -e
 
 # INPUT_DIR="input"
-INPUT_DIR="Taceboke\Tacebook\src\tacebook\img"
+INPUT_DIR="Taceboke\Tacebook\src\tacebook\view\img"
 # OUTPUT_DIR="output"
-OUTPUT_DIR="Taceboke\Tacebook\src\tacebook\images"
+OUTPUT_DIR="Taceboke\Tacebook\src\tacebook\view\images"
 FFMPEG_DIR="ffmpeg"
 FFMPEG_BIN="$FFMPEG_DIR/ffmpeg"
 

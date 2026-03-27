@@ -5,6 +5,9 @@ import java.awt.Insets;
 import java.net.URL;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.UIManager;
+import javax.swing.plaf.metal.MetalLookAndFeel;
+import javax.swing.plaf.metal.OceanTheme;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -12,7 +15,7 @@ import javax.swing.ImageIcon;
  */
 /**
  *
- * @author daw1al10
+ * @author Araceli,Diego,Oscar
  */
 public class GuiFinal extends javax.swing.JFrame {
 
@@ -24,16 +27,16 @@ public class GuiFinal extends javax.swing.JFrame {
     public GuiFinal() {
         initComponents();
 
-        btnPostCreate.setMargin(new Insets(5, 20, 5, 20));
-        btnPostCreate.setIcon(loadIcon("/tacebook/images/mas.png"));
-        btnPostCreate.setFocusPainted(false);
-        btnPostCreate.setBorderPainted(false);
-        btnPostCreate.setContentAreaFilled(false);
-        btnPostCreate.setOpaque(true);
-        btnPostCreate.setBackground(new Color(1, 155, 1));
-        btnPostCreate.setForeground(Color.WHITE);
+//        btnPostCreate.setMargin(new Insets(5, 20, 5, 20));
+        btnPostCreate.setIcon(loadIcon("/tacebook/view/images/mas.png"));
+//        btnPostCreate.setFocusPainted(false);
+//        btnPostCreate.setBorderPainted(false);
+//        btnPostCreate.setContentAreaFilled(false);
+//        btnPostCreate.setOpaque(true);
+//        btnPostCreate.setBackground(new Color(1, 155, 1));
+//        btnPostCreate.setForeground(Color.WHITE);
 
-        jTabbedPane1.setIconAt(0, loadIcon("/tacebook/images/persona.png"));
+        jTabbedPane1.setIconAt(0, loadIcon("/tacebook/view/images/persona.png"));
 
     }
 
@@ -115,13 +118,14 @@ public class GuiFinal extends javax.swing.JFrame {
         jButton32 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(0, 204, 204));
         setMinimumSize(new java.awt.Dimension(800, 600));
 
         jPanel1.setMaximumSize(new java.awt.Dimension(800, 600));
         jPanel1.setMinimumSize(new java.awt.Dimension(800, 600));
         jPanel1.setPreferredSize(new java.awt.Dimension(800, 600));
 
-        jPanel5.setBackground(new java.awt.Color(204, 102, 255));
+        jPanel5.setBackground(new java.awt.Color(227, 190, 247));
         jPanel5.setMaximumSize(new java.awt.Dimension(800, 50));
         jPanel5.setMinimumSize(new java.awt.Dimension(800, 50));
         jPanel5.setName(""); // NOI18N
@@ -546,8 +550,8 @@ public class GuiFinal extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 857, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 798, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 798, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -652,20 +656,57 @@ public class GuiFinal extends javax.swing.JFrame {
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
+//            logger.log(java.util.logging.Level.SEVERE, null, ex);
+//        }
         //</editor-fold>
+
+       customizePallete();
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new GuiFinal().setVisible(true));
+    }
+    
+    public static void customizePallete(){
+      //cambio de lookandfeel
+        try {
+            MetalLookAndFeel.setCurrentTheme(new OceanTheme());
+            UIManager.setLookAndFeel(new MetalLookAndFeel());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Color PURPLE_LIGHT = new Color(230, 220, 255);
+        Color PURPLE = new Color(227,190,247);
+          Color PURPLE_DARK = new Color(230, 220, 255);
+
+        //fondo de j option panes
+        UIManager.put("control", PURPLE_LIGHT);
+        UIManager.put("nimbusLightBackground", PURPLE_LIGHT);
+        UIManager.put("OptionPane.background", PURPLE_LIGHT);
+        UIManager.put("OptionPane.messageArea.background", PURPLE_LIGHT);
+        UIManager.put("OptionPane.buttonArea.background", PURPLE_LIGHT);
+
+        //fondo de paneles
+        UIManager.put("Panel.background", PURPLE_LIGHT);
+        //fondo de scroll pane
+        UIManager.put("ScrollPane.background", PURPLE_LIGHT);
+        UIManager.put("Viewport.background", PURPLE_LIGHT);
+        
+        //botones
+        UIManager.put("Button.background", PURPLE_DARK);
+        UIManager.put("Button.foreground", Color.BLACK);
+
+        //encabezado de las tablas:
+        UIManager.put("TableHeader.background", PURPLE);
+        UIManager.put("TableHeader.foreground", Color.BLACK);
+       
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
