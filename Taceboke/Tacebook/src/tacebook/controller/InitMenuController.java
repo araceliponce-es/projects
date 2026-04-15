@@ -45,7 +45,6 @@ public class InitMenuController {
 //            this.myView = new GUIInitMenuView(this);
 //        }
 //    }
-
     /**
      * Método que creará un controlador e invocará al método "init"
      *
@@ -58,13 +57,36 @@ public class InitMenuController {
 
     }
 
+    public static void addDemoUsers() throws PersistenceException {
+        try {
+            Profile uno = new Profile("a", "123", "status");
+            Profile dos = new Profile("b", "123", "456");
+            Profile tres = new Profile("c", "123", "789");
+            ProfileDB.save(uno);
+            ProfileDB.save(dos);
+            ProfileDB.save(tres);
+        } catch (PersistenceException e) {
+            System.out.println(e);
+        }
+
+    }
+
     /**
      * Método que llama al método "showLoginMenu" hasta que devuelva true,
      * inicia el tacebook hasta que el usuario salga
      */
     private void init() {
-            
-        while (!myView.showLoginMenu()){
+
+        //SOLO temporal, con usuarios y datos temporales
+        System.out.println("hay usuarios temporales");
+        try {
+            InitMenuController.addDemoUsers();
+        } catch (PersistenceException ex) {
+            System.getLogger(InitMenuController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+
+//muestra el menu de loginMenu hasta que este retorne false
+        while (!myView.showLoginMenu()) {
             myView.showLoginMenu();
         }
 

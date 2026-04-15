@@ -56,6 +56,11 @@ public class ProfileController {
 //    }
     /**
      * Obtiene el perfil con el que se abre sesión
+     * 
+     * se hara un select campos from profile where name=?   y luego pst.setstring(1,name)   try resultquery
+     * 
+     * 
+     * get posts: select * from posts where p.id in (ids concatenados por coma) prder by id desc
      *
      * @return
      */

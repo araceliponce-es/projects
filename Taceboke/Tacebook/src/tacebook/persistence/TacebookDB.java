@@ -25,7 +25,7 @@ public class TacebookDB {
      * @return
      * @throws tacebook.persistence.PersistenceException
      */
-    public static ArrayList<Profile> getProfiles() throws PersistenceException{
+    public static ArrayList<Profile> getProfiles() throws PersistenceException {
         return profiles;
     }
 
@@ -35,12 +35,13 @@ public class TacebookDB {
      * @param profiles
      * @throws tacebook.persistence.PersistenceException
      */
-    public static void setProfiles(ArrayList<Profile> profiles) throws PersistenceException{
+    public static void setProfiles(ArrayList<Profile> profiles) throws PersistenceException {
         TacebookDB.profiles = profiles;
     }
-    
+
     /**
      * Método que en la fase 3 no hace nada, cerrará la conexión con la database
      */
-    public static void close(){}
+    public static void close() {
+    }
 }

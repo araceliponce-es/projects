@@ -61,18 +61,33 @@ public class ProfileView {
 
         if (ownProfile = true) {
 
-            System.out.println("Nombre: " + profile.getName());
+            System.out.println("TACEBOOK: " + profile.getName());
+
+            System.out.println("");
+
+            System.out.println("Estado actual: " + profile.getStatus());
             System.out.println();
-            System.out.println("Estado: " + profile.getStatus());
+
+            System.out.println("Tu biografia (10 recientes publicaciones): " + profile.getPosts());
             System.out.println();
-            System.out.println("Publicaciones: " + profile.getPosts());
-            System.out.println();
+
+            // lista de amigos : 0 - nombre
+            ArrayList<Profile> friends = profile.getFriends();
+            if (friends.size() > 0) {
+                System.out.println("Tienes " + friends.size() + " amigos");
+                for (int i = 0; i < friends.size(); i++) {
+                    System.out.println(i + " - " + friends.get(i).getName());
+                }
+            } else {
+                System.out.println("tienes 0 amigos");
+            }
+
             //No hay un metodo en profile para recoger los mensajes y no encuentro donde lo pone en las partes del proyecto
             System.out.println("Comentarios: ");
             System.out.println();
             System.out.println("Solicitudes de amistad: " + profile.getFriendshipRequest());
             System.out.println();
-            System.out.println("Amistades: " + profile.getFriends());
+
             System.out.println();
             System.out.println("");
 
@@ -104,7 +119,7 @@ public class ProfileView {
      *
      * @param profile
      */
-    public void showProfileMenu(Profile profile) {
+    public void showProfileMenuOld(Profile profile) {
         showProfileInfo(true, profile);
         System.out.println("¿Cabiar el perfil(1) o cerrar sesión(2)?");
         Scanner scan = new Scanner(System.in);
@@ -118,6 +133,116 @@ public class ProfileView {
                 System.out.println("Sólo hay dos opciones 1 o 2, no es tan difícil");
                 break;
         }
+    }
+
+    public void showProfileMenu(Profile profile) {
+        showProfileInfo(true, profile);
+        boolean keepShowing = true;
+
+        while (keepShowing) {
+
+            System.out.println("""
+                           Escolle unha opción:
+                           1. Escribir unha nova publicación
+                           2. Comentar unha publicación
+                           3. Facer me gusta sobre unha publicación
+                           4. Ver a biografía dun amigo
+                           5. Enviar unha solicitude de amizade
+                           6. Aceptar unha solicitude de amizade
+                           7. Rexeitar unha solicitude de amizade
+                           8. Enviar unha mensaxe privada a un amigo
+                           9. Ler unha mensaxe privada
+                           10. Eliminar unha mensaxe privada
+                           11. Ver publicacións anteriores
+                           12. Cambiar o estado
+                           13. Pechar a sesión
+                           """);
+            Scanner scan = new Scanner(System.in);
+            switch (scan.nextInt()) {
+                case 1:
+                    writeNewPost(scan, profile);
+                    break;
+                case 2:
+                    commentPost(scan, profile);
+                    break;
+                case 3:
+                    addLike(scan, profile);
+                    break;
+                case 4:
+                    
+                     if (profile.friends.size() > 0) {
+                        showBiography(true, scan, profile);
+                       
+                    } else{
+                         showProfileInfo(true, profile);
+                    }
+                    break;
+                case 5:
+                    commentPost(scan, profile);
+                    break;
+                case 6:
+                    myController.acceptFriendshipRequest(profile); //???
+                    break;
+                case 7:
+
+                    if (profile.friendshipRequest.size() > 0) {
+                        System.out.println("...............");
+                        //selecciona un numero de amigo
+                        Profile profileToReject = null;
+                        //encuentra ese numero en la lista de solicitudes
+                        int rejectIndex = selectElement("elige un amigo", profile.friendshipRequest.size(), scan);
+                        //sera el profile de destino
+                        profileToReject = profile.friends.get(rejectIndex);
+                        myController.rejectFriendshipRequest(profileToReject);
+                        break;
+                    } else{
+                         showProfileInfo(true, profile);
+                    }
+                case 8:
+
+                    if (profile.friends.size() > 0) {
+                        System.out.println("------------");
+                        //selecciona un numero de amigo
+                        Profile destProfile = null;
+                        //encuentra ese numero en la lista de amigos
+                        int destIndex = selectElement("elige un amigo", profile.friends.size(), scan);
+                        //sera el profile de destino
+                        destProfile = profile.friends.get(destIndex);
+
+                        String message = scan.nextLine();
+                        myController.newMessage(destProfile, message);
+
+                    } else{
+                         showProfileInfo(true, profile);
+                    }
+
+                    break;
+                case 9:
+//                    private void readPrivateMessage(boolean ownProfile, Scanner scanner, Profile profile)
+                    readPrivateMessage(true,scan, profile);
+                    break;
+
+                case 10:
+                    deletePrivateMessage(true, scan, profile);
+                    break;
+                case 11:
+                    showOldPosts(scan, profile);
+                    break;
+                case 12:
+                    changeStatus(true, scan, profile);
+                    break;
+                case 13:
+                    //cerrar sesion
+                    myController.setSessionProfile(null);
+                    keepShowing = false;
+                    break;
+                default:
+                   
+                    keepShowing = false;
+                    break;
+            }
+        }
+
     }
 
     // FASE 2.6- METODOS
@@ -134,12 +259,13 @@ public class ProfileView {
 
         do {
 
-            //pregunta por consola un texto
+            //pregunta por consola algo
             System.out.println(text);
             //recibe un numero
             numberUser = scanner.nextInt();
             scanner.nextLine();
 
+            //solo acepta el numero colocado si está en el rango de 1 a maxnumber
         } while (numberUser > 0 && numberUser < maxNumber - 1);
 
         return numberUser;
@@ -182,11 +308,25 @@ public class ProfileView {
      */
     private void addLike(Scanner scanner, Profile profile) {
 
-        //selecciona la publicacion del perfil usando el index
-        System.out.println("Selecciona una publicacion");
-        int selectedIndex = scanner.nextInt();
-        scanner.nextLine();
-        myController.newLike(myController.getShownProfile().getPosts().get(selectedIndex));
+        ArrayList<Post> profilePosts = profile.getPosts();
+
+        if (profilePosts.size() > 0) {
+
+            //selecciona la publicacion del perfil usando el index
+            System.out.println("Selecciona una publicacion");
+
+            for (int i = 0; i < profilePosts.size(); i++) {
+                System.out.println(i + " - " + profilePosts.get(i).getText() + " " + profilePosts.get(i).getDate() + " " + profilePosts.get(i).getAuthor());
+            }
+            int selectedIndex = scanner.nextInt();
+            scanner.nextLine();
+            // myController.newLike(myController.getShownProfile().getPosts().get(selectedIndex));
+            myController.newLike(profile.getPosts().get(selectedIndex));
+
+        } else {
+            System.out.println("profileposts size igual o menor a cero");
+        }
+
     }
 
     /**
@@ -197,14 +337,14 @@ public class ProfileView {
      * propio perfil da sesión ou o perfil dunha amizade. *
      */
     private void showBiography(boolean ownProfile, Scanner scanner, Profile profile) {
-        //si usuario esta en su propio perfil, le pide que eliga a uno de sus amigos para mostrar el perfil de est@
 
+        //si usuario esta en su propio perfil, le pide que eliga a uno de sus amigos para mostrar el perfil de est@
         if (ownProfile) {
             System.out.println("Elige el perfil de cual amigo quieres ver");
-            String userText = scanner.nextLine();
-
-            int frienIndex = 0;
-            myController.setShownProfile(profile.getFriends().get(frienIndex));
+            //mostrar aqui o antes la lusta de amigos con sus indices
+            int userText = scanner.nextInt();
+            scanner.nextLine();
+            myController.setShownProfile(profile.getFriends().get(userText));
         }
 
         //si no está en su perfil

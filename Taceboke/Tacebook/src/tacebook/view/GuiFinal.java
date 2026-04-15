@@ -668,14 +668,14 @@ public class GuiFinal extends javax.swing.JFrame {
 //        }
         //</editor-fold>
 
-       customizePallete();
+        customizePallete();
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new GuiFinal().setVisible(true));
     }
-    
-    public static void customizePallete(){
-      //cambio de lookandfeel
+
+    public static void customizePallete() {
+        //cambio de lookandfeel
         try {
             MetalLookAndFeel.setCurrentTheme(new OceanTheme());
             UIManager.setLookAndFeel(new MetalLookAndFeel());
@@ -683,8 +683,8 @@ public class GuiFinal extends javax.swing.JFrame {
             e.printStackTrace();
         }
         Color PURPLE_LIGHT = new Color(230, 220, 255);
-        Color PURPLE = new Color(227,190,247);
-          Color PURPLE_DARK = new Color(230, 220, 255);
+        Color PURPLE = new Color(227, 190, 247);
+        Color PURPLE_DARK = new Color(230, 220, 255);
 
         //fondo de j option panes
         UIManager.put("control", PURPLE_LIGHT);
@@ -698,7 +698,7 @@ public class GuiFinal extends javax.swing.JFrame {
         //fondo de scroll pane
         UIManager.put("ScrollPane.background", PURPLE_LIGHT);
         UIManager.put("Viewport.background", PURPLE_LIGHT);
-        
+
         //botones
         UIManager.put("Button.background", PURPLE_DARK);
         UIManager.put("Button.foreground", Color.BLACK);
@@ -706,7 +706,7 @@ public class GuiFinal extends javax.swing.JFrame {
         //encabezado de las tablas:
         UIManager.put("TableHeader.background", PURPLE);
         UIManager.put("TableHeader.foreground", Color.BLACK);
-       
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
