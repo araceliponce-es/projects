@@ -30,7 +30,7 @@ public class GUIInitMenuView {
      * @return true si usuario quiere salir de app
      */
     public boolean showLoginMenu() {
-        System.out.println("¿Iniciar sesión(1), registrarse(2) o salir(3)?");
+        System.out.println("¿Iniciar sesión(1), registrarse(2) o salir(3)?    versionGUI");
         Scanner scan=new Scanner(System.in);
         switch (scan.nextInt()) {
             case 1:
