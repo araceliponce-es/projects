@@ -57,6 +57,13 @@ public class InitMenuController {
 
     }
 
+    /**
+     * Método que no sé hasta qué fase lo usaremos porque no lo hice ni lo pide
+     * el proyecto, añade unos perfiles de prueba con su nombre, contraseña y
+     * estado
+     *
+     * @throws PersistenceException
+     */
     public static void addDemoUsers() throws PersistenceException {
         try {
             Profile uno = new Profile("a", "123", "status");
@@ -85,7 +92,7 @@ public class InitMenuController {
             System.getLogger(InitMenuController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
 
-//muestra el menu de loginMenu hasta que este retorne false
+        //muestra el menu de loginMenu hasta que este retorne false
         while (!myView.showLoginMenu()) {
             myView.showLoginMenu();
         }
@@ -97,8 +104,8 @@ public class InitMenuController {
      * contraseña introducidos son correctos (existen en la BD), si no existen
      * mostrará un error, si existen abrirá la sesión del perfil introducido
      *
-     * @param name
-     * @param password
+     * @param name Nombre del usuario
+     * @param password Contraseña del usuario
      */
     public void login(String name, String password) {
         try {
@@ -126,14 +133,16 @@ public class InitMenuController {
      * antes (si ya existía pedirá uno nuevo), lo almacena en la BD e inicia
      * sesión con él
      *
-     * @param name
-     * @param password
-     * @param status
+     * @param name Nombre del usuario
+     * @param password Contraseña del usuario
+     * @param status Estado del usuario
      */
     public void createProfile(String name, String password, String status) {
         try {
-            // Comprobamos que no existe un perfil con ese nombre
+
+            //Sout sobra, borrar cuando este método funcione 100 veces de 100
             System.out.println("Ping");
+            // Comprobamos que no existe un perfil con ese nombre
             if (ProfileDB.findByName(name, 0) == null) {
                 // creamos y guardamos el perfil
                 Profile nuevoPerfil = new Profile(name, password, status);

@@ -4,7 +4,6 @@
  */
 package tacebook.model;
 
-import tacebook.model.Profile;
 import java.util.Date;
 
 /**

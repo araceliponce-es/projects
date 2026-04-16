@@ -7,6 +7,7 @@ package tacebook.view;
 import tacebook.persistence.ProfileDB;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 import tacebook.model.Post;
 import tacebook.model.Profile;
@@ -169,12 +170,12 @@ public class ProfileView {
                     addLike(scan, profile);
                     break;
                 case 4:
-                    
-                     if (profile.friends.size() > 0) {
+
+                    if (profile.friends.size() > 0) {
                         showBiography(true, scan, profile);
-                       
-                    } else{
-                         showProfileInfo(true, profile);
+
+                    } else {
+                        showProfileInfo(true, profile);
                     }
                     break;
                 case 5:
@@ -195,8 +196,8 @@ public class ProfileView {
                         profileToReject = profile.friends.get(rejectIndex);
                         myController.rejectFriendshipRequest(profileToReject);
                         break;
-                    } else{
-                         showProfileInfo(true, profile);
+                    } else {
+                        showProfileInfo(true, profile);
                     }
                 case 8:
 
@@ -212,14 +213,14 @@ public class ProfileView {
                         String message = scan.nextLine();
                         myController.newMessage(destProfile, message);
 
-                    } else{
-                         showProfileInfo(true, profile);
+                    } else {
+                        showProfileInfo(true, profile);
                     }
 
                     break;
                 case 9:
 //                    private void readPrivateMessage(boolean ownProfile, Scanner scanner, Profile profile)
-                    readPrivateMessage(true,scan, profile);
+                    readPrivateMessage(true, scan, profile);
                     break;
 
                 case 10:
@@ -237,7 +238,7 @@ public class ProfileView {
                     keepShowing = false;
                     break;
                 default:
-                   
+
                     keepShowing = false;
                     break;
             }
@@ -519,6 +520,24 @@ public class ProfileView {
      */
     public void showDuplicateFrienshipRequestMessage(String profileName) {
         System.out.println("Ya le enviaste una solicitud a  : " + profileName);
+    }
+
+    //Método fase 3 aunque da igual porque esto se volverá una interfaz
+    private int readNumber(Scanner scanner) {
+        boolean numeroIntroducido = false;
+        int numero = -1;
+        do {
+            try {
+                System.out.println("Introduce un numerín");
+                numero = scanner.nextInt();
+                numeroIntroducido = true;
+            } catch (NoSuchElementException Nex) {
+                System.out.println("Se debe introducir número, si no no arranca");
+            } finally {
+                scanner.nextLine();
+            }
+        } while (!numeroIntroducido);
+        return numero;
     }
 
 }

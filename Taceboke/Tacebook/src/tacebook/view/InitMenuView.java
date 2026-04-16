@@ -4,6 +4,7 @@
  */
 package tacebook.view;
 
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 import tacebook.controller.InitMenuController;
 
@@ -99,6 +100,24 @@ public class InitMenuView {
         System.out.println("Nombe de usuario no disponible, por favor introduce uno nuevo:");
         String newName=scan.nextLine();
         return newName;
+    }
+    
+    //Método fase 3 aunque da igual porque esto se volverá una interfaz
+    private int readNumber(Scanner scanner) {
+        boolean numeroIntroducido = false;
+        int numero = -1;
+        do {
+            try {
+                System.out.println("Introduce un numerín");
+                numero = scanner.nextInt();
+                numeroIntroducido = true;
+            } catch (NoSuchElementException Nex) {
+                System.out.println("Se debe introducir número, si no no arranca");
+            } finally {
+                scanner.nextLine();
+            }
+        } while (!numeroIntroducido);
+        return numero;
     }
 
 }
