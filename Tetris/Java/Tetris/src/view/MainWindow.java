@@ -19,6 +19,7 @@ package view;
 
 import model.Game;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
@@ -27,22 +28,24 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
+import javax.swing.Timer;
 
 /**
  * Clase que implementa a ventá principal do xogo do Tetris
  * @author Profe de Programación
  */
-public class MainWindow1 extends javax.swing.JFrame {
+public class MainWindow extends javax.swing.JFrame {
     
     // Referenza ao obxecto da partida actual
     private Game game = null; 
-    
+    private Timer timer ;
+    private int contador = 100;
     /**
      * Creates new form MainWindow
      */
-    public MainWindow1() {
+    public MainWindow() {
         initComponents();
-  
+        pnlGame.setLayout(null);
         //quita el foco a los botones para que Space no los enfoque
         btnNewGame.setFocusable(false);
         btnLeft.setFocusable(false);
@@ -50,7 +53,7 @@ public class MainWindow1 extends javax.swing.JFrame {
         btnDown.setFocusable(false);
         btnRotate.setFocusable(false);
         tglbtnPause.setFocusable(false);
-
+        Timer.setText(Integer.toString(contador));
         configKeys(); //usa teclado 
     }
 
@@ -103,6 +106,15 @@ public class MainWindow1 extends javax.swing.JFrame {
         tglbtnPause.setSelected(false);
         // Establecemos o número de liñas que se mostran na ventá a cero
         lblNumberOfLines.setText("0");
+        timer = new Timer(1000,new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                contador--;
+                btnDownActionPerformed(e);
+            }
+        });
+        
+        
     }
 
     private void configKeys() {
@@ -187,6 +199,7 @@ public class MainWindow1 extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jSpinner1 = new javax.swing.JSpinner();
         btnNewGame = new javax.swing.JButton();
         pnlGame = new javax.swing.JPanel();
         btnRotate = new javax.swing.JButton();
@@ -196,6 +209,10 @@ public class MainWindow1 extends javax.swing.JFrame {
         tglbtnPause = new javax.swing.JToggleButton();
         lblLines = new javax.swing.JLabel();
         lblNumberOfLines = new javax.swing.JLabel();
+        JUsuarioAuto = new javax.swing.JLabel();
+        JUsuarioText = new javax.swing.JLabel();
+        JTimeText = new javax.swing.JLabel();
+        Timer = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Teistris");
@@ -210,13 +227,13 @@ public class MainWindow1 extends javax.swing.JFrame {
         });
 
         pnlGame.setBackground(java.awt.Color.white);
-        pnlGame.setPreferredSize(new java.awt.Dimension(160, 200));
+        pnlGame.setPreferredSize(new java.awt.Dimension(320, 420));
 
         javax.swing.GroupLayout pnlGameLayout = new javax.swing.GroupLayout(pnlGame);
         pnlGame.setLayout(pnlGameLayout);
         pnlGameLayout.setHorizontalGroup(
             pnlGameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 320, Short.MAX_VALUE)
         );
         pnlGameLayout.setVerticalGroup(
             pnlGameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -267,6 +284,15 @@ public class MainWindow1 extends javax.swing.JFrame {
 
         lblNumberOfLines.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
 
+        JUsuarioAuto.setText(System.getProperty("user.name")
+        );
+
+        JUsuarioText.setText("Usuario : ");
+
+        JTimeText.setText("Tiempo : ");
+
+        Timer.setText("jLabel4");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -279,9 +305,18 @@ public class MainWindow1 extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblLines)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lblNumberOfLines, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(84, 84, 84)
-                .addComponent(pnlGame, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblNumberOfLines, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addComponent(JTimeText)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(Timer, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(JUsuarioText)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(JUsuarioAuto, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(98, 98, 98)
+                .addComponent(pnlGame, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -303,16 +338,6 @@ public class MainWindow1 extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(66, 66, 66)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblLines)
-                    .addComponent(lblNumberOfLines, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnNewGame)
-                .addGap(18, 18, 18)
-                .addComponent(tglbtnPause)
-                .addGap(135, 135, 135))
-            .addGroup(layout.createSequentialGroup()
                 .addGap(161, 161, 161)
                 .addComponent(btnRotate, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -324,8 +349,30 @@ public class MainWindow1 extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(29, 29, 29)
-                .addComponent(pnlGame, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 51, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(JUsuarioAuto, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(JUsuarioText))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(2, 2, 2)
+                                .addComponent(JTimeText))
+                            .addComponent(Timer))
+                        .addGap(9, 9, 9)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblLines)
+                            .addComponent(lblNumberOfLines, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnNewGame)
+                        .addGap(18, 18, 18)
+                        .addComponent(tglbtnPause)
+                        .addGap(135, 135, 135))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(pnlGame, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 51, Short.MAX_VALUE))))
         );
 
         pack();
@@ -341,6 +388,7 @@ public class MainWindow1 extends javax.swing.JFrame {
         // Ao picar no botón de "Pausa", chamamos ao obxecto xogo para 
         // establecer o atributo de pausa no estado do botón
         if (game != null) {
+            timer.stop();
             game.setPaused(tglbtnPause.isSelected());
         }
     }//GEN-LAST:event_tglbtnPauseActionPerformed
@@ -394,13 +442,13 @@ public class MainWindow1 extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainWindow1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainWindow1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainWindow1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainWindow1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -410,17 +458,22 @@ public class MainWindow1 extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainWindow1().setVisible(true);
+                new MainWindow().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel JTimeText;
+    private javax.swing.JLabel JUsuarioAuto;
+    private javax.swing.JLabel JUsuarioText;
+    private javax.swing.JLabel Timer;
     private javax.swing.JButton btnDown;
     private javax.swing.JButton btnLeft;
     private javax.swing.JButton btnNewGame;
     private javax.swing.JButton btnRight;
     private javax.swing.JButton btnRotate;
+    private javax.swing.JSpinner jSpinner1;
     private javax.swing.JLabel lblLines;
     private javax.swing.JLabel lblNumberOfLines;
     private javax.swing.JPanel pnlGame;

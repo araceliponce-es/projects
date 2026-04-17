@@ -34,7 +34,7 @@ public class Game {
     /**
      * Constante que define o valor máximo da coordenada x no panel de cadrados
      */
-    public final static int MAX_X = 300;
+    public final static int MAX_X = 320;
 
     /**
      * Constante que define o valor máximo en la cordenada y en el panel de
@@ -183,7 +183,7 @@ public class Game {
         // o 
         // si el x y y a evaluar coinciden con un key existente en groundSquares
         // retorna falso
-        if (((x == MAX_X) || (x < 0) || (y == MAX_Y) || (y < 0)) || groundSquares.containsKey(x + "," + y)) {
+        if (((x >= MAX_X) || (x < 0) || (y == MAX_Y) || (y < 0)) || groundSquares.containsKey(x + "," + y)) {
             valid = false;
         }
 
