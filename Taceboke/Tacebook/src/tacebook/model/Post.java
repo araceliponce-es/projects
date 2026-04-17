@@ -4,7 +4,6 @@
  */
 package tacebook.model;
 
-import tacebook.model.Profile;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -23,9 +22,10 @@ public class Post {
     private Profile author;
 
     /**
-     * Devuelve el profioe asignado al post
+     * Devuelve el profile asignado al post
      *
-     * @return profile
+     * @return El perfil sobre el que se hizo el post (no siempre es el que lo
+     * creó)
      */
     public Profile getProfile() {
         return profile;
@@ -34,15 +34,15 @@ public class Post {
     /**
      * Establece el perfil del post
      *
-     * @param profile w`
+     * @param profile
      */
     public void setProfile(Profile profile) {
         this.profile = profile;
     }
 
     /**
-     * Para construir un post se necesita un profile y una string que es el
-     * mensaje
+     * Constructor del post. Para construir un post se necesita un profile y una
+     * string que es el mensaje
      *
      * @param text
      * @param profile
@@ -53,16 +53,16 @@ public class Post {
     }
 
     /**
-     * obtiene el id del post
+     * Obtiene el id del post
      *
-     * @return
+     * @return El id en forma de int
      */
     public int getId() {
         return id;
     }
 
     /**
-     * establece el id del post
+     * Establece el id del post
      *
      * @param id
      */
@@ -71,6 +71,7 @@ public class Post {
     }
 
     /**
+     * Otro constructor? que sólo recibe el texto del post
      *
      * @param text
      */
@@ -79,16 +80,16 @@ public class Post {
     }
 
     /**
-     * obtiene el texto del post
+     * Obtiene el texto del post
      *
-     * @return
+     * @return Una cadena con el contenido del post
      */
     public String getText() {
         return text;
     }
 
     /**
-     * establece el texto del post
+     * Establece el texto del post
      *
      * @param text
      */
@@ -97,16 +98,16 @@ public class Post {
     }
 
     /**
-     * obtiene la fecha del post
+     * Obtiene la fecha del post
      *
-     * @return
+     * @return La fecha con día y hora a la que se publicó el post
      */
     public Date getDate() {
         return date;
     }
 
     /**
-     * establece la fecha del post
+     * Establece la fecha del post
      *
      * @param date
      */
@@ -115,7 +116,8 @@ public class Post {
     }
 
     /**
-     * constructor del post
+     * Constructor del post. ¿Por qué hay como tres constructores? TODO:Explicar
+     * a Diego
      *
      * @param id
      * @param text
@@ -131,7 +133,7 @@ public class Post {
      * A quien haya creado el array de likeProfile: le faltó el get/set, muy mal
      * hecho
      *
-     * @return Perfiles que dieron like
+     * @return Lista de perfiles que dieron like
      */
     public ArrayList<Profile> getLikeProfiles() {
         return likeProfiles;
@@ -149,7 +151,7 @@ public class Post {
     /**
      * Obtiene el array de comentarios hechos sobre el post
      *
-     * @return Comentarios del post
+     * @return Lista de comentarios del post
      */
     public ArrayList<Comment> getComments() {
         return comments;
