@@ -522,7 +522,7 @@ public class ProfileView {
         System.out.println("Ya le enviaste una solicitud a  : " + profileName);
     }
 
-    //Método fase 3 aunque da igual porque esto se volverá una interfaz
+    //Métodos fase 3 aunque da igual porque esto se volverá una interfaz
     private int readNumber(Scanner scanner) {
         boolean numeroIntroducido = false;
         int numero = -1;
@@ -538,6 +538,30 @@ public class ProfileView {
             }
         } while (!numeroIntroducido);
         return numero;
+    }
+
+    /**
+     * Método que debe mostrar un mensaje cuando se porduzca un error en la
+     * conexión con la base de datos
+     */
+    public void showConnectionErrorMessage() {
+        System.out.println("Erro na conexión co almacén de datos!");
+    }
+
+    /**
+     * Método que debe mostrar un mensaje cuando se porduzca un error en la
+     * lectura de datos
+     */
+    public void showReadErrorMessage() {
+        System.out.println("Erro na lectura de datos!");
+    }
+
+    /**
+     * Método que debe mostrar un mensaje cuando se porduzca un error en la
+     * escritura de datos
+     */
+    public void showWriteErrorMessage() {
+        System.out.println("Erro na escritura dos datos!");
     }
 
 }

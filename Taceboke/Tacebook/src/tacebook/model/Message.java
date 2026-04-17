@@ -18,10 +18,10 @@ public class Message {
     private boolean read;
 
     /**
-     *¿Por qué están public estas cosas?
-     * 
+     * ¿Por qué están public estas cosas?
+     *
      */
-    public Profile destProfile; 
+    public Profile destProfile;
 
     /**
      *
@@ -29,17 +29,17 @@ public class Message {
     public Profile sourceProfile;
 
     /**
-     * obtiene el id del mensaje
-     * 
-     * @return 
+     * Obtiene el id del mensaje
+     *
+     * @return El id en forma de int
      */
     public int getId() {
         return id;
     }
 
     /**
-     * establece el id del mensaje
-     * 
+     * Establece el id del mensaje
+     *
      * @param id
      */
     public void setId(int id) {
@@ -47,16 +47,17 @@ public class Message {
     }
 
     /**
-     * obtiene el texto del mensaje
-     * 
-     * @return
+     * Obtiene el texto del mensaje
+     *
+     * @return Una cadena con el contenido del mensaje
      */
     public String getText() {
         return text;
     }
 
     /**
-     * establece el texto del mensaje
+     * Establece el texto del mensaje
+     *
      * @param text
      */
     public void setText(String text) {
@@ -64,16 +65,17 @@ public class Message {
     }
 
     /**
-     * obtiene la fecha del mensaje
-     * @return
+     * Obtiene la fecha del mensaje
+     *
+     * @return La fecha con día y hora a la que se publicó el mensaje
      */
     public Date getDate() {
         return date;
     }
 
     /**
-     * establece la fecha del mensaje
-     * 
+     * Establece la fecha del mensaje
+     *
      * @param date
      */
     public void setDate(Date date) {
@@ -81,17 +83,17 @@ public class Message {
     }
 
     /**
-     * obtiene el valor booleano de mensaje leido o no
-     * 
-     * @return
+     * Obtiene el valor booleano de mensaje leido o no
+     *
+     * @return Si el mensaje se leyó o no
      */
     public boolean isRead() {
         return read;
     }
 
     /**
-     * establece el valor booleano de mensaje leido o no
-     * 
+     * Establece el valor booleano de mensaje leido o no
+     *
      * @param read
      */
     public void setRead(boolean read) {
@@ -99,16 +101,17 @@ public class Message {
     }
 
     /**
-     * obtiene el Profile del destinatario
-     * 
-     * @return
+     * Obtiene el Profile del destinatario
+     *
+     * @return El perfil al que se envió el mensaje
      */
     public Profile getDestProfile() {
         return destProfile;
     }
 
     /**
-     * establece el Profile del destinatario
+     * Establece el Profile del destinatario
+     *
      * @param destProfile
      */
     public void setDestProfile(Profile destProfile) {
@@ -116,17 +119,17 @@ public class Message {
     }
 
     /**
-     * obtiene el Profile del emisor
-     * 
-     * @return
+     * Obtiene el Profile del emisor
+     *
+     * @return El perfil que escribió y envió el mensaje
      */
     public Profile getSourceProfile() {
         return sourceProfile;
     }
 
     /**
-     * establece el Profile del emisor
-     * 
+     * Establece el Profile del emisor
+     *
      * @param sourceProfile
      */
     public void setSourceProfile(Profile sourceProfile) {
@@ -134,8 +137,8 @@ public class Message {
     }
 
     /**
-     * constructor del mensaje
-     * 
+     * Constructor del mensaje
+     *
      * @param id
      * @param text
      * @param read
@@ -149,7 +152,5 @@ public class Message {
         this.destProfile = destProfile;
         this.sourceProfile = sourceProfile;
     }
-    
- 
 
 }

@@ -7,6 +7,7 @@ package tacebook.model;
 import java.util.Date;
 
 /**
+ * Clase que simula ser un comentario de la mejor red social
  *
  * @author Araceli,Diego,Oscar
  */
@@ -19,16 +20,16 @@ public class Comment {
     private Profile sourceProfile;
 
     /**
-     * obtiene el id del comentario
+     * Obtiene el id del comentario
      *
-     * @return
+     * @return El id en forma de int
      */
     public int getId() {
         return id;
     }
 
     /**
-     * establece el id del comentario
+     * Establece el id del comentario
      *
      * @param id
      */
@@ -37,16 +38,16 @@ public class Comment {
     }
 
     /**
-     * obtiene la fecha del comentario
+     * Obtiene la fecha y hora del comentario
      *
-     * @return
+     * @return La fecha con día y hora a la que se publicó el comentario
      */
     public Date getDate() {
         return date;
     }
 
     /**
-     * establece la fecha del comentario
+     * Establece la fecha del comentario
      *
      * @param date
      */
@@ -55,16 +56,16 @@ public class Comment {
     }
 
     /**
-     * obtiene el texto del comentario
+     * Obtiene el texto del comentario
      *
-     * @return
+     * @return Una cadena con el contenido del comentario
      */
     public String getText() {
         return text;
     }
 
     /**
-     * establece el texto del comentario
+     * Establece el texto del comentario
      *
      * @param text
      */
@@ -73,13 +74,15 @@ public class Comment {
     }
 
     /**
-     * constructor del comentario
+     * Constructor del comentario
      *
      * @param id
      * @param date
      * @param text
+     * @param post
+     * @param sourceProfile
      */
-    public Comment(int id, Date date, String text, Post post, Profile sourceProfile) {   
+    public Comment(int id, Date date, String text, Post post, Profile sourceProfile) {
         this.id = id;
         this.date = date;
         this.text = text;
@@ -122,8 +125,5 @@ public class Comment {
     public void setSourceProfile(Profile sourceProfile) {
         this.sourceProfile = sourceProfile;
     }
-    
-    
-    
 
 }
