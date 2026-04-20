@@ -272,7 +272,7 @@ public class Game {
                         //Metodo que se encarga de borrar una linea
                         deleteLine(lineToDelete);
                         //Muestra las lineas eliminadas
-                        numberOfLines+=1;
+                        numberOfLines+=100;
                         mainWindow.showNumberOfLines(numberOfLines);
                     }
                 }

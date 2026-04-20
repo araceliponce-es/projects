@@ -35,25 +35,19 @@
           <Group type="102" attributes="0">
               <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="btnNewGame" min="-2" pref="110" max="-2" attributes="0"/>
-                  <Component id="tglbtnPause" min="-2" pref="70" max="-2" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="lblLines" min="-2" max="-2" attributes="0"/>
+                      <Component id="JUsuarioText" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="lblNumberOfLines" min="-2" pref="46" max="-2" attributes="0"/>
+                      <Component id="JUsuarioAuto" min="-2" pref="80" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="JTimeText" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="Timer" min="-2" pref="80" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" attributes="0">
-                          <Component id="JUsuarioText" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="JUsuarioAuto" min="-2" pref="80" max="-2" attributes="0"/>
-                      </Group>
+                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                      <Component id="lblNumberOfLines" alignment="0" max="32767" attributes="0"/>
+                      <Component id="lblLines" alignment="0" max="32767" attributes="0"/>
+                      <Component id="lblNivel" alignment="1" max="32767" attributes="0"/>
+                      <Component id="lblNumberOfLevel" alignment="0" max="32767" attributes="0"/>
                   </Group>
+                  <Component id="btnNewGame" alignment="0" min="-2" pref="140" max="-2" attributes="0"/>
+                  <Component id="tglbtnPause" alignment="0" min="-2" pref="80" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="90" max="-2" attributes="0"/>
               <Component id="pnlGame" min="-2" max="-2" attributes="0"/>
@@ -106,19 +100,14 @@
                           <Component id="JUsuarioAuto" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                           <Component id="JUsuarioText" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="lblLines" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
-                              <Component id="JTimeText" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="Timer" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lblLines" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblNumberOfLines" min="-2" pref="18" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="lblNumberOfLines" min="-2" pref="30" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="lblNivel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="lblNumberOfLevel" min="-2" pref="30" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="btnNewGame" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -137,6 +126,9 @@
   <SubComponents>
     <Component class="javax.swing.JButton" name="btnNewGame">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Monospaced" size="13" style="1"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Nova partida"/>
       </Properties>
       <Events>
@@ -171,6 +163,9 @@
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="33" red="33" type="rgb"/>
         </Property>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Monospaced" size="13" style="1"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Rotar"/>
       </Properties>
       <Events>
@@ -181,6 +176,9 @@
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="66" green="ff" red="ff" type="rgb"/>
+        </Property>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Monospaced" size="13" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Dereita"/>
       </Properties>
@@ -193,6 +191,9 @@
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="33" green="33" red="ff" type="rgb"/>
         </Property>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Monospaced" size="12" style="1"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Esquerda"/>
       </Properties>
       <Events>
@@ -204,6 +205,9 @@
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="66" green="ff" red="66" type="rgb"/>
         </Property>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Monospaced" size="13" style="1"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Abaixo"/>
       </Properties>
       <Events>
@@ -212,6 +216,9 @@
     </Component>
     <Component class="javax.swing.JToggleButton" name="tglbtnPause">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Monospaced" size="13" style="1"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Pausa"/>
         <Property name="toolTipText" type="java.lang.String" value=""/>
       </Properties>
@@ -221,16 +228,26 @@
     </Component>
     <Component class="javax.swing.JLabel" name="lblLines">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Li&#xf1;as:"/>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Courier 10 Pitch" size="16" style="1"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Puntuacion :"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblNumberOfLines">
       <Properties>
-        <Property name="horizontalAlignment" type="int" value="4"/>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Monospaced" size="20" style="1"/>
+        </Property>
+        <Property name="horizontalAlignment" type="int" value="2"/>
+        <Property name="text" type="java.lang.String" value="0"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="JUsuarioAuto">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Monospaced" size="16" style="1"/>
+        </Property>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
           <Connection code="System.getProperty(&quot;user.name&quot;)&#xa;" type="code"/>
         </Property>
@@ -238,17 +255,27 @@
     </Component>
     <Component class="javax.swing.JLabel" name="JUsuarioText">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Courier 10 Pitch" size="16" style="1"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Usuario : "/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="JTimeText">
+    <Component class="javax.swing.JLabel" name="lblNivel">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Tiempo : "/>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Courier 10 Pitch" size="16" style="1"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Nivel:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="Timer">
+    <Component class="javax.swing.JLabel" name="lblNumberOfLevel">
       <Properties>
-        <Property name="text" type="java.lang.String" value="jLabel4"/>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Monospaced" size="20" style="1"/>
+        </Property>
+        <Property name="horizontalAlignment" type="int" value="2"/>
+        <Property name="text" type="java.lang.String" value="1"/>
       </Properties>
     </Component>
   </SubComponents>

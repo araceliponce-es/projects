@@ -1,5 +1,5 @@
 
-        /*
+/*
  * Copyright (C) 2025 Antonio de Andrés Lema
  *
  * This program is free software: you can redistribute it and/or modify
@@ -32,14 +32,16 @@ import javax.swing.Timer;
 
 /**
  * Clase que implementa a ventá principal do xogo do Tetris
+ *
  * @author Profe de Programación
  */
 public class MainWindow extends javax.swing.JFrame {
-    
+
     // Referenza ao obxecto da partida actual
-    private Game game = null; 
-    private Timer timer ;
-    private int contador = 100;
+    private Game game = null;
+    private Timer timer;
+    private int tiempo_ini = 1000;
+
     /**
      * Creates new form MainWindow
      */
@@ -53,7 +55,6 @@ public class MainWindow extends javax.swing.JFrame {
         btnDown.setFocusable(false);
         btnRotate.setFocusable(false);
         tglbtnPause.setFocusable(false);
-        Timer.setText(Integer.toString(contador));
         configKeys(); //usa teclado 
     }
 
@@ -98,6 +99,7 @@ public class MainWindow extends javax.swing.JFrame {
      * Inicia un novo xogo
      */
     private void startGame() {
+
         // Limpamos todo o que puidese haber pintado no panel do xogo
         pnlGame.removeAll();
         // Creamos un novo obxecto xogo
@@ -106,15 +108,17 @@ public class MainWindow extends javax.swing.JFrame {
         tglbtnPause.setSelected(false);
         // Establecemos o número de liñas que se mostran na ventá a cero
         lblNumberOfLines.setText("0");
-        timer = new Timer(1000,new ActionListener(){
+        //Cuando creas un nuevo juego
+        if (timer != null) {
+            timer.stop();
+        }
+        timer = new Timer(tiempo_ini, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                contador--;
                 btnDownActionPerformed(e);
             }
         });
-        
-        
+        timer.start();
     }
 
     private void configKeys() {
@@ -176,8 +180,6 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
-
-
         // Usar ADSW Y adsw
         im.put(KeyStroke.getKeyStroke('A'), "left");
         im.put(KeyStroke.getKeyStroke('a'), "left");
@@ -188,7 +190,6 @@ public class MainWindow extends javax.swing.JFrame {
         im.put(KeyStroke.getKeyStroke('W'), "rotate");
         im.put(KeyStroke.getKeyStroke('w'), "rotate");
     }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -211,14 +212,15 @@ public class MainWindow extends javax.swing.JFrame {
         lblNumberOfLines = new javax.swing.JLabel();
         JUsuarioAuto = new javax.swing.JLabel();
         JUsuarioText = new javax.swing.JLabel();
-        JTimeText = new javax.swing.JLabel();
-        Timer = new javax.swing.JLabel();
+        lblNivel = new javax.swing.JLabel();
+        lblNumberOfLevel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Teistris");
         setLocation(new java.awt.Point(150, 300));
         setResizable(false);
 
+        btnNewGame.setFont(new java.awt.Font("Monospaced", 1, 13)); // NOI18N
         btnNewGame.setText("Nova partida");
         btnNewGame.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -241,6 +243,7 @@ public class MainWindow extends javax.swing.JFrame {
         );
 
         btnRotate.setBackground(new java.awt.Color(51, 51, 255));
+        btnRotate.setFont(new java.awt.Font("Monospaced", 1, 13)); // NOI18N
         btnRotate.setText("Rotar");
         btnRotate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -249,6 +252,7 @@ public class MainWindow extends javax.swing.JFrame {
         });
 
         btnRight.setBackground(new java.awt.Color(255, 255, 102));
+        btnRight.setFont(new java.awt.Font("Monospaced", 1, 13)); // NOI18N
         btnRight.setText("Dereita");
         btnRight.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -257,6 +261,7 @@ public class MainWindow extends javax.swing.JFrame {
         });
 
         btnLeft.setBackground(new java.awt.Color(255, 51, 51));
+        btnLeft.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
         btnLeft.setText("Esquerda");
         btnLeft.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -265,6 +270,7 @@ public class MainWindow extends javax.swing.JFrame {
         });
 
         btnDown.setBackground(new java.awt.Color(102, 255, 102));
+        btnDown.setFont(new java.awt.Font("Monospaced", 1, 13)); // NOI18N
         btnDown.setText("Abaixo");
         btnDown.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -272,6 +278,7 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
+        tglbtnPause.setFont(new java.awt.Font("Monospaced", 1, 13)); // NOI18N
         tglbtnPause.setText("Pausa");
         tglbtnPause.setToolTipText("");
         tglbtnPause.addActionListener(new java.awt.event.ActionListener() {
@@ -280,18 +287,26 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
-        lblLines.setText("Liñas:");
+        lblLines.setFont(new java.awt.Font("Courier 10 Pitch", 1, 16)); // NOI18N
+        lblLines.setText("Puntuacion :");
 
-        lblNumberOfLines.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblNumberOfLines.setFont(new java.awt.Font("Monospaced", 1, 20)); // NOI18N
+        lblNumberOfLines.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblNumberOfLines.setText("0");
 
+        JUsuarioAuto.setFont(new java.awt.Font("Monospaced", 1, 16)); // NOI18N
         JUsuarioAuto.setText(System.getProperty("user.name")
         );
 
+        JUsuarioText.setFont(new java.awt.Font("Courier 10 Pitch", 1, 16)); // NOI18N
         JUsuarioText.setText("Usuario : ");
 
-        JTimeText.setText("Tiempo : ");
+        lblNivel.setFont(new java.awt.Font("Courier 10 Pitch", 1, 16)); // NOI18N
+        lblNivel.setText("Nivel:");
 
-        Timer.setText("jLabel4");
+        lblNumberOfLevel.setFont(new java.awt.Font("Monospaced", 1, 20)); // NOI18N
+        lblNumberOfLevel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblNumberOfLevel.setText("1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -300,21 +315,17 @@ public class MainWindow extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnNewGame, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tglbtnPause, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblLines)
+                        .addComponent(JUsuarioText)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lblNumberOfLines, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addComponent(JTimeText)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(Timer, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(JUsuarioText)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(JUsuarioAuto, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(JUsuarioAuto, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(lblNumberOfLines, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblLines, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblNivel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblNumberOfLevel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnNewGame, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tglbtnPause, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(90, 90, 90)
                 .addComponent(pnlGame, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -355,16 +366,14 @@ public class MainWindow extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(JUsuarioAuto, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(JUsuarioText))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblLines)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(2, 2, 2)
-                                .addComponent(JTimeText))
-                            .addComponent(Timer))
-                        .addGap(9, 9, 9)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblLines)
-                            .addComponent(lblNumberOfLines, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lblNumberOfLines, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblNivel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblNumberOfLevel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnNewGame)
                         .addGap(18, 18, 18)
@@ -382,6 +391,8 @@ public class MainWindow extends javax.swing.JFrame {
         // Ao picar no botón de "Nova partida", invocamos ao método privado 
         // que inicia un novo xogo
         startGame();
+
+
     }//GEN-LAST:event_btnNewGameActionPerformed
 
     private void tglbtnPauseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tglbtnPauseActionPerformed
@@ -464,10 +475,8 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel JTimeText;
     private javax.swing.JLabel JUsuarioAuto;
     private javax.swing.JLabel JUsuarioText;
-    private javax.swing.JLabel Timer;
     private javax.swing.JButton btnDown;
     private javax.swing.JButton btnLeft;
     private javax.swing.JButton btnNewGame;
@@ -475,6 +484,8 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JButton btnRotate;
     private javax.swing.JSpinner jSpinner1;
     private javax.swing.JLabel lblLines;
+    private javax.swing.JLabel lblNivel;
+    private javax.swing.JLabel lblNumberOfLevel;
     private javax.swing.JLabel lblNumberOfLines;
     private javax.swing.JPanel pnlGame;
     private javax.swing.JToggleButton tglbtnPause;
