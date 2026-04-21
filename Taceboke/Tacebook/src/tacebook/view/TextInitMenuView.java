@@ -4,6 +4,7 @@
  */
 package tacebook.view;
 
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 import tacebook.controller.InitMenuController;
 
@@ -16,29 +17,33 @@ public class TextInitMenuView {
 
     InitMenuController myController;
 
+    /**
+     *Constructor de la fista en modo texto que recibe como parámetro  el controlador
+     * @param controller
+     */
     public TextInitMenuView(InitMenuController controller) {
-        myController= controller;
+        myController = controller;
     }
 
     /**
      * muestra el menu de inicio de sesion
-     * 
+     *
      * menu tiene 3 opciones : login, signup, escape
-     * 
+     *
      * si quiere iniciar sesion o registrarse llama a myController
-     * 
+     *
      * @return true si usuario quiere salir de app
      */
     public boolean showLoginMenu() {
         System.out.println("¿Iniciar sesión(1), registrarse(2) o salir(3)?");
-        Scanner scan=new Scanner(System.in);
+        Scanner scan = new Scanner(System.in);
         switch (scan.nextInt()) {
             case 1:
                 scan.nextLine(); //despues de numero
                 System.out.println("Escribe tu nombre de usuario: ");
-                String name=scan.nextLine();
+                String name = scan.nextLine();
                 System.out.println("Escribe tu contraseña: ");
-                String password=scan.nextLine();
+                String password = scan.nextLine();
                 myController.login(name, password);
                 break;
             case 2:
@@ -61,43 +66,86 @@ public class TextInitMenuView {
 
     /**
      * muestra el menu de registro
-     * 
+     *
      * le pide: nombre de usuario, contraseña y repetir contraseña
-     * 
+     *
      * si provee la informacion llama a myController
-     * 
-     * @return
+     *
      */
     public void showRegisterMenu() {
-        Scanner scan=new Scanner(System.in);
+        Scanner scan = new Scanner(System.in);
         System.out.println("Escribe un nombre de usuario:");
-                
-        String name=scan.nextLine();
+
+        String name = scan.nextLine();
         System.out.println("Escribe una contraseña:");
-        String contraseña=scan.nextLine();
+        String contraseña = scan.nextLine();
         System.out.println("Escríbela otra vez, que no me quedó clara");
-        String segundaContraseña=scan.nextLine();
-        if(contraseña.equals(segundaContraseña)){
-            String password=segundaContraseña;
+        String segundaContraseña = scan.nextLine();
+        if (contraseña.equals(segundaContraseña)) {
+            String password = segundaContraseña;
             System.out.println("Dime el estado de tu perfil:");
-            String status=scan.nextLine();
+            String status = scan.nextLine();
             myController.createProfile(name, password, status);
-            
-        }else{
+
+        } else {
             System.out.println("Las contraseñas no coinciden");
-        } 
+        }
     }
 
     /**
-     * muestra el menu para cambiar nombre , porque el que coloco antes ya estaba en uso
-     * 
+     * muestra el menu para cambiar nombre , porque el que coloco antes ya
+     * estaba en uso
+     *
      * @return el nuevo nombre introducido
      */
     public String showNewNameMenu() {
-        Scanner scan=new Scanner(System.in);
+        Scanner scan = new Scanner(System.in);
         System.out.println("Nombe de usuario no disponible, por favor introduce uno nuevo:");
-        String newName=scan.nextLine();
+        String newName = scan.nextLine();
         return newName;
+    }
+
+    //Métodos fase 3 aunque da igual porque esto se volverá una interfaz
+    //Debe usarse siempre que el usuario tenga que escribir un número
+    private int readNumber(Scanner scanner) {
+        boolean numeroIntroducido = false;
+        int numero = -1;
+        do {
+            try {
+                System.out.println("Introduce un numerín");
+                numero = scanner.nextInt();
+                numeroIntroducido = true;
+            } catch (NoSuchElementException Nex) {
+                System.out.println("Se debe introducir número, si no no arranca");
+            } finally {
+                scanner.nextLine();
+            }
+        } while (!numeroIntroducido);
+        return numero;
+    }
+
+    /**
+     * Método que debe mostrar un mensaje cuando se porduzca un error en la
+     * conexión con la base de datos
+     */
+    public void showConnectionErrorMessage() {
+        System.out.println("Erro na conexión co almacén de datos!");
+    }
+
+    /**
+     * Método que debe mostrar un mensaje cuando se porduzca un error en la
+     * lectura de datos
+     */
+    public void showReadErrorMessage() {
+        System.out.println("Erro na lectura de datos!");
+    }
+
+    /**
+     * Método que debe mostrar un mensaje cuando se porduzca un error en la
+     * escritura de datos
+     */
+    public void showWriteErrorMessage() {
+        System.out.println("Erro na escritura dos datos!");
     }
 
 }

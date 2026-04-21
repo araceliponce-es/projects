@@ -56,11 +56,13 @@ public class ProfileController {
 //    }
     /**
      * Obtiene el perfil con el que se abre sesión
-     * 
-     * se hara un select campos from profile where name=?   y luego pst.setstring(1,name)   try resultquery
-     * 
-     * 
-     * get posts: select * from posts where p.id in (ids concatenados por coma) prder by id desc
+     *
+     * se hara un select campos from profile where name=? y luego
+     * pst.setstring(1,name) try resultquery
+     *
+     *
+     * get posts: select * from posts where p.id in (ids concatenados por coma)
+     * prder by id desc
      *
      * @return
      */
@@ -133,7 +135,7 @@ public class ProfileController {
         try {
             ProfileDB.findByName(this.shownProfile.getName(), myView.getPostsShown());
         } catch (PersistenceException ex) {
-            System.getLogger(ProfileController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            proccessPersistenceException(ex);
         }
     }
 
@@ -162,7 +164,7 @@ public class ProfileController {
         try {
             ProfileDB.update(sessionProfile);
         } catch (PersistenceException ex) {
-            System.getLogger(ProfileController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            proccessPersistenceException(ex);
         }
         reloadProfile();
     }
@@ -181,7 +183,7 @@ public class ProfileController {
         try {
             PostDB.save(post);
         } catch (PersistenceException ex) {
-            System.getLogger(ProfileController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            proccessPersistenceException(ex);
         }
 
         //recarga perfil
@@ -202,7 +204,7 @@ public class ProfileController {
         try {
             CommentDB.save(comment);
         } catch (PersistenceException ex) {
-            System.getLogger(ProfileController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            proccessPersistenceException(ex);
         }
     }
 
@@ -232,7 +234,7 @@ public class ProfileController {
             try {
                 PostDB.saveLike(post, shownProfile);
             } catch (PersistenceException ex) {
-                System.getLogger(ProfileController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+                proccessPersistenceException(ex);
             }
         }
 
@@ -298,7 +300,7 @@ public class ProfileController {
                 myView.showProfileNotFoundMessage();
             }
         } catch (PersistenceException ex) {
-            System.getLogger(ProfileController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            proccessPersistenceException(ex);
         }
 
         //en cualquier caso, recarga el perfil
@@ -325,7 +327,7 @@ public class ProfileController {
             //recarga el perfil
             reloadProfile();
         } catch (PersistenceException ex) {
-            System.getLogger(ProfileController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            proccessPersistenceException(ex);
         }
     }
 
@@ -341,7 +343,7 @@ public class ProfileController {
             //elimina la solicitud de amistad
             ProfileDB.removeFriendshipRequest(shownProfile, sourceProfile);
         } catch (PersistenceException ex) {
-            System.getLogger(ProfileController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            proccessPersistenceException(ex);
         }
 
         //recarga el perfil
@@ -364,7 +366,7 @@ public class ProfileController {
             // metodo que añade al inicio del arraylist
             MessageDB.save(message);
         } catch (PersistenceException ex) {
-            System.getLogger(ProfileController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            proccessPersistenceException(ex);
         }
 
         //recarga el perfil
@@ -381,7 +383,7 @@ public class ProfileController {
         try {
             MessageDB.remove(message);
         } catch (PersistenceException ex) {
-            System.getLogger(ProfileController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            proccessPersistenceException(ex);
         }
 
         //recarga el perfil
@@ -401,7 +403,7 @@ public class ProfileController {
         try {
             MessageDB.update(message);
         } catch (PersistenceException ex) {
-            System.getLogger(ProfileController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            proccessPersistenceException(ex);
         }
 
         //recarga el perfil
@@ -433,7 +435,20 @@ public class ProfileController {
         //recarga el perfil
         reloadProfile();
 
-        //Método que necestia la implementación de métodos para las vistas
-        //private void proccessPersistenceException(PersistenceException ex){}  
+    }
+
+    private void proccessPersistenceException(PersistenceException ex) {
+        switch (ex.getCode()) {
+            case 0:
+                myView.showConnectionErrorMessage();
+                break;
+            case 1:
+                myView.showReadErrorMessage();
+                break;
+            case 2:
+                myView.showWriteErrorMessage();
+                break;
+
+        }
     }
 }

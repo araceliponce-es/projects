@@ -4,7 +4,6 @@
  */
 package tacebook.view;
 
-import tacebook.persistence.ProfileDB;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
@@ -136,6 +135,10 @@ public class ProfileView {
         }
     }
 
+    /**
+     *
+     * @param profile
+     */
     public void showProfileMenu(Profile profile) {
         showProfileInfo(true, profile);
         boolean keepShowing = true;

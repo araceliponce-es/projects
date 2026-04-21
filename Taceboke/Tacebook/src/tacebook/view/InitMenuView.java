@@ -14,16 +14,18 @@ import tacebook.controller.InitMenuController;
  *
  * @author Araceli,Diego,Oscar
  */
-public class InitMenuView {
+public interface InitMenuView {
 
     InitMenuController myController;
 
     /**
      *
      * @param controller
+     * @return 
      */
     public InitMenuView(InitMenuController controller) {
         myController = controller;
+        return null;
     }
 
     /**
@@ -35,35 +37,12 @@ public class InitMenuView {
      *
      * @return true si usuario quiere salir de app
      */
-    public boolean showLoginMenu() {
-        System.out.println("¿Iniciar sesión(1), registrarse(2) o salir(3)?");
-        Scanner scan = new Scanner(System.in);
-        switch (scan.nextInt()) {
-            case 1:
-                scan.nextLine(); //despues de numero
-                System.out.println("Escribe tu nombre de usuario: ");
-                String name = scan.nextLine();
-                System.out.println("Escribe tu contraseña: ");
-                String password = scan.nextLine();
-                myController.login(name, password);
-                break;
-            case 2:
-                myController.register();
-                break;
-            case 3:
-                return true;
-            default:
-                break;
-        }
-        return false;
-    }
+    public boolean showLoginMenu(); 
 
     /**
      * muestra mensaje en caso de error en login
      */
-    public void showLoginErrorMessage() {
-        System.out.println("Usuario y contraseña incorrectos, probablemente sólo uno esté mal, pero no te voy a decir cuál");
-    }
+    public void showLoginErrorMessage();
 
     /**
      * muestra el menu de registro
@@ -73,25 +52,7 @@ public class InitMenuView {
      * si provee la informacion llama a myController
      *
      */
-    public void showRegisterMenu() {
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Escribe un nombre de usuario:");
-
-        String name = scan.nextLine();
-        System.out.println("Escribe una contraseña:");
-        String contraseña = scan.nextLine();
-        System.out.println("Escríbela otra vez, que no me quedó clara");
-        String segundaContraseña = scan.nextLine();
-        if (contraseña.equals(segundaContraseña)) {
-            String password = segundaContraseña;
-            System.out.println("Dime el estado de tu perfil:");
-            String status = scan.nextLine();
-            myController.createProfile(name, password, status);
-
-        } else {
-            System.out.println("Las contraseñas no coinciden");
-        }
-    }
+    public void showRegisterMenu();
 
     /**
      * muestra el menu para cambiar nombre , porque el que coloco antes ya
@@ -99,13 +60,8 @@ public class InitMenuView {
      *
      * @return el nuevo nombre introducido
      */
-    public String showNewNameMenu() {
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Nombe de usuario no disponible, por favor introduce uno nuevo:");
-        String newName = scan.nextLine();
-        return newName;
-    }
-
+    public String showNewNameMenu();
+    
     //Métodos fase 3 aunque da igual porque esto se volverá una interfaz
     //Debe usarse siempre que el usuario tenga que escribir un número
     private int readNumber(Scanner scanner) {
@@ -129,24 +85,18 @@ public class InitMenuView {
      * Método que debe mostrar un mensaje cuando se porduzca un error en la
      * conexión con la base de datos
      */
-    public void showConnectionErrorMessage() {
-        System.out.println("Erro na conexión co almacén de datos!");
-    }
+    public void showConnectionErrorMessage();
 
     /**
      * Método que debe mostrar un mensaje cuando se porduzca un error en la
      * lectura de datos
      */
-    public void showReadErrorMessage() {
-        System.out.println("Erro na lectura de datos!");
-    }
+    public void showReadErrorMessage();
 
     /**
      * Método que debe mostrar un mensaje cuando se porduzca un error en la
      * escritura de datos
      */
-    public void showWriteErrorMessage() {
-        System.out.println("Erro na escritura dos datos!");
-    }
+    public void showWriteErrorMessage();
 
 }

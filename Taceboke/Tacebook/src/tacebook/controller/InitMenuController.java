@@ -8,6 +8,7 @@ import tacebook.model.Profile;
 import tacebook.persistence.PersistenceException;
 import tacebook.view.InitMenuView;
 import tacebook.persistence.ProfileDB;
+import tacebook.persistence.TacebookDB;
 import tacebook.view.GUIInitMenuView;
 import tacebook.view.TextInitMenuView;
 
@@ -54,6 +55,7 @@ public class InitMenuController {
 
         InitMenuController controller = new InitMenuController();
         controller.init();
+        TacebookDB.close();
 
     }
 
@@ -89,7 +91,7 @@ public class InitMenuController {
         try {
             InitMenuController.addDemoUsers();
         } catch (PersistenceException ex) {
-            System.getLogger(InitMenuController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            proccessPersistenceException(ex);
         }
 
         //muestra el menu de loginMenu hasta que este retorne false
@@ -116,7 +118,7 @@ public class InitMenuController {
                 new ProfileController().openSession(p);
             }
         } catch (PersistenceException ex) {
-            System.getLogger(InitMenuController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            proccessPersistenceException(ex);
         }
     }
 
@@ -151,11 +153,24 @@ public class InitMenuController {
                 profileController.openSession(nuevoPerfil);
             }
         } catch (PersistenceException ex) {
-            System.getLogger(InitMenuController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            proccessPersistenceException(ex);
         }
 
     }
-    //Método que necestia la implementación de métodos para las vistas
-    //private void proccessPersistenceException(PersistenceException ex){}
+
+    private void proccessPersistenceException(PersistenceException ex) {
+        switch (ex.getCode()) {
+            case 0:
+                myView.showConnectionErrorMessage();
+                break;
+            case 1:
+                myView.showReadErrorMessage();
+                break;
+            case 2:
+                myView.showWriteErrorMessage();
+                break;
+
+        }
+    }
 
 }
