@@ -267,6 +267,7 @@ public class Game {
                     linesToDelete.add(entry.getKey());
                 }
             }
+            //Ordena las lineas de mayor a menor comparandolas unas con otras
             for (int i = 0; i < linesToDelete.size(); i++) {
                 for (int j = 0; j < linesToDelete.size() - 1; j++) {
                     if (linesToDelete.get(j) > linesToDelete.get(j + 1)) {
