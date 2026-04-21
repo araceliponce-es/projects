@@ -16,6 +16,7 @@
  */
 package model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import view.MainWindow;
@@ -157,7 +158,7 @@ public class Game {
             this.addPieceToGround();
             this.createNewPiece();
             if (this.hitPieceTheGround()) {
-                this.numberOfLines=0;
+                this.numberOfLines = 0;
                 this.mainWindow.showGameOver();
             }
         }
@@ -257,27 +258,31 @@ public class Game {
                 //le introduces la clave al square si esta existe la suma al contador del hashmap
                 contador.put(squareY, contador.getOrDefault(squareY, 0) + 1);
             }
+            ArrayList<Integer> linesToDelete = new ArrayList<>();
             //Creamos dos variables para saber si tiene que borrar y la linea que borrar
-            boolean doDelete = false;
-            int lineToDelete = 0;
 
             for (Map.Entry<Integer, Integer> entry : contador.entrySet()) {
                 if (entry.getValue() == maxSquares) {
-                    doDelete = true;
-                    lineToDelete = entry.getKey();
 
-                    //cuando se vuelve true
-                    if (doDelete) {
-                        
-                        //Metodo que se encarga de borrar una linea
-                        deleteLine(lineToDelete);
-                        //Muestra las lineas eliminadas
-                        numberOfLines+=100;
-                        mainWindow.showNumberOfLines(numberOfLines);
-                        mainWindow.showLevel(numberOfLines/100);
+                    linesToDelete.add(entry.getKey());
+                }
+            }
+            for (int i = 0; i < linesToDelete.size(); i++) {
+                for (int j = 0; j < linesToDelete.size() - 1; j++) {
+                    if (linesToDelete.get(j) > linesToDelete.get(j + 1)) {
+                        int temp = linesToDelete.get(j);
+                        linesToDelete.set(j, linesToDelete.get(j + 1));
+                        linesToDelete.set(j + 1, temp);
                     }
                 }
             }
+            //Recorre las lineas a boorrar y las elmina
+            for (int y : linesToDelete) {
+                deleteLine(y);
+                numberOfLines += 100;
+            }
+            mainWindow.showNumberOfLines(numberOfLines);
+            mainWindow.showLevel(numberOfLines / 100);
 
         }
 
@@ -291,7 +296,6 @@ public class Game {
      * @param y Coordenada y da liña a borrar
      */
     private void deleteLine(int y) {
-        
 
         for (int j = 0; j < MAX_X; j += SQUARE_SIDE) {
 
@@ -346,7 +350,6 @@ public class Game {
                 res = true;
             }
 
-            
         }
         return res;
     }
