@@ -274,6 +274,7 @@ public class Game {
                         //Muestra las lineas eliminadas
                         numberOfLines+=100;
                         mainWindow.showNumberOfLines(numberOfLines);
+                        mainWindow.showLevel(numberOfLines/100);
                     }
                 }
             }

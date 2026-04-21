@@ -40,7 +40,8 @@ public class MainWindow extends javax.swing.JFrame {
     // Referenza ao obxecto da partida actual
     private Game game = null;
     private Timer timer;
-    private int tiempo_ini = 1000;
+    private int level;
+    private int levelcap = 2;
 
     /**
      * Creates new form MainWindow
@@ -77,7 +78,16 @@ public class MainWindow extends javax.swing.JFrame {
         pnlGame.remove(lblSquare);
         pnlGame.repaint();
     }
-
+    public void showLevel(int numberOfLines ){
+        level = ((numberOfLines/3)+1);
+        lblNumberOfLevel.setText(Integer.toString(level));
+        //Si el nivel alcanza el level cap entonces aumenta el level cap y aumenta
+        // la velocidad
+        if(levelcap==level){
+            timer.setDelay(timer.getDelay()/2);
+            levelcap++;
+        }
+    }
     /**
      * Actualiza na ventá o número de liñas que van feitas no xogo
      *
@@ -108,11 +118,11 @@ public class MainWindow extends javax.swing.JFrame {
         tglbtnPause.setSelected(false);
         // Establecemos o número de liñas que se mostran na ventá a cero
         lblNumberOfLines.setText("0");
-        //Cuando creas un nuevo juego
+        //Cuando creas un nuevo juego para el timer anterior para no multiplicarse
         if (timer != null) {
             timer.stop();
         }
-        timer = new Timer(tiempo_ini, new ActionListener() {
+        timer = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 btnDownActionPerformed(e);
@@ -401,6 +411,10 @@ public class MainWindow extends javax.swing.JFrame {
         if (game != null) {
             timer.stop();
             game.setPaused(tglbtnPause.isSelected());
+            //Comprueba si el boton de pausa no esta pausado y deja correr el timer
+            if(!tglbtnPause.isSelected()){
+                timer.start();
+            }
         }
     }//GEN-LAST:event_tglbtnPauseActionPerformed
 
