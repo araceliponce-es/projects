@@ -35,25 +35,18 @@ public class ProfileController {
     private boolean textMode;
 
     /**
-     * Constructor hasta la fase 2
-     */
-    public ProfileController() {
-        myView = new ProfileView(this);
-    }
-
-    /**
      * Controlador de la fase 3 en adelante, como estamos en la fae 2 da errores
      *
      * @param textMode
      */
-//    public ProfileController(boolean textMode) {
-//        this.textMode = textMode;
-//        if (textMode) {
-//            myView = new TextProfileView(this);
-//        } else {
-//            myView = new GUIProfileView(this);
-//        }
-//    }
+    public ProfileController(boolean textMode) {
+        this.textMode = textMode;
+        if (textMode) {
+            myView = new TextProfileView(this);
+        } else {
+            myView = new GUIProfileView(this);
+        }
+    }
     /**
      * Obtiene el perfil con el que se abre sesión
      *

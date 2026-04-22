@@ -17,7 +17,7 @@ import tacebook.model.Profile;
  *
  * @author Araceli,Diego,Oscar
  */
-public class GUIProfileView implements ProfileView{
+public class GUIProfileView implements ProfileView {
 
     private ProfileController myController;
 
@@ -58,8 +58,8 @@ public class GUIProfileView implements ProfileView{
      */
     private void showProfileInfo(boolean ownProfile, Profile profile) {
 
-        if (ownProfile = true) {
-
+        if (ownProfile) {
+            System.out.println("");
             System.out.println("TACEBOOK: " + profile.getName());
 
             System.out.println("");
@@ -67,7 +67,12 @@ public class GUIProfileView implements ProfileView{
             System.out.println("Estado actual: " + profile.getStatus());
             System.out.println();
 
-            System.out.println("Tu biografia (10 recientes publicaciones): " + profile.getPosts());
+            System.out.println("Tu biografia (10 recientes publicaciones):");
+            System.out.println("");
+            for (int i = 0; i < profile.posts.size(); i++) {
+                System.out.println((i+1)+". "+profile.getPosts().get(i).getText());
+            }
+
             System.out.println();
 
             // lista de amigos : 0 - nombre
@@ -122,7 +127,7 @@ public class GUIProfileView implements ProfileView{
         showProfileInfo(true, profile);
         System.out.println("¿Cabiar el perfil(1) o cerrar sesión(2)?");
         Scanner scan = new Scanner(System.in);
-        switch (scan.nextInt()) {
+        switch (readNumber(scan)) {
             case 1:
                 changeStatus(true, scan, profile);
                 break;
@@ -139,11 +144,11 @@ public class GUIProfileView implements ProfileView{
      * @param profile
      */
     public void showProfileMenu(Profile profile) {
-        showProfileInfo(true, profile);
+
         boolean keepShowing = true;
 
         while (keepShowing) {
-
+            showProfileInfo(true, profile);
             System.out.println("""
                            Escolle unha opción:
                            1. Escribir unha nova publicación
@@ -161,7 +166,7 @@ public class GUIProfileView implements ProfileView{
                            13. Pechar a sesión
                            """);
             Scanner scan = new Scanner(System.in);
-            switch (scan.nextInt()) {
+            switch (readNumber(scan)) {
                 case 1:
                     writeNewPost(scan, profile);
                     break;
@@ -238,11 +243,10 @@ public class GUIProfileView implements ProfileView{
                     //cerrar sesion
                     myController.setSessionProfile(null);
                     keepShowing = false;
-                    break;
                 default:
 
                     keepShowing = false;
-                    break;
+
             }
         }
 
@@ -265,8 +269,7 @@ public class GUIProfileView implements ProfileView{
             //pregunta por consola algo
             System.out.println(text);
             //recibe un numero
-            numberUser = scanner.nextInt();
-            scanner.nextLine();
+            numberUser = readNumber(scanner);
 
             //solo acepta el numero colocado si está en el rango de 1 a maxnumber
         } while (numberUser > 0 && numberUser < maxNumber - 1);
@@ -295,8 +298,8 @@ public class GUIProfileView implements ProfileView{
 
         //selecciona la publicacion del perfil usando el index
         System.out.println("selecciona una publicacion");
-        int selectedIndex = scanner.nextInt();
-        scanner.nextLine();
+        int selectedIndex = readNumber(scanner);
+
         Post selectedPost = profile.getPosts().get(selectedIndex);
 
         System.out.println("cual es tu comentario?");
@@ -321,8 +324,7 @@ public class GUIProfileView implements ProfileView{
             for (int i = 0; i < profilePosts.size(); i++) {
                 System.out.println(i + " - " + profilePosts.get(i).getText() + " " + profilePosts.get(i).getDate() + " " + profilePosts.get(i).getAuthor());
             }
-            int selectedIndex = scanner.nextInt();
-            scanner.nextLine();
+            int selectedIndex = readNumber(scanner);
             // myController.newLike(myController.getShownProfile().getPosts().get(selectedIndex));
             myController.newLike(profile.getPosts().get(selectedIndex));
 
@@ -345,8 +347,7 @@ public class GUIProfileView implements ProfileView{
         if (ownProfile) {
             System.out.println("Elige el perfil de cual amigo quieres ver");
             //mostrar aqui o antes la lusta de amigos con sus indices
-            int userText = scanner.nextInt();
-            scanner.nextLine();
+            int userText = readNumber(scanner);
             myController.setShownProfile(profile.getFriends().get(userText));
         }
 
@@ -375,7 +376,7 @@ public class GUIProfileView implements ProfileView{
     private void proccessFriendshipRequest(boolean ownProfile, Scanner scanner, Profile profile, boolean accept) {
         if (ownProfile) {
             System.out.println("Que numero de solicitud quieres atender : ");
-            int userInt = scanner.nextInt();
+            int userInt = readNumber(scanner);
 
             if (accept) {
                 myController.acceptFriendshipRequest(myController.getShownProfile().getFriendshipRequest().get(userInt));
@@ -396,8 +397,7 @@ public class GUIProfileView implements ProfileView{
         if (ownProfile) {
             //Si estas en tu propio perfil obtiene el amigo con el index indicado
             System.out.println("Seleciona un amigo : ");
-            int userIndex = scanner.nextInt();
-            scanner.nextLine();
+            int userIndex = readNumber(scanner);
             System.out.println("Escribe el mensaje para tu amigo : ");
             String msg = scanner.nextLine();
             Profile friend = myController.getShownProfile().getFriends().get(userIndex);
@@ -422,15 +422,15 @@ public class GUIProfileView implements ProfileView{
                 System.out.println("No tienes mensajes");
             } else {
                 System.out.println("Que mensaje quieres leer : ");
-                int msgIndex = scanner.nextInt();
+                int msgIndex = readNumber(scanner);
                 System.out.println(myController.getShownProfile().getMessages().get(msgIndex));
                 System.out.println("Que quieres hacer con el mensaje :");
                 System.out.println("1.Responder :");
                 System.out.println("2.Borrar mensaje :");
                 System.out.println("3.Volver al perfil :");
                 System.out.println("");
-                int selector = scanner.nextInt();
-                switch (selector) {
+
+                switch (readNumber(scanner)) {
                     case 1 ->
                         sendPrivateMessage(ownProfile, scanner, myController.getShownProfile().getMessages().get(msgIndex).getSourceProfile());
                     case 2 ->
@@ -452,7 +452,7 @@ public class GUIProfileView implements ProfileView{
      */
     private void deletePrivateMessage(boolean ownProfile, Scanner scanner, Profile profile) {
         System.out.println("Que mensaje quieres borrar : ");
-        int msgIndex = scanner.nextInt();
+        int msgIndex = readNumber(scanner);
         myController.deleteMessage(myController.getShownProfile().getMessages().get(msgIndex));
     }
 
@@ -462,7 +462,7 @@ public class GUIProfileView implements ProfileView{
      */
     private void showOldPosts(Scanner scanner, Profile profile) {
         System.out.println("Cuantos post quieres mirar ???");
-        int numeroPosts = scanner.nextInt();
+        int numeroPosts = readNumber(scanner);
         this.setPostsShown(numeroPosts);
         setPostsShown(numeroPosts);
         myController.reloadProfile();

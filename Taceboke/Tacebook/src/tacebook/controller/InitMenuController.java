@@ -21,39 +21,37 @@ import tacebook.view.TextInitMenuView;
 public class InitMenuController {
 
     //Este atributo no tiene get ni set, indica si se activa el modo texto
-    private boolean textMode;
+    private boolean textMode ;
 
     private InitMenuView myView;
-
-    /**
-     * Controlador hasta la fase 2
-     */
-    public InitMenuController() {
-
-        myView = new InitMenuView(this);
-    }
 
     /**
      * Controlador de la fase 3 en adelante, como estamos en la fae 2 da errores
      *
      * @param textMode
      */
-//    public InitMenuController(boolean textMode) {
-//        this.textMode = textMode;
-//        if (textMode) {
-//            this.myView = new TextInitMenuView(this);
-//        } else {
-//            this.myView = new GUIInitMenuView(this);
-//        }
-//    }
+    public InitMenuController(boolean textMode) {
+        this.textMode = textMode;
+        if (textMode) {
+            this.myView = new TextInitMenuView(this);
+        } else {
+            this.myView = new GUIInitMenuView(this);
+        }
+    }
     /**
      * Método que creará un controlador e invocará al método "init"
-     *
+     * y obtiene los parametos de la terminal para saber si hay 
+     * que activar el textMode
      * @param args
      */
     public static void main(String[] args) {
-
-        InitMenuController controller = new InitMenuController();
+        //Variable sin activar el modo "text"
+        boolean textMode = false;
+        // Comprueba que el usuario activa el modo texto por comando
+        if (args.length > 0 && args[0].equals("text")){
+            textMode = true;
+        }
+        InitMenuController controller = new InitMenuController(textMode); 
         controller.init();
         TacebookDB.close();
 
@@ -86,8 +84,6 @@ public class InitMenuController {
      */
     private void init() {
 
-        //SOLO temporal, con usuarios y datos temporales
-        System.out.println("hay usuarios temporales");
         try {
             InitMenuController.addDemoUsers();
         } catch (PersistenceException ex) {
@@ -95,10 +91,11 @@ public class InitMenuController {
         }
 
         //muestra el menu de loginMenu hasta que este retorne false
-        while (!myView.showLoginMenu()) {
-            myView.showLoginMenu();
+        boolean exit = false;
+        while (!exit) {
+            exit = myView.showLoginMenu();
         }
-
+        
     }
 
     /**
@@ -115,7 +112,7 @@ public class InitMenuController {
             if (p == null) {
                 myView.showLoginErrorMessage();
             } else {
-                new ProfileController().openSession(p);
+                new ProfileController(textMode).openSession(p);
             }
         } catch (PersistenceException ex) {
             proccessPersistenceException(ex);
@@ -149,7 +146,7 @@ public class InitMenuController {
                 // creamos y guardamos el perfil
                 Profile nuevoPerfil = new Profile(name, password, status);
                 ProfileDB.save(nuevoPerfil);
-                ProfileController profileController = new ProfileController();
+                ProfileController profileController = new ProfileController(textMode);
                 profileController.openSession(nuevoPerfil);
             }
         } catch (PersistenceException ex) {

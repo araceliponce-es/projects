@@ -40,9 +40,9 @@ public class TextInitMenuView implements InitMenuView {
     public boolean showLoginMenu() {
         System.out.println("¿Iniciar sesión(1), registrarse(2) o salir(3)?");
         Scanner scan = new Scanner(System.in);
-        switch (scan.nextInt()) {
+        switch (readNumber(scan)) {
+            
             case 1:
-                scan.nextLine(); //despues de numero
                 System.out.println("Escribe tu nombre de usuario: ");
                 String name = scan.nextLine();
                 System.out.println("Escribe tu contraseña: ");
