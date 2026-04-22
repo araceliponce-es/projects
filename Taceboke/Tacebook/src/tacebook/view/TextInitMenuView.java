@@ -13,12 +13,14 @@ import tacebook.controller.InitMenuController;
  *
  * @author Araceli,Diego,Oscar
  */
-public class TextInitMenuView {
+public class TextInitMenuView implements InitMenuView {
 
     InitMenuController myController;
 
     /**
-     *Constructor de la fista en modo texto que recibe como parámetro  el controlador
+     * Constructor de la fista en modo texto que recibe como parámetro el
+     * controlador
+     *
      * @param controller
      */
     public TextInitMenuView(InitMenuController controller) {
@@ -34,6 +36,7 @@ public class TextInitMenuView {
      *
      * @return true si usuario quiere salir de app
      */
+    @Override
     public boolean showLoginMenu() {
         System.out.println("¿Iniciar sesión(1), registrarse(2) o salir(3)?");
         Scanner scan = new Scanner(System.in);
@@ -60,6 +63,7 @@ public class TextInitMenuView {
     /**
      * muestra mensaje en caso de error en login
      */
+    @Override
     public void showLoginErrorMessage() {
         System.out.println("Usuario y contraseña incorrectos, probablemente sólo uno esté mal, pero no te voy a decir cuál");
     }
@@ -72,6 +76,7 @@ public class TextInitMenuView {
      * si provee la informacion llama a myController
      *
      */
+    @Override
     public void showRegisterMenu() {
         Scanner scan = new Scanner(System.in);
         System.out.println("Escribe un nombre de usuario:");
@@ -98,6 +103,7 @@ public class TextInitMenuView {
      *
      * @return el nuevo nombre introducido
      */
+    @Override
     public String showNewNameMenu() {
         Scanner scan = new Scanner(System.in);
         System.out.println("Nombe de usuario no disponible, por favor introduce uno nuevo:");
@@ -128,6 +134,7 @@ public class TextInitMenuView {
      * Método que debe mostrar un mensaje cuando se porduzca un error en la
      * conexión con la base de datos
      */
+    @Override
     public void showConnectionErrorMessage() {
         System.out.println("Erro na conexión co almacén de datos!");
     }
@@ -136,6 +143,7 @@ public class TextInitMenuView {
      * Método que debe mostrar un mensaje cuando se porduzca un error en la
      * lectura de datos
      */
+    @Override
     public void showReadErrorMessage() {
         System.out.println("Erro na lectura de datos!");
     }
@@ -144,9 +152,9 @@ public class TextInitMenuView {
      * Método que debe mostrar un mensaje cuando se porduzca un error en la
      * escritura de datos
      */
+    @Override
     public void showWriteErrorMessage() {
         System.out.println("Erro na escritura dos datos!");
     }
 
 }
-

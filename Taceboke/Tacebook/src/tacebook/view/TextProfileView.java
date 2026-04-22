@@ -17,10 +17,9 @@ import tacebook.controller.ProfileController;
  *
  * @author Araceli,Diego,Oscar
  */
-public class TextProfileView {
+public class TextProfileView implements ProfileView{
 
     private ProfileController myController;
-    SimpleDateFormat formatter;
 
     private int postsShown = 10;
 

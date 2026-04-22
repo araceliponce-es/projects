@@ -17,10 +17,9 @@ import tacebook.model.Profile;
  *
  * @author Araceli,Diego,Oscar
  */
-public class GUIProfileView {
+public class GUIProfileView implements ProfileView{
 
     private ProfileController myController;
-    SimpleDateFormat formatter;
 
     private int postsShown = 10;
 
