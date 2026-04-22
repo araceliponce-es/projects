@@ -82,7 +82,7 @@ public class MainWindow extends javax.swing.JFrame {
         level = ((numberOfLines/3)+1);
         lblNumberOfLevel.setText(Integer.toString(level));
         //Si el nivel alcanza el level cap entonces aumenta el level cap y aumenta
-        // la velocidad
+        // la velocidadss
         if(levelcap==level){
             timer.setDelay(timer.getDelay()/2);
             levelcap++;
@@ -101,7 +101,7 @@ public class MainWindow extends javax.swing.JFrame {
      * Mostra unha mensaxe informando ao usuario do final do xogo
      */
     public void showGameOver() {
-        game = null;
+        game = null; 
         JOptionPane.showMessageDialog(this, "Fin do xogo");
     }
 
@@ -109,7 +109,10 @@ public class MainWindow extends javax.swing.JFrame {
      * Inicia un novo xogo
      */
     private void startGame() {
-
+        //Reiniciamos el contador de nivels
+        this.level= 1; 
+        this.levelcap = 2;
+        lblNumberOfLevel.setText(Integer.toString(level));
         // Limpamos todo o que puidese haber pintado no panel do xogo
         pnlGame.removeAll();
         // Creamos un novo obxecto xogo
@@ -401,7 +404,7 @@ public class MainWindow extends javax.swing.JFrame {
         // Ao picar no botón de "Nova partida", invocamos ao método privado 
         // que inicia un novo xogo
         startGame();
-
+        
 
     }//GEN-LAST:event_btnNewGameActionPerformed
 
