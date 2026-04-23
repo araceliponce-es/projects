@@ -87,7 +87,7 @@ public class MenuGenerator {
             char c = scan.next().charAt(0);
             hangMan.tryChar(c);
             System.out.println();
-            System.out.println(hangMan.showHidenWord());
+            System.out.println(hangMan.showHiddenWord());
             System.out.println("Letras falladas: " + hangMan.getStringFails());
         }
 

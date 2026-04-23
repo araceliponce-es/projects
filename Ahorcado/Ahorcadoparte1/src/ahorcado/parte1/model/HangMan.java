@@ -70,7 +70,7 @@ public class HangMan {
      *
      * @return La palabra secreta con guiones en los caracteres no acertados
      */
-    public String showHidenWord() {
+    public String showHiddenWord() {
         return hiddenWord.show();
     }
 

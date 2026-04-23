@@ -5,6 +5,7 @@
 package ahorcado.parte1.ui;
 
 import ahorcado.parte1.model.HangMan;
+import ahorcado.parte1.model.HiddenWord;
 import controller.HangManController;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -19,6 +20,7 @@ import ahorcado.parte1.ui.GenerateWordException;
 public class MainWindow extends javax.swing.JFrame {
 
     Icon[] imagenes = new Icon[6];
+    HiddenWord word = null;
 
     public void iconInicializer() {
         for (int i = 0; i < imagenes.length; i++) {
@@ -46,29 +48,8 @@ public class MainWindow extends javax.swing.JFrame {
 
     public String startNewGame() {
 
-//        Object seleccion = JOptionPane.showInputDialog(
-//                this,
-//                "Modo de xogo",
-//                "Selecciona un modo de xogo",
-//                JOptionPane.QUESTION_MESSAGE,
-//                null, // null para icono defecto
-//                new Object[]{"Clásico,generando palabra al azar", "Competitivo,metiendo la palabra por keyboard"},
-//                "");
-//        if (seleccion == null) {
-//            System.exit(0);
-//        } else if (seleccion.equals("Clásico,generando palabra al azar")) {
-//            try {
-//                ArrayWordGenerator palabraSecr = new ArrayWordGenerator();
-//                return palabraSecr.generateWord();
-//            } catch (GenerateWordException ex) {
-//                System.getLogger(MainWindow.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-//            }
-//        } else if ((seleccion.equals("Competitivo,metiendo la palabra por keyboard"))) {
-//            return secretWordCompetitive();
-//        }
-//        return null;
-showLevelCombobox();
-return null;
+        showLevelCombobox();
+        return null;
     }
 
     public String showLevelCombobox() {
@@ -85,7 +66,11 @@ return null;
         } else if (seleccion.equals("Clásico,generando palabra al azar")) {
             try {
                 ArrayWordGenerator palabraSecr = new ArrayWordGenerator();
-                return palabraSecr.generateWord();
+                word = new HiddenWord(palabraSecr.generateWord());
+                //show muestra guiones
+                jLhiddenWordOut.setText(word.show());
+                System.out.println(word.getCharacters());
+
             } catch (GenerateWordException ex) {
                 System.getLogger(MainWindow.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
             }
@@ -96,16 +81,17 @@ return null;
     }
 
     public String secretWordCompetitive() {
-        // Con caja de texto
-//        String seleccion = JOptionPane.showInputDialog(
-//                this, "Introduce la palabra secreta",
-//                "Palabra Secreta",
-//                JOptionPane.QUESTION_MESSAGE);  // el icono sera un iterrogante
-
+        String selectedWord;
         // Si seleccion es null es que el usuario ha pulsado Cancelar.
         GUIKeyboardWordGenerator palabraSecr = new GUIKeyboardWordGenerator();
         try {
-            return palabraSecr.generateWord();
+            selectedWord = palabraSecr.generateWord();
+
+            word = new HiddenWord(selectedWord);
+            //show muestra guiones
+            jLhiddenWordOut.setText(word.show());
+
+            return selectedWord;
         } catch (GenerateWordException ex) {
             return null;
         }
