@@ -60,7 +60,7 @@ public class Profile {
      * 
      * @return ArrayList<Profile>
      */
-    public ArrayList<Profile> getFriendshipRequest() {
+    public ArrayList<Profile> getFriendshipsRequest() {
         return friendshipRequest;
     }
 

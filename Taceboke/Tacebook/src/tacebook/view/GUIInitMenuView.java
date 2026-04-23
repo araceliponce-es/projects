@@ -36,11 +36,11 @@ public class GUIInitMenuView implements InitMenuView {
      */
     @Override
     public boolean showLoginMenu() {
-        System.out.println("¿Iniciar sesión(1), registrarse(2) o salir(3)?");
+        System.out.println("gui ¿Iniciar sesión(1), registrarse(2) o salir(3)?");
         Scanner scan = new Scanner(System.in);
         switch (readNumber(scan)) {
             case 1:
-                
+
                 System.out.println("Escribe tu nombre de usuario: ");
                 String name = scan.nextLine();
                 System.out.println("Escribe tu contraseña: ");

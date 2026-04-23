@@ -5,6 +5,7 @@
 package tacebook.controller;
 
 import tacebook.model.Profile;
+import tacebook.persistence.DemoData;
 import tacebook.persistence.PersistenceException;
 import tacebook.view.InitMenuView;
 import tacebook.persistence.ProfileDB;
@@ -21,9 +22,8 @@ import tacebook.view.TextInitMenuView;
 public class InitMenuController {
 
     //Este atributo no tiene get ni set, indica si se activa el modo texto
-    private boolean textMode ;
-
-    private InitMenuView myView;
+    private boolean textMode;
+    private InitMenuView myView;  
 
     /**
      * Controlador de la fase 3 en adelante, como estamos en la fae 2 da errores
@@ -31,6 +31,7 @@ public class InitMenuController {
      * @param textMode
      */
     public InitMenuController(boolean textMode) {
+        
         this.textMode = textMode;
         if (textMode) {
             this.myView = new TextInitMenuView(this);
@@ -38,43 +39,24 @@ public class InitMenuController {
             this.myView = new GUIInitMenuView(this);
         }
     }
+
     /**
-     * Método que creará un controlador e invocará al método "init"
-     * y obtiene los parametos de la terminal para saber si hay 
-     * que activar el textMode
+     * Método que creará un controlador e invocará al método "init" y obtiene
+     * los parametos de la terminal para saber si hay que activar el textMode
+     *
      * @param args
      */
     public static void main(String[] args) {
-        //Variable sin activar el modo "text"
-        boolean textMode = false;
+        //Variable activando modo text 
+        //todo: actualizar archivos *gui*
+        boolean textMode = true;
         // Comprueba que el usuario activa el modo texto por comando
-        if (args.length > 0 && args[0].equals("text")){
+        if (args.length > 0 && args[0].equals("text")) {
             textMode = true;
         }
-        InitMenuController controller = new InitMenuController(textMode); 
+        InitMenuController controller = new InitMenuController(textMode);
         controller.init();
         TacebookDB.close();
-
-    }
-
-    /**
-     * Método que no sé hasta qué fase lo usaremos porque no lo hice ni lo pide
-     * el proyecto, añade unos perfiles de prueba con su nombre, contraseña y
-     * estado
-     *
-     * @throws PersistenceException
-     */
-    public static void addDemoUsers() throws PersistenceException {
-        try {
-            Profile uno = new Profile("a", "123", "status");
-            Profile dos = new Profile("b", "123", "456");
-            Profile tres = new Profile("c", "123", "789");
-            ProfileDB.save(uno);
-            ProfileDB.save(dos);
-            ProfileDB.save(tres);
-        } catch (PersistenceException e) {
-            System.out.println(e);
-        }
 
     }
 
@@ -85,17 +67,18 @@ public class InitMenuController {
     private void init() {
 
         try {
-            InitMenuController.addDemoUsers();
+            DemoData.load();
         } catch (PersistenceException ex) {
             proccessPersistenceException(ex);
         }
 
-        //muestra el menu de loginMenu hasta que este retorne false
+        //muestra el menu de loginMenu en loop
+        // hasta que este retorne true
         boolean exit = false;
         while (!exit) {
             exit = myView.showLoginMenu();
         }
-        
+
     }
 
     /**
@@ -112,11 +95,11 @@ public class InitMenuController {
             if (p == null) {
                 myView.showLoginErrorMessage();
             } else {
-                new ProfileController(textMode).openSession(p);
+                                  new ProfileController(textMode).openSession(p);          
             }
         } catch (PersistenceException ex) {
             proccessPersistenceException(ex);
-        }
+        }   
     }
 
     /**

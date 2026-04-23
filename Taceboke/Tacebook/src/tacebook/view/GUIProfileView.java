@@ -98,7 +98,7 @@ public class GUIProfileView implements ProfileView {
             }
             
             
-            System.out.println("Solicitudes de amistad: " + profile.getFriendshipRequest());
+            System.out.println("Solicitudes de amistad: " + profile.getFriendshipsRequest());
             System.out.println();
 
             System.out.println();
@@ -388,9 +388,9 @@ public class GUIProfileView implements ProfileView {
             int userInt = readNumber(scanner);
 
             if (accept) {
-                myController.acceptFriendshipRequest(myController.getShownProfile().getFriendshipRequest().get(userInt));
+                myController.acceptFriendshipRequest(myController.getShownProfile().getFriendshipsRequest().get(userInt));
             } else {
-                myController.rejectFriendshipRequest(myController.getShownProfile().getFriendshipRequest().get(userInt));
+                myController.rejectFriendshipRequest(myController.getShownProfile().getFriendshipsRequest().get(userInt));
             }
 
         }

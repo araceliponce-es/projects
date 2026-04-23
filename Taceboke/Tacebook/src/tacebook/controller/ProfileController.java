@@ -10,6 +10,7 @@ import tacebook.persistence.PostDB;
 import tacebook.persistence.MessageDB;
 import tacebook.persistence.CommentDB;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import tacebook.model.Comment;
 import tacebook.model.Message;
@@ -47,6 +48,7 @@ public class ProfileController {
             myView = new GUIProfileView(this);
         }
     }
+
     /**
      * Obtiene el perfil con el que se abre sesión
      *
@@ -258,9 +260,9 @@ public class ProfileController {
                 //obtiene los amigos del A
                 ArrayList<Profile> friends = sessionProfile.getFriends();
                 //obtiene las solicitudes de amistad de A
-                ArrayList<Profile> pendingRequests = sessionProfile.getFriendshipRequest();
+                ArrayList<Profile> pendingRequests = sessionProfile.getFriendshipsRequest();
                 //obtiene las solicitudes de amistad de B (el futuro amigo)
-                ArrayList<Profile> pendingFutureFriendRequests = profileB.getFriendshipRequest();
+                ArrayList<Profile> pendingFutureFriendRequests = profileB.getFriendshipsRequest();
 
                 //si A ya es amigo de B
                 for (Profile friend : friends) {
@@ -351,9 +353,13 @@ public class ProfileController {
      * @param text
      */
     public void newMessage(Profile destProfile, String text) {
+//        Calendar cal = Calendar.getInstance();
+//        Date now = cal.getTime(); estas 2 lineas y new Date() hacen lo mismo
+        Date now = new Date();
+        
         // public Message(int id, String text, boolean read, Profile destProfile, Profile sourceProfile) {
         // id del mensaje = cantidad de mensajes del destinatario
-        Message message = new Message(destProfile.getMessages().size(), text, false, destProfile, shownProfile);
+        Message message = new Message(destProfile.getMessages().size(), now, text, false, destProfile, shownProfile);
 
         try {
             // metodo que añade al inicio del arraylist

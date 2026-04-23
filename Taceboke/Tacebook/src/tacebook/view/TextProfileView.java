@@ -11,16 +11,17 @@ import java.util.Scanner;
 import tacebook.model.Post;
 import tacebook.model.Profile;
 import tacebook.controller.ProfileController;
+import tacebook.model.Message;
 
 /**
  * Aquí metemos el código de ProfileView
  *
  * @author Araceli,Diego,Oscar
  */
-public class TextProfileView implements ProfileView{
+public class TextProfileView implements ProfileView {
 
     private ProfileController myController;
-    private SimpleDateFormat formatter=new SimpleDateFormat("dd-MM-yyyy 'ás' HH:mm:ss");
+    private SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy 'ás' HH:mm:ss");
     private int postsShown = 10;
 
     /**
@@ -58,10 +59,9 @@ public class TextProfileView implements ProfileView{
      */
     private void showProfileInfo(boolean ownProfile, Profile profile) {
 
-        if (ownProfile = true) {
+        if (ownProfile) {
 
             System.out.println("TACEBOOK: " + profile.getName());
-
             System.out.println("");
 
             System.out.println("Estado actual: " + profile.getStatus());
@@ -70,8 +70,11 @@ public class TextProfileView implements ProfileView{
             System.out.println("Tu biografia (10 recientes publicaciones): " + profile.getPosts());
             System.out.println("");
             System.out.println("");
-            for (int i = 0; i < profile.posts.size(); i++) {
-                System.out.println((i+1)+". "+profile.getPosts().get(i).getText()+" publicado el "+formatter.format(profile.getPosts().get(i).getDate()));
+            for (int i = 0; i < profile.getPosts().size(); i++) {
+                Post post = profile.getPosts().get(i);
+                System.out.println((i + 1) + ". " + post.getText() + " | " + formatter.format(post.getDate()));
+
+//               System.out.println((i + 1) + ". " + profile.getPosts().get(i).getText() + " publicado el " + formatter.format(profile.getPosts().get(i).getDate()));
             }
 
             // lista de amigos : 0 - nombre
@@ -79,7 +82,7 @@ public class TextProfileView implements ProfileView{
             if (friends.size() > 0) {
                 System.out.println("Tienes " + friends.size() + " amigos");
                 for (int i = 0; i < friends.size(); i++) {
-                    System.out.println(i + " - " + friends.get(i).getName());
+                    System.out.println((i + 1) + " - " + friends.get(i).getName());
                 }
             } else {
                 System.out.println("tienes 0 amigos");
@@ -88,7 +91,18 @@ public class TextProfileView implements ProfileView{
             //No hay un metodo en profile para recoger los mensajes y no encuentro donde lo pone en las partes del proyecto
             System.out.println("Comentarios: ");
             System.out.println();
-            System.out.println("Solicitudes de amistad: " + profile.getFriendshipRequest());
+
+            ArrayList<Profile> pendingRequests = profile.getFriendshipsRequest();
+
+            System.out.println("Solicitudes de amistad: " + profile.getFriendshipsRequest());
+            if (pendingRequests.size() > 0) {
+                System.out.println("Tienes " + pendingRequests.size() + " solicitudes de amistad");
+                for (int i = 0; i < pendingRequests.size(); i++) {
+                    System.out.println((i + 1) + " - " + pendingRequests.get(i).getName());
+                }
+            } else {
+                System.out.println("tienes 0 solicitudes de amistad");
+            }
             System.out.println();
 
             System.out.println();
@@ -139,6 +153,10 @@ public class TextProfileView implements ProfileView{
     }
 
     /**
+     * profileController en su método openSession usa
+     * view.showprofilemenu(sessionprofile)
+     *
+     * es decir, profile aqui se refiere al usuario que inició sesión
      *
      * @param profile
      */
@@ -185,26 +203,19 @@ public class TextProfileView implements ProfileView{
                     }
                     break;
                 case 5:
-                    commentPost(scan, profile);
+                    System.out.println("Introduce o nome do perfil ao que queres enviar a solitude");
+                    String futureFriendName = scan.nextLine();
+                    myController.newFriendshipRequest(futureFriendName);
                     break;
                 case 6:
-                    myController.acceptFriendshipRequest(profile); //???
+                    // el profesor no muestra lista de solicitudes de amistad de nuevo.
+                    // porque despues de realizar cualquier accion se muestra de nuevo la biografia entera y debajo el menu
+                    proccessFriendshipRequest(true, scan, profile, true);
+
                     break;
                 case 7:
-
-                    if (profile.friendshipRequest.size() > 0) {
-                        System.out.println("...............");
-                        //selecciona un numero de amigo
-                        Profile profileToReject = null;
-                        //encuentra ese numero en la lista de solicitudes
-                        int rejectIndex = selectElement("elige un amigo", profile.friendshipRequest.size(), scan);
-                        //sera el profile de destino
-                        profileToReject = profile.friends.get(rejectIndex);
-                        myController.rejectFriendshipRequest(profileToReject);
-                        break;
-                    } else {
-                        showProfileInfo(true, profile);
-                    }
+                    proccessFriendshipRequest(true, scan, profile, false);
+                    break;
                 case 8:
 
                     if (profile.friends.size() > 0) {
@@ -225,7 +236,6 @@ public class TextProfileView implements ProfileView{
 
                     break;
                 case 9:
-//                    private void readPrivateMessage(boolean ownProfile, Scanner scanner, Profile profile)
                     readPrivateMessage(true, scan, profile);
                     break;
 
@@ -262,7 +272,7 @@ public class TextProfileView implements ProfileView{
      * Devolve o número introducido polo usuario. *
      */
     private int selectElement(String text, int maxNumber, Scanner scanner) {
-        int numberUser = 0;
+        int numberUser;
 
         do {
 
@@ -270,10 +280,10 @@ public class TextProfileView implements ProfileView{
             System.out.println(text);
             //recibe un numero
             numberUser = readNumber(scanner);
-            
 
-            //solo acepta el numero colocado si está en el rango de 1 a maxnumber
-        } while (numberUser > 0 && numberUser < maxNumber - 1);
+            //sigue preguntando si el usuario sigue colocando numeros invalidos 
+            // (es invalido si : menor que cero o es >= al maxnumber)
+        } while (numberUser < 0 || numberUser >= maxNumber);
 
         return numberUser;
     }
@@ -296,10 +306,19 @@ public class TextProfileView implements ProfileView{
      * e chama ao controlador para crear un comentario con ese texto. *
      */
     private void commentPost(Scanner scanner, Profile profile) {
-
+        if (profile.getPosts().isEmpty()) {
+            System.out.println("no hay publicaciones");
+            return;
+        }
         //selecciona la publicacion del perfil usando el index
         System.out.println("selecciona una publicacion");
         int selectedIndex = readNumber(scanner);
+
+        if (selectedIndex < 0 || selectedIndex >= profile.getPosts().size()) {
+            System.out.println("indice invalido");
+            return;
+        }
+
         Post selectedPost = profile.getPosts().get(selectedIndex);
 
         System.out.println("cual es tu comentario?");
@@ -315,21 +334,28 @@ public class TextProfileView implements ProfileView{
     private void addLike(Scanner scanner, Profile profile) {
 
         ArrayList<Post> profilePosts = profile.getPosts();
+        if (profilePosts.isEmpty()) {
+            System.out.println("No hay publicaciones");
+            return;
+        }
 
-        if (profilePosts.size() > 0) {
+        System.out.println("Selecciona una publicacion:");
 
-            //selecciona la publicacion del perfil usando el index
-            System.out.println("Selecciona una publicacion");
+        for (int i = 0; i < profilePosts.size(); i++) {
+            Post post = profilePosts.get(i);
+            System.out.println((i + 1) + " - " + post.getText() + " " + post.getDate() + " " + post.getAuthor());
+        }
 
-            for (int i = 0; i < profilePosts.size(); i++) {
-                System.out.println(i + " - " + profilePosts.get(i).getText() + " " + profilePosts.get(i).getDate() + " " + profilePosts.get(i).getAuthor());
-            }
-            int selectedIndex = readNumber(scanner);
+        System.out.println("que número eliges?");
+        int selectedNumber = readNumber(scanner);
+
+        if (selectedNumber > 0 && selectedNumber <= profilePosts.size()) {
+            int selectedIndex = selectedNumber - 1;
             // myController.newLike(myController.getShownProfile().getPosts().get(selectedIndex));
-            myController.newLike(profile.getPosts().get(selectedIndex));
+            myController.newLike(profilePosts.get(selectedIndex));
 
         } else {
-            System.out.println("profileposts size igual o menor a cero");
+            System.out.println("Índice inválido");
         }
 
     }
@@ -375,13 +401,36 @@ public class TextProfileView implements ProfileView{
      */
     private void proccessFriendshipRequest(boolean ownProfile, Scanner scanner, Profile profile, boolean accept) {
         if (ownProfile) {
-            System.out.println("Que numero de solicitud quieres atender : ");
-            int userInt = readNumber(scanner);
+//            ArrayList<Profile> pendingRequests = myController.getShownProfile().getFriendshipsRequest();
+            ArrayList<Profile> pendingRequests = profile.getFriendshipsRequest();
 
-            if (accept) {
-                myController.acceptFriendshipRequest(myController.getShownProfile().getFriendshipRequest().get(userInt));
+            if (pendingRequests.isEmpty()) {
+                System.out.println("no tienes solicitudes pendientes");
+                return;
+            }
+
+            System.out.println("Que numero de solicitud quieres atender : ");
+
+            //mostrar la lista
+            for (int i = 0; i < pendingRequests.size(); i++) {
+                System.out.println((i + 1) + " - " + pendingRequests.get(i).getName());
+            }
+
+            int selectedNumber = readNumber(scanner);
+
+            if (selectedNumber > 0 && selectedNumber <= pendingRequests.size()) {
+
+                int selectedIndex = selectedNumber - 1;
+                Profile selectedProfile = pendingRequests.get(selectedIndex);
+
+                if (accept) {
+                    myController.acceptFriendshipRequest(selectedProfile);
+                } else {
+                    myController.rejectFriendshipRequest(selectedProfile);
+                }
+
             } else {
-                myController.rejectFriendshipRequest(myController.getShownProfile().getFriendshipRequest().get(userInt));
+                System.out.println("Índice inválido");
             }
 
         }
@@ -389,20 +438,28 @@ public class TextProfileView implements ProfileView{
 
     /**
      * Se estamos vendo o propio perfil, pide ao usuario selecciona un amigo e o
-     * texto da mensaxe e chama ao controlador para enviar unha mensaxe. Se
-     * estamos vendo o perfil dunha amizade, pide o texto para enviarlle unha
+     * texto da mensaxe e chama ao controlador para enviar unha mensaxe.
+     *
+     * Se estamos vendo o perfil dunha amizade, pide o texto para enviarlle unha
      * mensaxe a ese perfil. *
      */
     private void sendPrivateMessage(boolean ownProfile, Scanner scanner, Profile profile) {
         if (ownProfile) {
             //Si estas en tu propio perfil obtiene el amigo con el index indicado
             System.out.println("Seleciona un amigo : ");
-            int userIndex = readNumber(scanner);
-            
-            System.out.println("Escribe el mensaje para tu amigo : ");
-            String msg = scanner.nextLine();
-            Profile friend = myController.getShownProfile().getFriends().get(userIndex);
-            myController.newMessage(friend, msg);
+            int selectedNumber = readNumber(scanner);
+            int selectedIndex = selectedNumber - 1;
+
+            if (selectedNumber > 0 && selectedNumber <= profile.getFriends().size()) {
+                System.out.println("Escribe el mensaje para tu amigo : ");
+                String msg = scanner.nextLine();
+
+                Profile friend = profile.getFriends().get(selectedIndex);
+                myController.newMessage(friend, msg);
+            } else {
+                System.out.println("Índice inválido");
+            }
+
         } else {
             //Si ya estas sobre el perfil de un amigo entonces ya le mandas el mensaje
             System.out.println("Escribe el mensaje para tu amigo : ");
@@ -451,9 +508,24 @@ public class TextProfileView implements ProfileView{
      * borrala. *
      */
     private void deletePrivateMessage(boolean ownProfile, Scanner scanner, Profile profile) {
+        ArrayList<Message> messages = myController.getShownProfile().getMessages();
+
+        if (messages.isEmpty()) {
+            System.out.println("no hay mensajes");
+            return;
+        }
+
+        //no muestra lista, si quiere ver los mensajes en lista usaria readPrivateMessage()
         System.out.println("Que mensaje quieres borrar : ");
-        int msgIndex = readNumber(scanner);
-        myController.deleteMessage(myController.getShownProfile().getMessages().get(msgIndex));
+        int selectedNumber = readNumber(scanner);
+        int selectedIndex = selectedNumber - 1;
+
+        if (selectedNumber > 0 && selectedNumber <= messages.size()) {
+            myController.deleteMessage(myController.getShownProfile().getMessages().get(selectedIndex));
+        } else {
+            System.out.println("Índice inválido");
+        }
+
     }
 
     /**
@@ -463,7 +535,6 @@ public class TextProfileView implements ProfileView{
     private void showOldPosts(Scanner scanner, Profile profile) {
         System.out.println("Cuantos post quieres mirar ???");
         int numeroPosts = readNumber(scanner);
-        this.setPostsShown(numeroPosts);
         setPostsShown(numeroPosts);
         myController.reloadProfile();
     }
@@ -567,4 +638,3 @@ public class TextProfileView implements ProfileView{
     }
 
 }
-
