@@ -6,7 +6,6 @@ package ahorcado.parte1.ui;
 
 import ahorcado.parte1.model.HangMan;
 import ahorcado.parte1.ui.KeyboardWordGenerator;
-import controller.HangManController;
 import java.util.Scanner;
 
 /**

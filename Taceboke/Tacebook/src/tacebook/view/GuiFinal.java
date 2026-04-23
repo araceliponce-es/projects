@@ -5,6 +5,7 @@ import java.awt.Insets;
 import java.net.URL;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.plaf.metal.MetalLookAndFeel;
 import javax.swing.plaf.metal.OceanTheme;
@@ -25,17 +26,10 @@ public class GuiFinal extends javax.swing.JFrame {
      * Creates new form Gui
      */
     public GuiFinal() {
+        
         initComponents();
-
-//        btnPostCreate.setMargin(new Insets(5, 20, 5, 20));
+        showloginMenu();
         btnPostCreate.setIcon(loadIcon("/tacebook/view/images/mas.png"));
-//        btnPostCreate.setFocusPainted(false);
-//        btnPostCreate.setBorderPainted(false);
-//        btnPostCreate.setContentAreaFilled(false);
-//        btnPostCreate.setOpaque(true);
-//        btnPostCreate.setBackground(new Color(1, 155, 1));
-//        btnPostCreate.setForeground(Color.WHITE);
-
         jTabbedPane1.setIconAt(0, loadIcon("/tacebook/view/images/persona.png"));
 
     }
@@ -59,7 +53,12 @@ public class GuiFinal extends javax.swing.JFrame {
 
         return new ImageIcon(url);
     }
+    private boolean showloginMenu(){
+         
 
+       
+        return true;    
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
