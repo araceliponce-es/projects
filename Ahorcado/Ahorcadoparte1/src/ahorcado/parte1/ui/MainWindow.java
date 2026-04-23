@@ -97,13 +97,13 @@ return null;
 
     public String secretWordCompetitive() {
         // Con caja de texto
-        String seleccion = JOptionPane.showInputDialog(
-                this, "Introduce la palabra secreta",
-                "Palabra Secreta",
-                JOptionPane.QUESTION_MESSAGE);  // el icono sera un iterrogante
+//        String seleccion = JOptionPane.showInputDialog(
+//                this, "Introduce la palabra secreta",
+//                "Palabra Secreta",
+//                JOptionPane.QUESTION_MESSAGE);  // el icono sera un iterrogante
 
         // Si seleccion es null es que el usuario ha pulsado Cancelar.
-        GUIKeyboardWordGenerator palabraSecr = new GUIKeyboardWordGenerator(seleccion);
+        GUIKeyboardWordGenerator palabraSecr = new GUIKeyboardWordGenerator();
         try {
             return palabraSecr.generateWord();
         } catch (GenerateWordException ex) {

@@ -66,7 +66,7 @@ public class MenuGenerator {
         } else if ("2".equalsIgnoreCase(eleccion)) {
             myGenerator = new KeyboardWordGenerator();
         } else if ("3".equalsIgnoreCase(eleccion)) {
-            myGenerator = new GUIKeyboardWordGenerator("csmh");
+            myGenerator = new GUIKeyboardWordGenerator(); //aqui quité
         } else {
             System.out.println("Modo no disponible");
             return null;
