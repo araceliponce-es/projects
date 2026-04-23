@@ -20,7 +20,7 @@ import tacebook.controller.ProfileController;
 public class TextProfileView implements ProfileView{
 
     private ProfileController myController;
-
+    private SimpleDateFormat formatter=new SimpleDateFormat("dd-MM-yyyy 'ás' HH:mm:ss");
     private int postsShown = 10;
 
     /**
@@ -68,7 +68,11 @@ public class TextProfileView implements ProfileView{
             System.out.println();
 
             System.out.println("Tu biografia (10 recientes publicaciones): " + profile.getPosts());
-            System.out.println();
+            System.out.println("");
+            System.out.println("");
+            for (int i = 0; i < profile.posts.size(); i++) {
+                System.out.println((i+1)+". "+profile.getPosts().get(i).getText()+" publicado el "+formatter.format(profile.getPosts().get(i).getDate()));
+            }
 
             // lista de amigos : 0 - nombre
             ArrayList<Profile> friends = profile.getFriends();
