@@ -20,7 +20,7 @@ import tacebook.model.Profile;
 public class GUIProfileView implements ProfileView {
 
     private ProfileController myController;
-
+    private SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy 'ás' HH:mm:ss");
     private int postsShown = 10;
 
     /**
@@ -70,7 +70,7 @@ public class GUIProfileView implements ProfileView {
             System.out.println("Tu biografia (10 recientes publicaciones):");
             System.out.println("");
             for (int i = 0; i < profile.posts.size(); i++) {
-                System.out.println((i+1)+". "+profile.getPosts().get(i).getText());
+                System.out.println((i + 1) + ". " + profile.getPosts().get(i).getText() + " publicado el " + formatter.format(profile.getPosts().get(i).getDate()));
             }
 
             System.out.println();
@@ -88,7 +88,16 @@ public class GUIProfileView implements ProfileView {
 
             //No hay un metodo en profile para recoger los mensajes y no encuentro donde lo pone en las partes del proyecto
             System.out.println("Comentarios: ");
-            System.out.println();
+            System.out.println("");
+            
+            //Diego está intentando mostrar los comantarios y la fecha en la que fueron escritos
+            if(!profile.posts.isEmpty()){
+            for (int i = 0; i < profile.posts.get(i).getComments().size(); i++) {
+                System.out.println((i + 1) + ". " + profile.getPosts().get(i).getComments().get(i) + " publicado el " + formatter.format(profile.getPosts().get(i).getComments().get(i).getDate()));
+            }
+            }
+            
+            
             System.out.println("Solicitudes de amistad: " + profile.getFriendshipRequest());
             System.out.println();
 
