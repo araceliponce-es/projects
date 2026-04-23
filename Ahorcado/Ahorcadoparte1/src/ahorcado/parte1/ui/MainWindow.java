@@ -46,6 +46,32 @@ public class MainWindow extends javax.swing.JFrame {
 
     public String startNewGame() {
 
+//        Object seleccion = JOptionPane.showInputDialog(
+//                this,
+//                "Modo de xogo",
+//                "Selecciona un modo de xogo",
+//                JOptionPane.QUESTION_MESSAGE,
+//                null, // null para icono defecto
+//                new Object[]{"Clásico,generando palabra al azar", "Competitivo,metiendo la palabra por keyboard"},
+//                "");
+//        if (seleccion == null) {
+//            System.exit(0);
+//        } else if (seleccion.equals("Clásico,generando palabra al azar")) {
+//            try {
+//                ArrayWordGenerator palabraSecr = new ArrayWordGenerator();
+//                return palabraSecr.generateWord();
+//            } catch (GenerateWordException ex) {
+//                System.getLogger(MainWindow.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+//            }
+//        } else if ((seleccion.equals("Competitivo,metiendo la palabra por keyboard"))) {
+//            return secretWordCompetitive();
+//        }
+//        return null;
+showLevelCombobox();
+return null;
+    }
+
+    public String showLevelCombobox() {
         Object seleccion = JOptionPane.showInputDialog(
                 this,
                 "Modo de xogo",
@@ -72,10 +98,10 @@ public class MainWindow extends javax.swing.JFrame {
     public String secretWordCompetitive() {
         // Con caja de texto
         String seleccion = JOptionPane.showInputDialog(
-                this,"Introduce la palabra secreta",
+                this, "Introduce la palabra secreta",
                 "Palabra Secreta",
                 JOptionPane.QUESTION_MESSAGE);  // el icono sera un iterrogante
-        
+
         // Si seleccion es null es que el usuario ha pulsado Cancelar.
         GUIKeyboardWordGenerator palabraSecr = new GUIKeyboardWordGenerator(seleccion);
         try {
@@ -83,7 +109,7 @@ public class MainWindow extends javax.swing.JFrame {
         } catch (GenerateWordException ex) {
             return null;
         }
-        
+
     }
 
     public void init() {
@@ -151,11 +177,21 @@ public class MainWindow extends javax.swing.JFrame {
         jPanel5.setLayout(new java.awt.GridBagLayout());
 
         jBNovaPartida.setText("Nova Partida");
+        jBNovaPartida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBNovaPartidaActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 20, 5);
         jPanel5.add(jBNovaPartida, gridBagConstraints);
 
         jBExit.setText("Exit");
+        jBExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBExitActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.insets = new java.awt.Insets(0, 5, 20, 0);
         jPanel5.add(jBExit, gridBagConstraints);
@@ -243,6 +279,25 @@ public class MainWindow extends javax.swing.JFrame {
         // Nota que usamos "/" en lugar de "\\" y empezamos desde la raíz del paquete
         this.jLImage_Ahorcado.setIcon(imagenes[3]);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    /**
+     * hacer click en btn de exit, extingue el juego
+     *
+     * @param evt
+     */
+    private void jBExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBExitActionPerformed
+
+        this.dispose();
+    }//GEN-LAST:event_jBExitActionPerformed
+
+    /**
+     * hacer click en btn nueva partida muestra combobox para seleccionar
+     *
+     * @param evt
+     */
+    private void jBNovaPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBNovaPartidaActionPerformed
+        showLevelCombobox();
+    }//GEN-LAST:event_jBNovaPartidaActionPerformed
 
     /**
      * @param args the command line arguments
