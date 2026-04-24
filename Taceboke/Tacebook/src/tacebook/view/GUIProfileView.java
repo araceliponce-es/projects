@@ -93,7 +93,7 @@ public class GUIProfileView implements ProfileView {
             //Diego está intentando mostrar los comantarios y la fecha en la que fueron escritos
             if(!profile.posts.isEmpty()){
             for (int i = 0; i < profile.posts.get(i).getComments().size(); i++) {
-                System.out.println((i + 1) + ". " + profile.getPosts().get(i).getComments().get(i) + " publicado el " + formatter.format(profile.getPosts().get(i).getComments().get(i).getDate()));
+                System.out.println((i + 1) + ". " + profile.getPosts().get(i).getComments().get(i).getText() + " publicado el " + formatter.format(profile.getPosts().get(i).getComments().get(i).getDate()));
             }
             }
             
@@ -306,12 +306,12 @@ public class GUIProfileView implements ProfileView {
     private void commentPost(Scanner scanner, Profile profile) {
 
         //selecciona la publicacion del perfil usando el index
-        System.out.println("selecciona una publicacion");
+        System.out.println("Selecciona una publicacion");
         int selectedIndex = readNumber(scanner);
 
         Post selectedPost = profile.getPosts().get(selectedIndex);
 
-        System.out.println("cual es tu comentario?");
+        System.out.println("Cual es tu comentario?");
         String commentText = scanner.nextLine();
 
         myController.newComment(selectedPost, commentText);
