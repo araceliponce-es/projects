@@ -19,7 +19,9 @@ import ahorcado.parte1.ui.GenerateWordException;
 public class MainWindow extends javax.swing.JFrame {
 
     Icon[] imagenes = new Icon[6];
+    String selectedWord;
     HiddenWord word = null;
+    HangMan hangman;
 
     public void iconInicializer() {
         for (int i = 0; i < imagenes.length; i++) {
@@ -38,7 +40,6 @@ public class MainWindow extends javax.swing.JFrame {
 //
 //    }
     private HangManController myController;
-    private HangMan hangMan;
 
     public MainWindow(HangManController controller) {
         myController = controller;
@@ -63,7 +64,11 @@ public class MainWindow extends javax.swing.JFrame {
         } else if (seleccion.equals("Clásico,generando palabra al azar")) {
             try {
                 ArrayWordGenerator palabraSecr = new ArrayWordGenerator();
-                word = new HiddenWord(palabraSecr.generateWord());
+                selectedWord = palabraSecr.generateWord();
+
+                word = new HiddenWord(selectedWord);
+                hangman = new HangMan(selectedWord);
+
                 //show muestra guiones
                 jLhiddenWordOut.setText(word.show());
                 System.out.println(word.getCharacters());
@@ -78,13 +83,15 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     public String secretWordCompetitive() {
-        String selectedWord;
+
         // Si seleccion es null es que el usuario ha pulsado Cancelar.
         GUIKeyboardWordGenerator palabraSecr = new GUIKeyboardWordGenerator();
         try {
             selectedWord = palabraSecr.generateWord();
 
             word = new HiddenWord(selectedWord);
+            hangman = new HangMan(selectedWord);
+
             //show muestra guiones
             jLhiddenWordOut.setText(word.show());
 
@@ -135,8 +142,8 @@ public class MainWindow extends javax.swing.JFrame {
         jLintLetterTx = new javax.swing.JLabel();
         jLhiddenWordOut = new javax.swing.JLabel();
         jLfailLetterOut = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        jBtryChar = new javax.swing.JButton();
+        jTcharToTry = new javax.swing.JTextField();
         jPanelE = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLImage_Ahorcado = new javax.swing.JLabel();
@@ -227,25 +234,30 @@ public class MainWindow extends javax.swing.JFrame {
         gridBagConstraints.gridy = 1;
         jPanel2.add(jLfailLetterOut, gridBagConstraints);
 
-        jButton1.setText("Probar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jBtryChar.setText("Probar");
+        jBtryChar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jBtryCharActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 2;
-        jPanel2.add(jButton1, gridBagConstraints);
+        jPanel2.add(jBtryChar, gridBagConstraints);
 
-        jTextField1.setMinimumSize(new java.awt.Dimension(80, 30));
+        jTcharToTry.setMinimumSize(new java.awt.Dimension(80, 30));
+        jTcharToTry.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTcharToTryActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.gridwidth = java.awt.GridBagConstraints.RELATIVE;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 2.0;
-        jPanel2.add(jTextField1, gridBagConstraints);
+        jPanel2.add(jTcharToTry, gridBagConstraints);
 
         jPanelW.add(jPanel2, java.awt.BorderLayout.CENTER);
 
@@ -265,10 +277,14 @@ public class MainWindow extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jBtryCharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtryCharActionPerformed
         // Nota que usamos "/" en lugar de "\\" y empezamos desde la raíz del paquete
-        this.jLImage_Ahorcado.setIcon(imagenes[3]);
-    }//GEN-LAST:event_jButton1ActionPerformed
+//        this.jLImage_Ahorcado.setIcon(imagenes[3]);
+        char charToTry = jTcharToTry.getText().trim().charAt(0);
+        hangman.tryChar(charToTry);
+        
+        jLfailLetterOut.setText(hangman.getStringFails());
+    }//GEN-LAST:event_jBtryCharActionPerformed
 
     /**
      * hacer click en btn de exit, extingue el juego
@@ -288,6 +304,16 @@ public class MainWindow extends javax.swing.JFrame {
     private void jBNovaPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBNovaPartidaActionPerformed
         showLevelCombobox();
     }//GEN-LAST:event_jBNovaPartidaActionPerformed
+
+    /**
+     * si presiona enter debe intentar con ese char (haciendo click al btn o
+     * usando metodo)
+     *
+     * @param evt
+     */
+    private void jTcharToTryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTcharToTryActionPerformed
+
+    }//GEN-LAST:event_jTcharToTryActionPerformed
 
     /**
      * @param args the command line arguments
@@ -328,7 +354,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JLabel JLhiddenWordTx;
     private javax.swing.JButton jBExit;
     private javax.swing.JButton jBNovaPartida;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jBtryChar;
     private javax.swing.JLabel jLImage_Ahorcado;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLfailLetterOut;
@@ -343,6 +369,6 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelN;
     private javax.swing.JPanel jPanelS;
     private javax.swing.JPanel jPanelW;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTcharToTry;
     // End of variables declaration//GEN-END:variables
 }
