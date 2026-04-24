@@ -110,7 +110,7 @@ public class ProfileDB {
         if (destProfile != null && sourceProfile != null) {
             // Si los profiles existen obtiene el arrayList de solicitudes del
             // perfil destino y le añade el perfil del que viene la solicitud
-            destProfile.getFriendshipRequest().add(sourceProfile);
+            destProfile.getFriendshipsRequest().add(sourceProfile);
         }
     }
 
@@ -125,7 +125,7 @@ public class ProfileDB {
         if (destProfile != null && sourceProfile != null) {
             // Si los profiles existen obtiene el arrayList de solicitudes del
             // perfil destino y elimina el perfil del que viene la solicitud
-            destProfile.getFriendshipRequest().remove(sourceProfile);
+            destProfile.getFriendshipsRequest().remove(sourceProfile);
         }
     }
 

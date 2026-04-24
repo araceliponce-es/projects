@@ -73,15 +73,6 @@ public class Comment {
         this.text = text;
     }
 
-    /**
-     * Constructor del comentario
-     *
-     * @param id
-     * @param date
-     * @param text
-     * @param post
-     * @param sourceProfile
-     */
     public Comment(int id, Date date, String text, Post post, Profile sourceProfile) {
         this.id = id;
         this.date = date;
@@ -89,6 +80,7 @@ public class Comment {
         this.post = post;
         this.sourceProfile = sourceProfile;
     }
+
 
     /**
      * Obtiene el post sobre el que se hizo el comentario

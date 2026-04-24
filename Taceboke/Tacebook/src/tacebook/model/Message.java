@@ -13,8 +13,8 @@ import java.util.Date;
 public class Message {
 
     private int id;
+    private Date date;
     private String text;
-    private Date date = new Date();
     private boolean read;
 
     /**
@@ -141,13 +141,15 @@ public class Message {
      *
      * @param id
      * @param text
+     * @param date
      * @param read
      * @param destProfile
      * @param sourceProfile
      */
-    public Message(int id, String text, boolean read, Profile destProfile, Profile sourceProfile) {
+    public Message(int id, Date date, String text, boolean read, Profile destProfile, Profile sourceProfile) {
         this.id = id;
         this.text = text;
+        this.date = date;
         this.read = read;
         this.destProfile = destProfile;
         this.sourceProfile = sourceProfile;
