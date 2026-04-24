@@ -207,7 +207,7 @@ public class GUIProfileView implements ProfileView {
                         //selecciona un numero de amigo
                         Profile profileToReject = null;
                         //encuentra ese numero en la lista de solicitudes
-                        int rejectIndex = selectElement("elige un amigo", profile.friendshipRequest.size(), scan);
+                        int rejectIndex = selectElement("Elige un amigo", profile.friendshipRequest.size(), scan);
                         //sera el profile de destino
                         profileToReject = profile.friends.get(rejectIndex);
                         myController.rejectFriendshipRequest(profileToReject);

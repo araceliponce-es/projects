@@ -9,7 +9,6 @@ import ahorcado.parte1.model.HiddenWord;
 import controller.HangManController;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import ahorcado.parte1.ui.GenerateWordException;
 
@@ -46,13 +45,11 @@ public class MainWindow extends javax.swing.JFrame {
 
     }
 
-    public String startNewGame() {
-
+    private void startNewGame() {
         showLevelCombobox();
-        return null;
     }
 
-    public String showLevelCombobox() {
+    private String showLevelCombobox() {
         Object seleccion = JOptionPane.showInputDialog(
                 this,
                 "Modo de xogo",
@@ -95,7 +92,6 @@ public class MainWindow extends javax.swing.JFrame {
         } catch (GenerateWordException ex) {
             return null;
         }
-
     }
 
     public void init() {
@@ -105,6 +101,14 @@ public class MainWindow extends javax.swing.JFrame {
         startNewGame();
         this.setVisible(true);
 
+    }
+
+    private void showGameStatus() {
+        if (hangMan.isGameOver()) {
+            JOptionPane.showMessageDialog(this,"Perdiste, la palabra era :"+ hangMan.showFullWord());
+        }else{
+            
+        }
     }
 
     /**

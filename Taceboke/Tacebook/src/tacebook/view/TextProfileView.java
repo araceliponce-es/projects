@@ -67,15 +67,15 @@ public class TextProfileView implements ProfileView {
             System.out.println("Estado actual: " + profile.getStatus());
             System.out.println();
 
-            System.out.println("Tu biografia (10 recientes publicaciones): " + profile.getPosts());
+            System.out.println("Tu biografia (10 recientes publicaciones): ");
             System.out.println("");
-            System.out.println("");
-            for (int i = 0; i < profile.getPosts().size(); i++) {
-                Post post = profile.getPosts().get(i);
-                System.out.println((i + 1) + ". " + post.getText() + " | " + formatter.format(post.getDate()));
-
-//               System.out.println((i + 1) + ". " + profile.getPosts().get(i).getText() + " publicado el " + formatter.format(profile.getPosts().get(i).getDate()));
+            for (int i = 0; i < profile.posts.size(); i++) {
+                System.out.println((i + 1) + ". " + profile.getPosts().get(i).getText() + " publicado el " + formatter.format(profile.getPosts().get(i).getDate()));
             }
+            System.out.println("");
+             //No hay un metodo en profile para recoger los mensajes y no encuentro donde lo pone en las partes del proyecto
+            System.out.println("Comentarios: ");
+            System.out.println();
 
             // lista de amigos : 0 - nombre
             ArrayList<Profile> friends = profile.getFriends();
@@ -87,14 +87,10 @@ public class TextProfileView implements ProfileView {
             } else {
                 System.out.println("tienes 0 amigos");
             }
-
-            //No hay un metodo en profile para recoger los mensajes y no encuentro donde lo pone en las partes del proyecto
-            System.out.println("Comentarios: ");
-            System.out.println();
-
+            
             ArrayList<Profile> pendingRequests = profile.getFriendshipsRequest();
 
-            System.out.println("Solicitudes de amistad: " + profile.getFriendshipsRequest());
+            System.out.println("Solicitudes de amistad : ");
             if (pendingRequests.size() > 0) {
                 System.out.println("Tienes " + pendingRequests.size() + " solicitudes de amistad");
                 for (int i = 0; i < pendingRequests.size(); i++) {
@@ -165,7 +161,8 @@ public class TextProfileView implements ProfileView {
         boolean keepShowing = true;
 
         while (keepShowing) {
-
+            System.out.println("");
+            showProfileInfo(true, profile);
             System.out.println("""
                            Escolle unha opción:
                            1. Escribir unha nova publicación
