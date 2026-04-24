@@ -111,8 +111,8 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     private void showGameStatus() {
-        if (hangMan.isGameOver()) {
-            JOptionPane.showMessageDialog(this,"Perdiste, la palabra era :"+ hangMan.showFullWord());
+        if (hangman.isGameOver()) {
+            JOptionPane.showMessageDialog(this,"Perdiste, la palabra era :"+ hangman.showFullWord());
         }else{
             
         }
