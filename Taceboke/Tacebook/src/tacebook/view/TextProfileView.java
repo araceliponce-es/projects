@@ -73,9 +73,14 @@ public class TextProfileView implements ProfileView {
                 System.out.println((i + 1) + ". " + profile.getPosts().get(i).getText() + " publicado el " + formatter.format(profile.getPosts().get(i).getDate()));
             }
             System.out.println("");
-             //No hay un metodo en profile para recoger los mensajes y no encuentro donde lo pone en las partes del proyecto
+            //No hay un metodo en profile para recoger los mensajes y no encuentro donde lo pone en las partes del proyecto
             System.out.println("Comentarios: ");
             System.out.println();
+//            if (!profile.posts.isEmpty() && !profile.posts.get(0).getComments().isEmpty()) {
+//                for (int i = 0; i < profile.getPosts().get(i).getComments().size(); i++) {
+//                    System.out.println((i + 1) + ". " + profile.posts.get(i).getComments() + " publicado el " + formatter.format(profile.getPosts().get(i).getComments().get(i).getDate()));
+//                }
+//            }
 
             // lista de amigos : 0 - nombre
             ArrayList<Profile> friends = profile.getFriends();
@@ -87,7 +92,7 @@ public class TextProfileView implements ProfileView {
             } else {
                 System.out.println("tienes 0 amigos");
             }
-            
+
             ArrayList<Profile> pendingRequests = profile.getFriendshipsRequest();
 
             System.out.println("Solicitudes de amistad : ");
