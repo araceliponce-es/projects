@@ -24,9 +24,8 @@ public class MainWindow extends javax.swing.JFrame {
     HangMan hangman;
 
     public void iconInicializer() {
-        for (int i = 0; i < imagenes.length; i++) {
+        //TODO: hacer que las imágenes se pongan en base a la longitud del array de fallos
             imagenes[i] = new javax.swing.ImageIcon(getClass().getResource("/ahorcado/parte1/hangmanimages/Hangman-" + i + ".png"));
-        }
     }
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MainWindow.class.getName());
@@ -227,8 +226,13 @@ public class MainWindow extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
         jPanel2.add(jLintLetterTx, gridBagConstraints);
 
+        jLhiddenWordOut.setFont(new java.awt.Font("Noto Sans Mono", 0, 18)); // NOI18N
+        jLhiddenWordOut.setMinimumSize(new java.awt.Dimension(100, 10));
         jLhiddenWordOut.setName(""); // NOI18N
         jPanel2.add(jLhiddenWordOut, new java.awt.GridBagConstraints());
+
+        jLfailLetterOut.setFont(new java.awt.Font("Noto Sans Mono", 0, 18)); // NOI18N
+        jLfailLetterOut.setMinimumSize(new java.awt.Dimension(100, 10));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
@@ -284,6 +288,7 @@ public class MainWindow extends javax.swing.JFrame {
         hangman.tryChar(charToTry);
         
         jLfailLetterOut.setText(hangman.getStringFails());
+        
     }//GEN-LAST:event_jBtryCharActionPerformed
 
     /**
