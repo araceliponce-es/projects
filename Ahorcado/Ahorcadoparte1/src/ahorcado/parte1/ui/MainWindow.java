@@ -18,14 +18,21 @@ import ahorcado.parte1.ui.GenerateWordException;
  */
 public class MainWindow extends javax.swing.JFrame {
 
-    Icon[] imagenes = new Icon[6];
-    String selectedWord;
-    HiddenWord word = null;
-    HangMan hangman;
+    private Icon[] imagenes = new Icon[6];
+    private String selectedWord;
+    private HiddenWord word = null;
+    private HangMan hangman;
 
     public void iconInicializer() {
-        //TODO: hacer que las imágenes se pongan en base a la longitud del array de fallos
-            imagenes[i] = new javax.swing.ImageIcon(getClass().getResource("/ahorcado/parte1/hangmanimages/Hangman-" + i + ".png"));
+        if (hangman != null) {
+            //TODO: hacer que las imágenes se pongan en base a la longitud del array de fallos
+            if (hangman.getFails().isEmpty()) {
+                int i = 0;
+                imagenes[i] = new javax.swing.ImageIcon(getClass().getResource("/ahorcado/parte1/hangmanimages/Hangman-" + i + ".png"));
+            } else {
+                imagenes[hangman.getFails().size()] = new javax.swing.ImageIcon(getClass().getResource("/ahorcado/parte1/hangmanimages/Hangman-" + hangman.getFails().size() + ".png"));
+            }
+        }
     }
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MainWindow.class.getName());
@@ -111,9 +118,9 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void showGameStatus() {
         if (hangman.isGameOver()) {
-            JOptionPane.showMessageDialog(this,"Perdiste, la palabra era :"+ hangman.showFullWord());
-        }else{
-            
+            JOptionPane.showMessageDialog(this, "Perdiste, la palabra era :" + hangman.showFullWord());
+        } else {
+
         }
     }
 
@@ -286,9 +293,9 @@ public class MainWindow extends javax.swing.JFrame {
 //        this.jLImage_Ahorcado.setIcon(imagenes[3]);
         char charToTry = jTcharToTry.getText().trim().charAt(0);
         hangman.tryChar(charToTry);
-        
+
         jLfailLetterOut.setText(hangman.getStringFails());
-        
+
     }//GEN-LAST:event_jBtryCharActionPerformed
 
     /**
