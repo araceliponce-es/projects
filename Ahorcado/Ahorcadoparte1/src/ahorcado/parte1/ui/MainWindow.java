@@ -63,7 +63,7 @@ public class MainWindow extends javax.swing.JFrame {
                 "Selecciona un modo de xogo",
                 JOptionPane.QUESTION_MESSAGE,
                 null, // null para icono defecto
-                new Object[]{"Clásico,generando palabra al azar", "Competitivo,metiendo la palabra por keyboard"},
+                new Object[]{"Clásico,generando palabra al azar", "Competitivo,metiendo la palabra por teclado"},
                 "");
         if (seleccion == null) {
             System.exit(0);
@@ -234,12 +234,10 @@ public class MainWindow extends javax.swing.JFrame {
         jPanel2.add(jLintLetterTx, gridBagConstraints);
 
         jLhiddenWordOut.setFont(new java.awt.Font("Noto Sans Mono", 0, 18)); // NOI18N
-        jLhiddenWordOut.setMinimumSize(new java.awt.Dimension(100, 10));
         jLhiddenWordOut.setName(""); // NOI18N
         jPanel2.add(jLhiddenWordOut, new java.awt.GridBagConstraints());
 
         jLfailLetterOut.setFont(new java.awt.Font("Noto Sans Mono", 0, 18)); // NOI18N
-        jLfailLetterOut.setMinimumSize(new java.awt.Dimension(100, 10));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
@@ -295,6 +293,7 @@ public class MainWindow extends javax.swing.JFrame {
         hangman.tryChar(charToTry);
 
         jLfailLetterOut.setText(hangman.getStringFails());
+        jLhiddenWordOut.setText(word.show());
 
     }//GEN-LAST:event_jBtryCharActionPerformed
 
