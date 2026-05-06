@@ -22,17 +22,22 @@ public class MainWindow extends javax.swing.JFrame {
     private String selectedWord;
     private HiddenWord word = null;
     private HangMan hangman;
-
+    /**
+     * Metodo exclusivo solo para iniciar las imagenes no tiene que ver con los fails
+     */
     public void iconInicializer() {
-        if (hangman != null) {
-            //TODO: hacer que las imágenes se pongan en base a la longitud del array de fallos
-            if (hangman.getFails().isEmpty()) {
-                int i = 0;
-                imagenes[i] = new javax.swing.ImageIcon(getClass().getResource("/ahorcado/parte1/hangmanimages/Hangman-" + i + ".png"));
-            } else {
-                imagenes[hangman.getFails().size()] = new javax.swing.ImageIcon(getClass().getResource("/ahorcado/parte1/hangmanimages/Hangman-" + hangman.getFails().size() + ".png"));
-            }
+        for (int i = 0; i < imagenes.length; i++) {
+            imagenes[i] = new javax.swing.ImageIcon(getClass().getResource("/ahorcado/parte1/hangmanimages/Hangman-" + i + ".png"));
         }
+//        if (hangman != null) {
+//            //TODO: hacer que las imágenes se pongan en base a la longitud del array de fallos
+//            if (hangman.getFails().isEmpty()) {
+//                int i = 0;
+//                imagenes[i] = new javax.swing.ImageIcon(getClass().getResource("/ahorcado/parte1/hangmanimages/Hangman-" + i + ".png"));
+//            } else {
+//                imagenes[hangman.getFails().size()] = new javax.swing.ImageIcon(getClass().getResource("/ahorcado/parte1/hangmanimages/Hangman-" + hangman.getFails().size() + ".png"));
+//            }
+//        }
     }
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MainWindow.class.getName());
