@@ -75,6 +75,7 @@ public class MainWindow extends javax.swing.JFrame {
             }
         } else if (seleccion.equals("Clásico,generando palabra al azar")) {
             try {
+                resetComponents();
                 DBWordGenerator palabraSecr = new DBWordGenerator();
                 selectedWord = palabraSecr.generateWord();
 
@@ -89,6 +90,7 @@ public class MainWindow extends javax.swing.JFrame {
                 System.getLogger(MainWindow.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
             }
         } else if ((seleccion.equals("Competitivo,metiendo la palabra por teclado"))) {
+            resetComponents();
             return secretWordCompetitive();
         }
         return null;
@@ -315,14 +317,21 @@ public class MainWindow extends javax.swing.JFrame {
             hangman.tryChar(charToTry);
             this.jLImage_Ahorcado.setIcon(imagenes[hangman.getFails().size()]);
             jLfailLetterOut.setText(hangman.getStringFails());
-            jLhiddenWordOut.setText(word.show());
+            jLhiddenWordOut.setText(hangman.showHiddenWord());
             
-            if (word.isVisible() && hangman.maxFailsExceeded()){
+            if (word.isVisible() || hangman.maxFailsExceeded()){
                 showGameStatus();
             }
 
     }//GEN-LAST:event_jBtryCharActionPerformed
-
+    /**
+     * Metodo que resetea los componentes al hacer una nueva partida
+     */
+    private void resetComponents(){
+        this.jLImage_Ahorcado.setIcon(imagenes[0]);
+        this.jLfailLetterOut.setText("");
+        this.jTcharToTry.setText("");
+    }
     /**
      * hacer click en btn de exit, extingue el juego
      *
