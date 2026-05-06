@@ -31,7 +31,7 @@ public class MainWindow extends javax.swing.JFrame {
         }
 //        if (hangman != null) {
 //            //TODO: hacer que las imágenes se pongan en base a la longitud del array de fallos
-//            if (hangman.getFails().isEmpty()) {
+//            if (hangman.getFails().isEmpty) {
 //                int i = 0;
 //                imagenes[i] = new javax.swing.ImageIcon(getClass().getResource("/ahorcado/parte1/hangmanimages/Hangman-" + i + ".png"));
 //            } else {
@@ -71,7 +71,9 @@ public class MainWindow extends javax.swing.JFrame {
                 new Object[]{"Clásico,generando palabra al azar", "Competitivo,metiendo la palabra por teclado"},
                 "");
         if (seleccion == null) {
-            System.exit(0);
+            if (hangman != null){
+                System.exit(0);
+            }
         } else if (seleccion.equals("Clásico,generando palabra al azar")) {
             try {
                 ArrayWordGenerator palabraSecr = new ArrayWordGenerator();
@@ -293,10 +295,10 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void jBtryCharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtryCharActionPerformed
         // Nota que usamos "/" en lugar de "\\" y empezamos desde la raíz del paquete
-//        this.jLImage_Ahorcado.setIcon(imagenes[3]);
+       
         char charToTry = jTcharToTry.getText().trim().charAt(0);
         hangman.tryChar(charToTry);
-
+        this.jLImage_Ahorcado.setIcon(imagenes[hangman.getFails().size()]);
         jLfailLetterOut.setText(hangman.getStringFails());
         jLhiddenWordOut.setText(word.show());
 
