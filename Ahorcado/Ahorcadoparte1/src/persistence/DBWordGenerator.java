@@ -14,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
+ * reemplaza a ArrayWordGenerator
  *
  * @author Araceli,Diego,Óscar
  */
@@ -22,35 +23,28 @@ public class DBWordGenerator implements WordGenerator {
     static final String DB_URL = "jdbc:sqlite:words.db";
     static final String SQL_CREATE = """
             CREATE TABLE IF NOT EXISTS table_words (
-                word TEXT NOT NULL,
+                word TEXT NOT NULL
             );
         """;
-   static final String SQL_FILL = "INSERT INTO words VALUES 'guacamole'";
+    static final String SQL_FILL = "INSERT INTO table_words VALUES ('guacamole'),('aguacate'),('cilantro'),('cebolla');";
+    static final String SQL_DELETE = "delete from table_words ";
 
     public static void main(String[] args) {
-        //try with resources
 
         try (Connection c = DriverManager.getConnection(DB_URL);) {
 
-            System.out.println("creado con exito");
+            System.out.println("conexion con exito");
 
             try (Statement st = c.createStatement()) {
+                //CREA TABLA
                 st.executeUpdate(SQL_CREATE);
-            }
+                System.out.println("tabla creada");
 
-            String currentSql = "select * from table_words";
+                //LLENA CON VALORES
+                PreparedStatement ps = c.prepareStatement(SQL_FILL);
+                //insert requiere .executeUpdate
+                ps.executeUpdate();
 
-            //try usando ps y resulset como resources
-            try (PreparedStatement ps = c.prepareStatement(currentSql); ResultSet rs = ps.executeQuery()) {
-
-                ps.executeUpdate(SQL_FILL);
-                
-//                while (rs.next()) {
-//                    System.out.println(rs.getString("word"));
-//                }
-
-            } catch (Exception e) {
-                System.out.println("exception " + e.getMessage());
             }
 
         } catch (SQLException e) {
@@ -61,7 +55,36 @@ public class DBWordGenerator implements WordGenerator {
 
     @Override
     public String generateWord() throws GenerateWordException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
+        String palabra = "";
+
+        String SQL_GET_RANDOM = """
+                            SELECT * 
+                            FROM table_words
+                            ORDER BY RANDOM() 
+                            LIMIT 1
+                            """;
+
+        try (Connection c = DriverManager.getConnection(DB_URL)) {
+
+            System.out.println("conexion con exito");
+
+            try (Statement st = c.createStatement()) {
+                //obtiene random word
+                ResultSet rs = st.executeQuery(SQL_GET_RANDOM);
+                while (rs.next()) {
+                    //obtiene el valor de la columna word
+                    palabra = rs.getString("word");
+                }
+            }
+
+        } catch (SQLException e) {
+                       throw new GenerateWordException("error al obtener palabra "+ e.getMessage(),true);
+           
+        }
+
+        return palabra;
+
     }
 
 }

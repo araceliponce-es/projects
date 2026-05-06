@@ -11,6 +11,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import ahorcado.parte1.ui.GenerateWordException;
+import persistence.DBWordGenerator;
 
 /**
  *
@@ -76,7 +77,7 @@ public class MainWindow extends javax.swing.JFrame {
             }
         } else if (seleccion.equals("Clásico,generando palabra al azar")) {
             try {
-                ArrayWordGenerator palabraSecr = new ArrayWordGenerator();
+                DBWordGenerator palabraSecr = new DBWordGenerator();
                 selectedWord = palabraSecr.generateWord();
 
                 word = new HiddenWord(selectedWord);
