@@ -61,7 +61,7 @@ public class MenuGenerator {
         String eleccion = scan.nextLine();
         WordGenerator myGenerator = null;
         if ("1".equalsIgnoreCase(eleccion)) {
-            myGenerator = new ArrayWordGenerator();
+            myGenerator = new DBWordGenerator();
         } else if ("2".equalsIgnoreCase(eleccion)) {
             myGenerator = new KeyboardWordGenerator();
         } else if ("3".equalsIgnoreCase(eleccion)) {
