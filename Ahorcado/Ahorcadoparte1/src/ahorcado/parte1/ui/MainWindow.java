@@ -18,7 +18,7 @@ import ahorcado.parte1.ui.GenerateWordException;
  */
 public class MainWindow extends javax.swing.JFrame {
 
-    private Icon[] imagenes = new Icon[6];
+    private Icon[] imagenes = new Icon[7];
     private String selectedWord;
     private HiddenWord word = null;
     private HangMan hangman;
@@ -29,27 +29,10 @@ public class MainWindow extends javax.swing.JFrame {
         for (int i = 0; i < imagenes.length; i++) {
             imagenes[i] = new javax.swing.ImageIcon(getClass().getResource("/ahorcado/parte1/hangmanimages/Hangman-" + i + ".png"));
         }
-//        if (hangman != null) {
-//            //TODO: hacer que las imágenes se pongan en base a la longitud del array de fallos
-//            if (hangman.getFails().isEmpty) {
-//                int i = 0;
-//                imagenes[i] = new javax.swing.ImageIcon(getClass().getResource("/ahorcado/parte1/hangmanimages/Hangman-" + i + ".png"));
-//            } else {
-//                imagenes[hangman.getFails().size()] = new javax.swing.ImageIcon(getClass().getResource("/ahorcado/parte1/hangmanimages/Hangman-" + hangman.getFails().size() + ".png"));
-//            }
-//        }
+
     }
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MainWindow.class.getName());
-
-    /**
-     * Creates new form MainWindow
-     */
-//    public MainWindow() {
-//        initComponents();
-//        iconInicializer();
-//
-//    }
     private HangManController myController;
 
     public MainWindow(HangManController controller) {
@@ -71,7 +54,7 @@ public class MainWindow extends javax.swing.JFrame {
                 new Object[]{"Clásico,generando palabra al azar", "Competitivo,metiendo la palabra por teclado"},
                 "");
         if (seleccion == null) {
-            if (hangman != null){
+            if (hangman == null){
                 System.exit(0);
             }
         } else if (seleccion.equals("Clásico,generando palabra al azar")) {
@@ -89,7 +72,7 @@ public class MainWindow extends javax.swing.JFrame {
             } catch (GenerateWordException ex) {
                 System.getLogger(MainWindow.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
             }
-        } else if ((seleccion.equals("Competitivo,metiendo la palabra por keyboard"))) {
+        } else if ((seleccion.equals("Competitivo,metiendo la palabra por teclado"))) {
             return secretWordCompetitive();
         }
         return null;
@@ -242,12 +225,17 @@ public class MainWindow extends javax.swing.JFrame {
 
         jLhiddenWordOut.setFont(new java.awt.Font("Noto Sans Mono", 0, 18)); // NOI18N
         jLhiddenWordOut.setName(""); // NOI18N
-        jPanel2.add(jLhiddenWordOut, new java.awt.GridBagConstraints());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 2;
+        jPanel2.add(jLhiddenWordOut, gridBagConstraints);
 
         jLfailLetterOut.setFont(new java.awt.Font("Noto Sans Mono", 0, 18)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
         jPanel2.add(jLfailLetterOut, gridBagConstraints);
 
         jBtryChar.setText("Probar");
