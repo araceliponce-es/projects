@@ -14,6 +14,7 @@ import ahorcado.parte1.ui.GenerateWordException;
 import persistence.DBWordGenerator;
 
 /**
+ * Interfaz grafica
  *
  * @author daw1al11
  */
@@ -23,8 +24,11 @@ public class MainWindow extends javax.swing.JFrame {
     private String selectedWord;
     private HiddenWord word = null;
     private HangMan hangman;
+    private HangManController myController;
+
     /**
-     * Metodo exclusivo solo para iniciar las imagenes no tiene que ver con los fails
+     * Metodo exclusivo solo para iniciar las imagenes no tiene que ver con los
+     * fails
      */
     public void iconInicializer() {
         for (int i = 0; i < imagenes.length; i++) {
@@ -34,17 +38,28 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MainWindow.class.getName());
-    private HangManController myController;
 
+    /**
+     * Constructor de la interfaz atraves de un controlador
+     *
+     * @param controller
+     */
     public MainWindow(HangManController controller) {
         myController = controller;
-
     }
 
+    /**
+     * Metodo para comenzar una nueva partida
+     */
     private void startNewGame() {
         showLevelCombobox();
     }
 
+    /**
+     * Menu para comenzar una nueva partida
+     *
+     * @return
+     */
     private String showLevelCombobox() {
         Object seleccion = JOptionPane.showInputDialog(
                 this,
@@ -55,7 +70,7 @@ public class MainWindow extends javax.swing.JFrame {
                 new Object[]{"Clásico,generando palabra al azar", "Competitivo,metiendo la palabra por teclado"},
                 "");
         if (seleccion == null) {
-            if (hangman == null){
+            if (hangman == null) {
                 System.exit(0);
             }
         } else if (seleccion.equals("Clásico,generando palabra al azar")) {
@@ -79,6 +94,12 @@ public class MainWindow extends javax.swing.JFrame {
         return null;
     }
 
+    /**
+     * Metodo que te deja introducir una palabra atraves de la clase GUI
+     * keyboard generator
+     *
+     * @return String palabra seceta
+     */
     public String secretWordCompetitive() {
 
         // Si seleccion es null es que el usuario ha pulsado Cancelar.
@@ -98,6 +119,9 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Metodo para inicializar los componentes de una partida
+     */
     public void init() {
 
         initComponents();
@@ -107,11 +131,14 @@ public class MainWindow extends javax.swing.JFrame {
 
     }
 
+    /**
+     * Muestra el estado del juego
+     */
     private void showGameStatus() {
-        if (hangman.isGameOver()) {
+        if (hangman.isGameOver() && hangman.maxFailsExceeded()) {
             JOptionPane.showMessageDialog(this, "Perdiste, la palabra era :" + hangman.showFullWord());
-        } else {
-
+        }else if(hangman.isGameOver()){
+             JOptionPane.showMessageDialog(this, "Ganaste, la palabra era :" + hangman.showFullWord());
         }
     }
 
@@ -283,13 +310,16 @@ public class MainWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBtryCharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtryCharActionPerformed
-        // Nota que usamos "/" en lugar de "\\" y empezamos desde la raíz del paquete
-       
-        char charToTry = jTcharToTry.getText().trim().charAt(0);
-        hangman.tryChar(charToTry);
-        this.jLImage_Ahorcado.setIcon(imagenes[hangman.getFails().size()]);
-        jLfailLetterOut.setText(hangman.getStringFails());
-        jLhiddenWordOut.setText(word.show());
+
+            char charToTry = jTcharToTry.getText().trim().charAt(0);
+            hangman.tryChar(charToTry);
+            this.jLImage_Ahorcado.setIcon(imagenes[hangman.getFails().size()]);
+            jLfailLetterOut.setText(hangman.getStringFails());
+            jLhiddenWordOut.setText(word.show());
+            
+            if (word.isVisible() && hangman.maxFailsExceeded()){
+                showGameStatus();
+            }
 
     }//GEN-LAST:event_jBtryCharActionPerformed
 
