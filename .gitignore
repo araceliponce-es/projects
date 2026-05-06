@@ -23,6 +23,8 @@
 *.rar
 *.log
 
+
+
 # =========================
 # Archivos de sistema (seguridad y limpieza)
 # =========================
@@ -94,3 +96,9 @@ $RECYCLE.BIN/
 
 # 96MB
 ffmpeg
+
+
+
+# no ignorar !!
+!**/Libraries/*.jar
+!**/*.db

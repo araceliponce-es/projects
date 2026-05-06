@@ -7,6 +7,7 @@ package ahorcado.parte1.ui;
 import ahorcado.parte1.model.HangMan;
 import ahorcado.parte1.ui.KeyboardWordGenerator;
 import java.util.Scanner;
+import persistence.DBWordGenerator;
 
 /**
  * Clase que muestra los menús del juego y recoge los datos del usuario
@@ -61,7 +62,7 @@ public class MenuGenerator {
         String eleccion = scan.nextLine();
         WordGenerator myGenerator = null;
         if ("1".equalsIgnoreCase(eleccion)) {
-            myGenerator = new ArrayWordGenerator();
+            myGenerator = new DBWordGenerator();
         } else if ("2".equalsIgnoreCase(eleccion)) {
             myGenerator = new KeyboardWordGenerator();
         } else if ("3".equalsIgnoreCase(eleccion)) {
