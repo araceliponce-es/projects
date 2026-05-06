@@ -7,6 +7,7 @@ package ahorcado.parte1.ui;
 import ahorcado.parte1.model.HangMan;
 import ahorcado.parte1.ui.KeyboardWordGenerator;
 import java.util.Scanner;
+import persistence.DBWordGenerator;
 
 /**
  * Clase que muestra los menús del juego y recoge los datos del usuario
