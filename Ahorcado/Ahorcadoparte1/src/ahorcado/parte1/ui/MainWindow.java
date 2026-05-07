@@ -58,7 +58,7 @@ public class MainWindow extends javax.swing.JFrame {
     /**
      * Menu para comenzar una nueva partida
      *
-     * @return
+     * @return 
      */
     private String showLevelCombobox() {
         Object seleccion = JOptionPane.showInputDialog(
@@ -138,9 +138,9 @@ public class MainWindow extends javax.swing.JFrame {
      */
     private void showGameStatus() {
         if (hangman.isGameOver() && hangman.maxFailsExceeded()) {
-            JOptionPane.showMessageDialog(this, "Perdiste, la palabra era :" + hangman.showFullWord());
+            JOptionPane.showMessageDialog(this, "Perdiste, la palabra era : " + hangman.showFullWord());
         }else if(hangman.isGameOver()){
-             JOptionPane.showMessageDialog(this, "Ganaste, la palabra era :" + hangman.showFullWord());
+             JOptionPane.showMessageDialog(this, "Ganaste, la palabra era : " + hangman.showFullWord());
         }
     }
 
@@ -318,11 +318,7 @@ public class MainWindow extends javax.swing.JFrame {
             this.jLImage_Ahorcado.setIcon(imagenes[hangman.getFails().size()]);
             jLfailLetterOut.setText(hangman.getStringFails());
             jLhiddenWordOut.setText(hangman.showHiddenWord());
-            
-            if (word.isVisible() || hangman.maxFailsExceeded()){
-                showGameStatus();
-            }
-
+            showGameStatus();
     }//GEN-LAST:event_jBtryCharActionPerformed
     /**
      * Metodo que resetea los componentes al hacer una nueva partida
