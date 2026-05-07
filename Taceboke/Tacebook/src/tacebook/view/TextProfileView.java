@@ -67,14 +67,14 @@ public class TextProfileView implements ProfileView {
             System.out.println("Estado actual: " + profile.getStatus());
             System.out.println();
 
-            System.out.println("Tu biografia (Tus "+postsShown+"  publicaciones mas recientes): ");
+            System.out.println("Tu biografia (Tus " + postsShown + "  publicaciones mas recientes): ");
             System.out.println("");
             for (int i = 0; i < profile.posts.size(); i++) {
                 System.out.println((i + 1) + ". " + profile.getPosts().get(i).getText() + " publicado el " + formatter.format(profile.getPosts().get(i).getDate()));
                 if (!profile.posts.get(i).getComments().isEmpty()) {
                     System.out.println("Comentarios: ");
                     for (int j = 0; j < profile.getPosts().get(i).getComments().size(); j++) {
-                        System.out.println("--"+(j + 1) + ". " + profile.posts.get(i).getComments().get(j).getText() + " publicado el " + formatter.format(profile.getPosts().get(i).getComments().get(j).getDate()));
+                        System.out.println("--" + (j + 1) + ". " + profile.posts.get(i).getComments().get(j).getText() + " publicado el " + formatter.format(profile.getPosts().get(i).getComments().get(j).getDate()));
                     }
                 }
             }
@@ -331,7 +331,9 @@ public class TextProfileView implements ProfileView {
 
     /**
      * Pide ao usuario que seleccione unha publicación e chama ao controlador
-     * para facer like sobre ela. *
+     * para facer like sobre ela. 
+     * 
+     * todo: no poder dar segundo like a mismo post
      */
     private void addLike(Scanner scanner, Profile profile) {
 
@@ -349,16 +351,14 @@ public class TextProfileView implements ProfileView {
         }
 
         System.out.println("que número eliges?");
-        int selectedNumber = readNumber(scanner);
 
-        if (selectedNumber > 0 && selectedNumber <= profilePosts.size()) {
-            int selectedIndex = selectedNumber - 1;
-            // myController.newLike(myController.getShownProfile().getPosts().get(selectedIndex));
-            myController.newLike(profilePosts.get(selectedIndex));
+        int selectedIndex = readNumber(scanner);
 
-        } else {
-            System.out.println("Índice inválido");
+        if (selectedIndex < 0 || selectedIndex >= profilePosts.size()) {
+            System.out.println("indice invalido");
+            return;
         }
+        myController.newLike(profile.getPosts().get(selectedIndex));
 
     }
 

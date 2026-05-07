@@ -14,7 +14,7 @@
 # Archivos compilados o generados automáticamente
 # =========================
 *.class
-*.jar
+# *.jar
 *.war
 *.ear
 *.nar
