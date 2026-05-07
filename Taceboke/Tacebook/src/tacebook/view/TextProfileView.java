@@ -59,7 +59,7 @@ public class TextProfileView implements ProfileView {
      */
     private void showProfileInfo(boolean ownProfile, Profile profile) {
 
-        if (ownProfile) {
+        
 
             System.out.println("TACEBOOK: " + profile.getName());
             System.out.println("");
@@ -70,7 +70,7 @@ public class TextProfileView implements ProfileView {
             System.out.println("Tu biografia (Tus " + postsShown + "  publicaciones mas recientes): ");
             System.out.println("");
             for (int i = 0; i < profile.posts.size(); i++) {
-                System.out.println((i + 1) + ". " + profile.getPosts().get(i).getText() + " publicado el " + formatter.format(profile.getPosts().get(i).getDate()));
+                System.out.println((i + 1) + ". " + profile.getPosts().get(i).getText() + " publicado el " + formatter.format(profile.getPosts().get(i).getDate()) + " Me gustas " + profile.posts.get(i).getLikeProfiles().size());
                 if (!profile.posts.get(i).getComments().isEmpty()) {
                     System.out.println("Comentarios: ");
                     for (int j = 0; j < profile.getPosts().get(i).getComments().size(); j++) {
@@ -78,6 +78,7 @@ public class TextProfileView implements ProfileView {
                     }
                 }
             }
+        if (ownProfile) {
             System.out.println("");
             //No hay un metodo en profile para recoger los mensajes y no encuentro donde lo pone en las partes del proyecto
             System.out.println();
@@ -162,12 +163,11 @@ public class TextProfileView implements ProfileView {
      * @param profile
      */
     public void showProfileMenu(Profile profile) {
-        showProfileInfo(true, profile);
         boolean keepShowing = true;
-
         while (keepShowing) {
             System.out.println("");
-            showProfileInfo(true, profile);
+            boolean ownProfile = myController.getSessionProfile().getName().equals(myController.getShownProfile().getName());
+            showProfileInfo(ownProfile,profile);
             System.out.println("""
                            Escolle unha opción:
                            1. Escribir unha nova publicación
@@ -196,8 +196,11 @@ public class TextProfileView implements ProfileView {
                     addLike(scan, profile);
                     break;
                 case 4:
-
                     if (profile.friends.size() > 0) {
+                        System.out.println("Tienes " + profile.friends.size() + " amigos");
+                        for (int i = 0; i < profile.friends.size(); i++) {
+                            System.out.println((i + 1) + " - " + profile.friends.get(i).getName());
+                        }
                         showBiography(true, scan, profile);
 
                     } else {
@@ -331,8 +334,8 @@ public class TextProfileView implements ProfileView {
 
     /**
      * Pide ao usuario que seleccione unha publicación e chama ao controlador
-     * para facer like sobre ela. 
-     * 
+     * para facer like sobre ela.
+     *
      * todo: no poder dar segundo like a mismo post
      */
     private void addLike(Scanner scanner, Profile profile) {
@@ -377,10 +380,12 @@ public class TextProfileView implements ProfileView {
             //mostrar aqui o antes la lusta de amigos con sus indices
             int userText = readNumber(scanner);
             myController.setShownProfile(profile.getFriends().get(userText));
+        }else{
+            //si no está en su perfil
+            myController.setShownProfile(profile);
         }
 
-        //si no está en su perfil
-        myController.setShownProfile(profile);
+        
     }
 
     /**
