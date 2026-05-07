@@ -8,7 +8,6 @@ import ahorcado.parte1.model.HangMan;
 import ahorcado.parte1.model.HiddenWord;
 import controller.HangManController;
 import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import ahorcado.parte1.ui.GenerateWordException;
 import persistence.DBWordGenerator;
@@ -354,7 +353,7 @@ public class MainWindow extends javax.swing.JFrame {
      * @param evt
      */
     private void jTcharToTryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTcharToTryActionPerformed
-
+        
     }//GEN-LAST:event_jTcharToTryActionPerformed
 
     /**
