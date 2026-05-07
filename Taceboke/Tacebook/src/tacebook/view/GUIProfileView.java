@@ -331,9 +331,10 @@ public class GUIProfileView implements ProfileView {
             System.out.println("Selecciona una publicacion");
 
             for (int i = 0; i < profilePosts.size(); i++) {
-                System.out.println(i + " - " + profilePosts.get(i).getText() + " " + profilePosts.get(i).getDate() + " " + profilePosts.get(i).getAuthor());
+                System.out.println((i+1) + " - " + profilePosts.get(i).getText() + " " + profilePosts.get(i).getDate() + " " + profilePosts.get(i).getAuthor());
             }
             int selectedIndex = readNumber(scanner);
+            
             // myController.newLike(myController.getShownProfile().getPosts().get(selectedIndex));
             myController.newLike(profile.getPosts().get(selectedIndex));
 
