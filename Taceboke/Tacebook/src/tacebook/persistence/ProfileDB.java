@@ -137,10 +137,12 @@ public class ProfileDB {
      * @throws tacebook.persistence.PersistenceException
      */
     public static void saveFriendship(Profile profile1, Profile profile2) throws PersistenceException{
+        System.out.println(profile1.getFriends().size() +"cantidad de amiggos");
         if (profile1 != null && profile2 != null) {
             profile1.getFriends().add(profile2);
-            profile1.getFriends().add(profile2);
+            profile2.getFriends().add(profile1);
         }
+               System.out.println(profile1.getFriends().size() +"cantidad de amiggos despues");
     }
 
 }

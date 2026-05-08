@@ -30,10 +30,11 @@ public class DemoData {
         ProfileDB.save(c);
 
         // 2. Relaciones (requests + friends)
-        ProfileDB.saveFriendshipRequest(a,b); 
+        ProfileDB.saveFriendshipRequest(a,c); 
         ProfileDB.saveFriendshipRequest(b,c);
 
-        ProfileDB.saveFriendship(a, b); // A <-> B amigos
+        ProfileDB.saveFriendship(a, b); // a  se guarda en la lista de amigos  de b
+
 
         // 3. Posts
         Post post1 = new Post("primer post de a ", a);
