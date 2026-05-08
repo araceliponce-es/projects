@@ -204,7 +204,9 @@ public class TextProfileView implements ProfileView {
                         showBiography(true, scan, profile);
 
                     } else {
-                        showProfileInfo(true, profile);
+                        System.out.println("No tienes amigo para ver su perfil");
+                        System.out.println("");
+                        showProfileMenu(profile);
                     }
                     break;
                 case 5:
