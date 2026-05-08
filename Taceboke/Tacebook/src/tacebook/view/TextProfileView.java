@@ -58,26 +58,25 @@ public class TextProfileView implements ProfileView {
      * @param profile
      */
     private void showProfileInfo(boolean ownProfile, Profile profile) {
-
         
+    
+        System.out.println("TACEBOOK: " + profile.getName());
+        System.out.println("");
 
-            System.out.println("TACEBOOK: " + profile.getName());
-            System.out.println("");
+        System.out.println("Estado actual: " + profile.getStatus());
+        System.out.println();
 
-            System.out.println("Estado actual: " + profile.getStatus());
-            System.out.println();
-
-            System.out.println("Tu biografia (Tus " + postsShown + "  publicaciones mas recientes): ");
-            System.out.println("");
-            for (int i = 0; i < profile.posts.size(); i++) {
-                System.out.println((i + 1) + ". " + profile.getPosts().get(i).getText() + " publicado el " + formatter.format(profile.getPosts().get(i).getDate()) + " Me gustas " + profile.posts.get(i).getLikeProfiles().size());
-                if (!profile.posts.get(i).getComments().isEmpty()) {
-                    System.out.println("Comentarios: ");
-                    for (int j = 0; j < profile.getPosts().get(i).getComments().size(); j++) {
-                        System.out.println("--" + (j + 1) + ". " + profile.posts.get(i).getComments().get(j).getText() + " publicado el " + formatter.format(profile.getPosts().get(i).getComments().get(j).getDate()));
-                    }
+        System.out.println("Tu biografia (Tus " + postsShown + "  publicaciones mas recientes): ");
+        System.out.println("");
+        for (int i = 0; i < profile.posts.size(); i++) {
+            System.out.println((i + 1) + ". " + profile.getPosts().get(i).getText() + " publicado el " + formatter.format(profile.getPosts().get(i).getDate()) + " Me gustas " + profile.posts.get(i).getLikeProfiles().size());
+            if (!profile.posts.get(i).getComments().isEmpty()) {
+                System.out.println("Comentarios: ");
+                for (int j = 0; j < profile.getPosts().get(i).getComments().size(); j++) {
+                    System.out.println("--" + (j + 1) + ". " + profile.posts.get(i).getComments().get(j).getText() + " publicado el " + formatter.format(profile.getPosts().get(i).getComments().get(j).getDate()));
                 }
             }
+        }
         if (ownProfile) {
             System.out.println("");
             //No hay un metodo en profile para recoger los mensajes y no encuentro donde lo pone en las partes del proyecto
@@ -167,7 +166,7 @@ public class TextProfileView implements ProfileView {
         while (keepShowing) {
             System.out.println("");
             boolean ownProfile = myController.getSessionProfile().getName().equals(myController.getShownProfile().getName());
-            showProfileInfo(ownProfile,profile);
+            showProfileInfo(ownProfile, myController.getShownProfile());
             System.out.println("""
                            Escolle unha opción:
                            1. Escribir unha nova publicación
@@ -381,13 +380,12 @@ public class TextProfileView implements ProfileView {
             System.out.println("Elige el perfil de cual amigo quieres ver");
             //mostrar aqui o antes la lusta de amigos con sus indices
             int userText = readNumber(scanner);
-            myController.setShownProfile(profile.getFriends().get(userText));
-        }else{
+            myController.setShownProfile(profile.getFriends().get(userText - 1));
+        } else {
             //si no está en su perfil
             myController.setShownProfile(profile);
         }
 
-        
     }
 
     /**
