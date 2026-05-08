@@ -488,7 +488,9 @@ public class TextProfileView implements ProfileView {
             } else {
                 System.out.println("Que mensaje quieres leer : ");
                 int msgIndex = readNumber(scanner);
-                System.out.println(myController.getShownProfile().getMessages().get(msgIndex));
+                System.out.println("elige del 1 al " + myController.getShownProfile().getMessages().size());
+
+                
                 System.out.println("Que quieres hacer con el mensaje :");
                 System.out.println("1.Responder :");
                 System.out.println("2.Borrar mensaje :");
