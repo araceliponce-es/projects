@@ -58,22 +58,30 @@ public class TextProfileView implements ProfileView {
      * @param profile
      */
     private void showProfileInfo(boolean ownProfile, Profile profile) {
-        
-    
+
         System.out.println("TACEBOOK: " + profile.getName());
         System.out.println("");
 
         System.out.println("Estado actual: " + profile.getStatus());
         System.out.println();
 
-        System.out.println("Tu biografia (Tus " + postsShown + "  publicaciones mas recientes): ");
+        System.out.println("Biografia (" + postsShown + "  publicaciones mas recientes): ");
         System.out.println("");
-        for (int i = 0; i < profile.posts.size(); i++) {
-            System.out.println((i + 1) + ". " + profile.getPosts().get(i).getText() + " publicado el " + formatter.format(profile.getPosts().get(i).getDate()) + " Me gustas " + profile.posts.get(i).getLikeProfiles().size());
-            if (!profile.posts.get(i).getComments().isEmpty()) {
+        ArrayList<Post> profilePosts = profile.getPosts();
+        if (profilePosts.isEmpty()) {
+            System.out.println("No hay publicaciones");
+            return;
+        }
+
+        for (int i = 0; i < profilePosts.size(); i++) {
+            Post post = profilePosts.get(i);
+            System.out.println((i + 1) + ". " + post.getText() + " publicado el " + formatter.format(post.getDate()) + " Me gustas " + post.getLikeProfiles().size());
+
+            //si tiene comentarios, los muestra
+            if (!post.getComments().isEmpty()) {
                 System.out.println("Comentarios: ");
-                for (int j = 0; j < profile.getPosts().get(i).getComments().size(); j++) {
-                    System.out.println("--" + (j + 1) + ". " + profile.posts.get(i).getComments().get(j).getText() + " publicado el " + formatter.format(profile.getPosts().get(i).getComments().get(j).getDate()));
+                for (int j = 0; j < post.getComments().size(); j++) {
+                    System.out.println("--" + (j + 1) + ". " + post.getComments().get(j).getText() + " publicado el " + formatter.format(post.getComments().get(j).getDate()));
                 }
             }
         }
@@ -104,12 +112,10 @@ public class TextProfileView implements ProfileView {
             } else {
                 System.out.println("tienes 0 solicitudes de amistad");
             }
-            System.out.println();
-
-            System.out.println();
-            System.out.println("");
 
         }
+
+        System.out.println();
 
     }
 
@@ -165,8 +171,14 @@ public class TextProfileView implements ProfileView {
         boolean keepShowing = true;
         while (keepShowing) {
             System.out.println("");
-            boolean ownProfile = myController.getSessionProfile().getName().equals(myController.getShownProfile().getName());
-            showProfileInfo(ownProfile, myController.getShownProfile());
+            //perfil que el el usuario logueado está viendo en consola/pantalla
+            Profile profileInView = myController.getShownProfile();
+            Profile user = myController.getSessionProfile();
+
+            boolean ownProfile = myController.getSessionProfile().getName().equals(profileInView.getName());
+
+            showProfileInfo(ownProfile, profileInView);
+
             System.out.println("""
                            Escolle unha opción:
                            1. Escribir unha nova publicación
@@ -186,31 +198,33 @@ public class TextProfileView implements ProfileView {
             Scanner scan = new Scanner(System.in);
             switch (readNumber(scan)) {
                 case 1:
-                    writeNewPost(scan, profile);
+                    //puedes escribir posts en tu perfil y de amigos
+                    writeNewPost(scan, profileInView);
                     break;
                 case 2:
-                    commentPost(scan, profile);
+                    commentPost(scan, profileInView);
                     break;
                 case 3:
-                    addLike(scan, profile);
+                    addLike(scan, profileInView);
                     break;
                 case 4:
-                    if (profile.friends.size() > 0) {
-                        System.out.println("Tienes " + profile.friends.size() + " amigos");
-                        for (int i = 0; i < profile.friends.size(); i++) {
-                            System.out.println((i + 1) + " - " + profile.friends.get(i).getName());
+                    if (user.friends.size() > 0) {
+                        System.out.println("Tienes " + user.friends.size() + " amigos");
+                        for (int i = 0; i < user.friends.size(); i++) {
+                            System.out.println((i + 1) + " - " + user.friends.get(i).getName());
                         }
-                        showBiography(true, scan, profile);
+                        showBiography(true, scan, user);
 
                     } else {
-                        System.out.println("No tienes amigo para ver su perfil");
+                        System.out.println(user.getName() + " no tienes amigos. no puedes ver otros perfiles");
                         System.out.println("");
                         showProfileMenu(profile);
                     }
                     break;
                 case 5:
                     System.out.println("Introduce o nome do perfil ao que queres enviar a solitude");
-                    String futureFriendName = scan.nextLine();
+                    String futureFriendName = scan.nextLine().toLowerCase();
+                    // todo: controller debe verificar que no sean ya amigos o no este ya en solicitudes
                     myController.newFriendshipRequest(futureFriendName);
                     break;
                 case 6:
@@ -337,32 +351,36 @@ public class TextProfileView implements ProfileView {
      * Pide ao usuario que seleccione unha publicación e chama ao controlador
      * para facer like sobre ela.
      *
-     * todo: no poder dar segundo like a mismo post
+     *
      */
     private void addLike(Scanner scanner, Profile profile) {
 
         ArrayList<Post> profilePosts = profile.getPosts();
+
         if (profilePosts.isEmpty()) {
             System.out.println("No hay publicaciones");
             return;
         }
 
-        System.out.println("Selecciona una publicacion:");
+        System.out.println("Selecciona una publicación para dar me gusta:");
 
         for (int i = 0; i < profilePosts.size(); i++) {
             Post post = profilePosts.get(i);
-            System.out.println((i + 1) + " - " + post.getText() + " " + post.getDate() + " " + post.getAuthor());
+            System.out.println((i + 1) + ". " + post.getText() + " publicado el " + formatter.format(post.getDate()) + " Me gustas " + post.getLikeProfiles().size());
         }
 
         System.out.println("que número eliges?");
 
-        int selectedIndex = readNumber(scanner);
+        int selectedNumber = readNumber(scanner);
 
-        if (selectedIndex < 0 || selectedIndex >= profilePosts.size()) {
-            System.out.println("indice invalido");
-            return;
+        if (selectedNumber > 0 && selectedNumber <= profilePosts.size()) {
+            //se envia al controller (que hace las verificaciones)
+            Post selectedPost = profile.getPosts().get(selectedNumber - 1);
+            myController.newLike(selectedPost);
+
+        } else {
+            System.out.println("Índice inválido");
         }
-        myController.newLike(profile.getPosts().get(selectedIndex));
 
     }
 
@@ -490,7 +508,6 @@ public class TextProfileView implements ProfileView {
                 int msgIndex = readNumber(scanner);
                 System.out.println("elige del 1 al " + myController.getShownProfile().getMessages().size());
 
-                
                 System.out.println("Que quieres hacer con el mensaje :");
                 System.out.println("1.Responder :");
                 System.out.println("2.Borrar mensaje :");
@@ -563,7 +580,7 @@ public class TextProfileView implements ProfileView {
      * Informa de que non se pode facer like sobre unha publicación propia. *
      */
     public void showCannotLikeOwnPostMessage() {
-        System.out.println("No te puedes dar like a ti mismo egolatra =)");
+        System.out.println("No te puedes dar like a ti mismo egolatra =). Intenta ver primero el perfil de un amigo (4)");
     }
 
     /**
@@ -571,7 +588,7 @@ public class TextProfileView implements ProfileView {
      * xa se fixo like. *
      */
     public void showAlreadyLikedPostMessage() {
-        System.out.println("No puedes dar like dos vezes");
+        System.out.println("No puedes dar like dos veces");
     }
 
     /**

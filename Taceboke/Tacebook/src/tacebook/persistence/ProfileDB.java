@@ -100,7 +100,7 @@ public class ProfileDB {
 
     /**
      * Añade en el array @friendshipRequest del destProfile el sourceProfile
-     *
+     * envia solicitud de amistad (a esta persona, desde esta persona) (receiver,sender)
      * @param destProfile
      * @param sourceProfile
      * @throws tacebook.persistence.PersistenceException

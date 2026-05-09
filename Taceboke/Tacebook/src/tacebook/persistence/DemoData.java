@@ -29,7 +29,7 @@ public class DemoData {
         ProfileDB.save(b);
         ProfileDB.save(c);
 
-        // 2. Relaciones (requests + friends)
+        // 2. Relaciones (requests + friends) 
         ProfileDB.saveFriendshipRequest(a,c); 
         ProfileDB.saveFriendshipRequest(b,c);
 

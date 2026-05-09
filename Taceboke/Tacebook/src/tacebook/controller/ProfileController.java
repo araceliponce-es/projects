@@ -143,7 +143,7 @@ public class ProfileController {
      */
     public void openSession(Profile sessionProfile) {
         this.sessionProfile = sessionProfile;
-        this.shownProfile = sessionProfile;
+        this.shownProfile = sessionProfile; // al inicio es el mismo sessionProfile, cambiará cuando vea perfil de amigos
         myView.showProfileMenu(sessionProfile); //muestra opciones de cambiar de sesion o cerrar sesion
 
     }
@@ -213,27 +213,30 @@ public class ProfileController {
      * @param post
      */
     public void newLike(Post post) {
-        // guarda el like, solo si el nombre del autor del post NO ES IGUAL al nombre del usuario actual
-        boolean alreadyLike = false;
+
+        // no puede darse like a sí mismo
+        if (shownProfile.getName().equalsIgnoreCase(sessionProfile.getName())) {
+
+            myView.showCannotLikeOwnPostMessage();
+            reloadProfile();
+            return;
+        }
+
+        // no puede dar me gusta 2 veces al mismo post
         for (int i = 0; i < post.getLikeProfiles().size(); i++) {
             if (post.getLikeProfiles().get(i).getName().equalsIgnoreCase(sessionProfile.getName())) {
-                alreadyLike = true;
+                myView.showAlreadyLikedPostMessage();
+                reloadProfile();
+                return;
             }
         }
 
-        if (alreadyLike) {
-            myView.showAlreadyLikedPostMessage();
-        } else if (post.getAuthor().getName().equalsIgnoreCase(sessionProfile.getName())) {
-            myView.showCannotLikeOwnPostMessage();
-        } else {
-            try {
-                PostDB.saveLike(post, shownProfile);
-            } catch (PersistenceException ex) {
-                proccessPersistenceException(ex);
-            }
+        // intenta guardar me gusta en basededatos
+        try {
+            PostDB.saveLike(post, sessionProfile);
+        } catch (PersistenceException ex) {
+            proccessPersistenceException(ex);
         }
-
-        // en cualquier caso, recargar profile
         reloadProfile();
     }
 
@@ -256,40 +259,45 @@ public class ProfileController {
         try {
             //comprueba que el perfil del shownprofile existe
             if (ProfileDB.findByName(profileName) != null) {
-                Profile profileB = ProfileDB.findByName(profileName);
-                //obtiene los amigos del A
+                Profile profileDest = ProfileDB.findByName(profileName);
+                //obtiene los amigos de A (logged user)
                 ArrayList<Profile> friends = sessionProfile.getFriends();
-                //obtiene las solicitudes de amistad de A
+                //obtiene las solicitudes de amistad de A (logged user)
                 ArrayList<Profile> pendingRequests = sessionProfile.getFriendshipsRequest();
                 //obtiene las solicitudes de amistad de B (el futuro amigo)
-                ArrayList<Profile> pendingFutureFriendRequests = profileB.getFriendshipsRequest();
+                ArrayList<Profile> pendingFutureFriendRequests = profileDest.getFriendshipsRequest();
 
-                //si A ya es amigo de B
+                //si loggedUser  ya es amigo de profileName
                 for (Profile friend : friends) {
-                    if (friend.getName().equals(profileName)) {
+                    if (friend.getName().equalsIgnoreCase(profileName)) {
                         exists = true;
+                        myView.showIsAlreadyFriendMessage(profileName);
                         break;
                     }
                 }
-                //si B esta en la lista de solicitudes de amistad de A
+                //si profileName esta en la lista de solicitudes de amistad de loggedUser
                 for (Profile request : pendingRequests) {
-                    if (request.getName().equals(profileName)) {
+                    if (request.getName().equalsIgnoreCase(profileName)) {
                         exists = true;
+                        myView.showExistsFrienshipRequestMessage(profileName);
                         break;
                     }
                 }
 
-                //si A esta en la lista de solicitudes de amistad de B
+                //si loggedUser esta en la lista de solicitudes de amistad de profileName
+               
                 for (Profile request : pendingFutureFriendRequests) {
-                    if (request.getName().equals(shownProfile)) {
+                    if (request.getName().equalsIgnoreCase(sessionProfile.getName())) {
                         exists = true;
+                        myView.showDuplicateFrienshipRequestMessage(profileName);
                         break;
                     }
                 }
 
-                // si ningun caso anterior se cumple, guarda la solicitud de amistad
+                // si ningun caso anterior se cumple, guarda la solicitud de amistad 
+                // solicitud hacia profileDest desde loggedUser
                 if (!exists) {
-                    ProfileDB.saveFriendshipRequest(shownProfile, sessionProfile);
+                    ProfileDB.saveFriendshipRequest(profileDest, sessionProfile);
                 }
             } else {
                 myView.showProfileNotFoundMessage();
@@ -356,7 +364,7 @@ public class ProfileController {
 //        Calendar cal = Calendar.getInstance();
 //        Date now = cal.getTime(); estas 2 lineas y new Date() hacen lo mismo
         Date now = new Date();
-        
+
         // public Message(int id, String text, boolean read, Profile destProfile, Profile sourceProfile) {
         // id del mensaje = cantidad de mensajes del destinatario
         Message message = new Message(destProfile.getMessages().size(), now, text, false, destProfile, shownProfile);

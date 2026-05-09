@@ -41,21 +41,21 @@ public class TextInitMenuView implements InitMenuView {
         System.out.println("text ¿Iniciar sesión(1), registrarse(2) o salir(3)?");
         Scanner scan = new Scanner(System.in);
         switch (readNumber(scan)) {
-            
+
             case 1:
                 System.out.println("Escribe tu nombre de usuario: ");
                 String name = scan.nextLine();
                 System.out.println("Escribe tu contraseña: ");
                 String password = scan.nextLine();
                 myController.login(name, password);
-              
- 
+                
+                
                 break;
             case 2:
                 myController.register();
                 break;
             case 3:
-                return true; 
+                return true;
             default:
                 break;
         }
