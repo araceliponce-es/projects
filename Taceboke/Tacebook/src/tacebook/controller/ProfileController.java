@@ -252,63 +252,55 @@ public class ProfileController {
      */
     public void newFriendshipRequest(String profileName) {
 
-        // session profile = quiene envia la solicitud = usuario A
-        // shown profile = quien recibe la solicitud de amistad = usuario B
-        boolean exists = false;
-
         try {
-            //comprueba que el perfil del shownprofile existe
-            if (ProfileDB.findByName(profileName) != null) {
-                Profile profileDest = ProfileDB.findByName(profileName);
-                //obtiene los amigos de A (logged user)
-                ArrayList<Profile> friends = sessionProfile.getFriends();
-                //obtiene las solicitudes de amistad de A (logged user)
-                ArrayList<Profile> pendingRequests = sessionProfile.getFriendshipsRequest();
-                //obtiene las solicitudes de amistad de B (el futuro amigo)
-                ArrayList<Profile> pendingFutureFriendRequests = profileDest.getFriendshipsRequest();
 
-                //si loggedUser  ya es amigo de profileName
-                for (Profile friend : friends) {
-                    if (friend.getName().equalsIgnoreCase(profileName)) {
-                        exists = true;
-                        myView.showIsAlreadyFriendMessage(profileName);
-                        break;
-                    }
-                }
-                //si profileName esta en la lista de solicitudes de amistad de loggedUser
-                for (Profile request : pendingRequests) {
-                    if (request.getName().equalsIgnoreCase(profileName)) {
-                        exists = true;
-                        myView.showExistsFrienshipRequestMessage(profileName);
-                        break;
-                    }
-                }
+            Profile profileDest = ProfileDB.findByName(profileName);
+            //obtiene los amigos de A (logged user)
 
-                //si loggedUser esta en la lista de solicitudes de amistad de profileName
-               
-                for (Profile request : pendingFutureFriendRequests) {
-                    if (request.getName().equalsIgnoreCase(sessionProfile.getName())) {
-                        exists = true;
-                        myView.showDuplicateFrienshipRequestMessage(profileName);
-                        break;
-                    }
-                }
-
-                // si ningun caso anterior se cumple, guarda la solicitud de amistad 
-                // solicitud hacia profileDest desde loggedUser
-                if (!exists) {
-                    ProfileDB.saveFriendshipRequest(profileDest, sessionProfile);
-                }
-            } else {
+            if (profileDest == null) {
                 myView.showProfileNotFoundMessage();
+                return;
             }
+
+            ArrayList<Profile> senderFriends = sessionProfile.getFriends();
+
+            //si loggedUser  ya es amigo de profileName
+            //todo: no comprueba si senderfriends es empty
+            for (Profile friend : senderFriends) {
+                if (friend.getName().equalsIgnoreCase(profileName)) {
+
+                    myView.showIsAlreadyFriendMessage(profileName);
+                    return;
+                }
+            }
+
+            //si profileName esta en la lista de solicitudes de amistad de loggedUser
+            for (Profile request : sessionProfile.getFriendshipsRequest()) {
+                if (request.getName().equalsIgnoreCase(profileName)) {
+
+                    myView.showExistsFrienshipRequestMessage(profileName);
+                    return;
+                }
+            }
+
+            //si loggedUser esta en la lista de solicitudes de amistad de profileName
+            for (Profile request : profileDest.getFriendshipsRequest()) {
+                if (request.getName().equalsIgnoreCase(sessionProfile.getName())) {
+
+                    myView.showDuplicateFrienshipRequestMessage(profileName);
+                    return;
+                }
+            }
+
+            // si ningun caso anterior se cumple, guarda la solicitud de amistad
+            // solicitud hacia profileDest desde loggedUser
+            ProfileDB.saveFriendshipRequest(profileDest, sessionProfile);
+
+            //en cualquier caso, recarga el perfil
         } catch (PersistenceException ex) {
             proccessPersistenceException(ex);
         }
-
-        //en cualquier caso, recarga el perfil
         reloadProfile();
-
     }
 
     /**

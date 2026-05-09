@@ -30,6 +30,7 @@ public class DemoData {
         ProfileDB.save(c);
 
         // 2. Relaciones (requests + friends) 
+        // c le envio solicitud a: a y b
         ProfileDB.saveFriendshipRequest(a,c); 
         ProfileDB.saveFriendshipRequest(b,c);
 

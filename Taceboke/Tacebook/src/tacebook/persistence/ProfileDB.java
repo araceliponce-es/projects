@@ -21,7 +21,7 @@ public class ProfileDB {
      * @return
      * @throws tacebook.persistence.PersistenceException
      */
-    public static Profile findByName(String name) throws PersistenceException{
+    public static Profile findByName(String name) throws PersistenceException {
         Profile res = null;
 
         for (Profile person : TacebookDB.getProfiles()) {
@@ -44,7 +44,7 @@ public class ProfileDB {
      * @return Objeto Profile encontrado, o null
      * @throws tacebook.persistence.PersistenceException
      */
-    public static Profile findByName(String name, int numberOfPosts) throws PersistenceException{
+    public static Profile findByName(String name, int numberOfPosts) throws PersistenceException {
         Profile res = null;
 
         for (Profile person : TacebookDB.getProfiles()) {
@@ -68,7 +68,7 @@ public class ProfileDB {
      * @return Perfil de usuario encontrado, o null
      * @throws tacebook.persistence.PersistenceException
      */
-    public static Profile findByNameAndPassword(String name, String password, int numberOfPosts) throws PersistenceException{
+    public static Profile findByNameAndPassword(String name, String password, int numberOfPosts) throws PersistenceException {
         Profile res = null;
 
         for (Profile person : TacebookDB.getProfiles()) {
@@ -85,7 +85,7 @@ public class ProfileDB {
      * @param profile
      * @throws tacebook.persistence.PersistenceException
      */
-    public static void save(Profile profile) throws PersistenceException{
+    public static void save(Profile profile) throws PersistenceException {
         TacebookDB.profiles.add(profile);
     }
 
@@ -95,21 +95,27 @@ public class ProfileDB {
      * @param profile
      * @throws tacebook.persistence.PersistenceException
      */
-    public static void update(Profile profile) throws PersistenceException{
+    public static void update(Profile profile) throws PersistenceException {
     }
 
     /**
      * Añade en el array @friendshipRequest del destProfile el sourceProfile
-     * envia solicitud de amistad (a esta persona, desde esta persona) (receiver,sender)
+     * envia solicitud de amistad (a esta persona, desde esta persona)
+     * (receiver,sender)
+     *
      * @param destProfile
      * @param sourceProfile
      * @throws tacebook.persistence.PersistenceException
      */
-    public static void saveFriendshipRequest(Profile destProfile, Profile sourceProfile) throws PersistenceException{
+    public static void saveFriendshipRequest(Profile destProfile, Profile sourceProfile) throws PersistenceException {
+
         // Compara los profiles con nulo para saber si existen
-        if (destProfile != null && sourceProfile != null) {
-            // Si los profiles existen obtiene el arrayList de solicitudes del
-            // perfil destino y le añade el perfil del que viene la solicitud
+        if (destProfile == null || sourceProfile == null) {
+            return;
+        }
+
+        // evita duplicados
+        if (!destProfile.getFriendshipsRequest().contains(sourceProfile)) {
             destProfile.getFriendshipsRequest().add(sourceProfile);
         }
     }
@@ -121,7 +127,7 @@ public class ProfileDB {
      * @param sourceProfile
      * @throws tacebook.persistence.PersistenceException
      */
-    public static void removeFriendshipRequest(Profile destProfile, Profile sourceProfile) throws PersistenceException{
+    public static void removeFriendshipRequest(Profile destProfile, Profile sourceProfile) throws PersistenceException {
         if (destProfile != null && sourceProfile != null) {
             // Si los profiles existen obtiene el arrayList de solicitudes del
             // perfil destino y elimina el perfil del que viene la solicitud
@@ -136,13 +142,13 @@ public class ProfileDB {
      * @param profile2
      * @throws tacebook.persistence.PersistenceException
      */
-    public static void saveFriendship(Profile profile1, Profile profile2) throws PersistenceException{
-        System.out.println(profile1.getFriends().size() +"cantidad de amiggos");
+    public static void saveFriendship(Profile profile1, Profile profile2) throws PersistenceException {
+        System.out.println(profile1.getFriends().size() + "cantidad de amiggos");
         if (profile1 != null && profile2 != null) {
             profile1.getFriends().add(profile2);
             profile2.getFriends().add(profile1);
         }
-               System.out.println(profile1.getFriends().size() +"cantidad de amiggos despues");
+        System.out.println(profile1.getFriends().size() + "cantidad de amiggos despues");
     }
 
 }

@@ -608,7 +608,7 @@ public class TextProfileView implements ProfileView {
      * @param profileName
      */
     public void showExistsFrienshipRequestMessage(String profileName) {
-        System.out.println("Ya le enviaste una solicitud a  : " + profileName);
+        System.out.println("Ya existe una solicitud de amistad de  : " + profileName);
     }
 
     /**
@@ -618,7 +618,7 @@ public class TextProfileView implements ProfileView {
      * @param profileName
      */
     public void showDuplicateFrienshipRequestMessage(String profileName) {
-        System.out.println("Ya le enviaste una solicitud a  : " + profileName);
+        System.out.println("Antes le enviaste una solicitud a  : " + profileName);
     }
 
     //Métodos fase 3 aunque da igual porque esto se volverá una interfaz
