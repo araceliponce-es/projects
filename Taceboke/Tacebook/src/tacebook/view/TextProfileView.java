@@ -183,18 +183,35 @@ public class TextProfileView implements ProfileView {
                            Escolle unha opción:
                            1. Escribir unha nova publicación
                            2. Comentar unha publicación
-                           3. Facer me gusta sobre unha publicación
-                           4. Ver a biografía dun amigo
-                           5. Enviar unha solicitude de amizade
-                           6. Aceptar unha solicitude de amizade
-                           7. Rexeitar unha solicitude de amizade
-                           8. Enviar unha mensaxe privada a un amigo
-                           9. Ler unha mensaxe privada
-                           10. Eliminar unha mensaxe privada
-                           11. Ver publicacións anteriores
-                           12. Cambiar o estado
-                           13. Pechar a sesión
-                           """);
+                           3. Facer me gusta sobre unha publicación""");
+            if (ownProfile) {
+                System.out.println("4. Ver a biografía dun amigo");
+            } else {
+                System.out.println("4. Volver a tu perfil");
+            }
+            if (ownProfile) {
+                System.out.println("""
+                                   5. Enviar unha solicitude de amizade
+                                   6. Aceptar unha solicitude de amizade
+                                   7. Rexeitar unha solicitude de amizade""");
+            }
+            if(ownProfile){
+                System.out.println("8. Enviar unha mensaxe privada a un amigo");
+            }else{
+                System.out.println("8. Enviar unha mensaxe privada a este amigo");
+            }
+           
+            
+            if(ownProfile){
+                System.out.println("9. Ler unha mensaxe privada");
+                System.out.println("10. Eliminar unha mensaxe privada");
+            }
+            System.out.println("11. Ver publicacións anteriores");
+             if(ownProfile){
+                System.out.println("12. Cambiar o estado");
+            }
+            System.out.println("13. Cerrar sesion");
+
             Scanner scan = new Scanner(System.in);
             switch (readNumber(scan)) {
                 case 1:
@@ -208,18 +225,22 @@ public class TextProfileView implements ProfileView {
                     addLike(scan, profileInView);
                     break;
                 case 4:
-                    if (user.friends.size() > 0) {
-                        System.out.println("Tienes " + user.friends.size() + " amigos");
-                        for (int i = 0; i < user.friends.size(); i++) {
-                            System.out.println((i + 1) + " - " + user.friends.get(i).getName());
-                        }
-                        showBiography(true, scan, user);
+                    if(ownProfile){
+                        if (user.friends.size() > 0) {
+                            System.out.println("Tienes " + user.friends.size() + " amigos");
+                            for (int i = 0; i < user.friends.size(); i++) {
+                                System.out.println((i + 1) + " - " + user.friends.get(i).getName());
+                            }
+                            showBiography(true, scan, user);
 
-                    } else {
-                        System.out.println(user.getName() + " no tienes amigos. no puedes ver otros perfiles");
-                        System.out.println("");
-                        showProfileMenu(profile);
-                    }
+                            } else {
+                            System.out.println(user.getName() + " no tienes amigos. no puedes ver otros perfiles");
+                            System.out.println("");
+                            showProfileMenu(profile);
+                            }
+                        }else{
+                            myController.setShownProfile(myController.getSessionProfile());
+                        }
                     break;
                 case 5:
                     System.out.println("Introduce o nome do perfil ao que queres enviar a solitude");
