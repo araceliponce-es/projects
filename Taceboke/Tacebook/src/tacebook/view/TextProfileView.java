@@ -19,6 +19,9 @@ import tacebook.model.Message;
  * @author Araceli,Diego,Oscar
  */
 public class TextProfileView implements ProfileView {
+    //TODO que no se dónde meter para que lo leais: Punto 8,9,10,11
+    //Implementar el selectElement cuando intentamos mirar un comentario o amigo concreto
+    //Hacer que el índice del comentario introducido sea uno menos para buscar entre los comentarios
 
     private ProfileController myController;
     private SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy 'ás' HH:mm:ss");
@@ -81,7 +84,10 @@ public class TextProfileView implements ProfileView {
             if (!post.getComments().isEmpty()) {
                 System.out.println("Comentarios: ");
                 for (int j = 0; j < post.getComments().size(); j++) {
-                    System.out.println("--" + (j + 1) + ". " + post.getComments().get(j).getText() + " publicado el " + formatter.format(post.getComments().get(j).getDate()));
+                    //Todo esto para un número, un comentario, una fecha y un nombre
+                    System.out.println("--" + (j + 1) + ". " + post.getComments().get(j).getText() + 
+                    " publicado el " + formatter.format(post.getComments().get(j).getDate())+" por "
+                    + post.getComments().get(j).getSourceProfile().getName());
                 }
             }
         }
@@ -158,6 +164,9 @@ public class TextProfileView implements ProfileView {
                 break;
         }
     }
+    //TODO que no se dónde meter para que lo leais: Punto 8,9,10,11
+    //Implementar el selectElement cuando intentamos mirar un comentario o amigo concreto
+    //Hacer que el índice del comentario introducido sea uno menos para buscar entre los comentarios
 
     /**
      * profileController en su método openSession usa
@@ -179,38 +188,40 @@ public class TextProfileView implements ProfileView {
 
             showProfileInfo(ownProfile, profileInView);
 
-            System.out.println("""
+            //TODO que no se dónde meter para que lo leais: Punto 8,9,10,11,12
+            //Implementar el selectElement cuando intentamos mirar un comentario o amigo concreto
+            //Hacer que el índice del comentario introducido sea uno menos para buscar entre los comentarios
+
+            if (ownProfile) {
+                System.out.println("""
                            Escolle unha opción:
                            1. Escribir unha nova publicación
                            2. Comentar unha publicación
-                           3. Facer me gusta sobre unha publicación""");
-            if (ownProfile) {
-                System.out.println("4. Ver a biografía dun amigo");
+                           3. Facer me gusta sobre unha publicación
+                           4. Ver a biografía dun amigo
+                           5. Enviar unha solicitude de amizade
+                           6. Aceptar unha solicitude de amizade
+                           7. Rexeitar unha solicitude de amizade
+                           8. Enviar unha mensaxe privada a un amigo
+                           9. Ler unha mensaxe privada
+                           10. Eliminar unha mensaxe privada
+                           11. Ver publicacións anteriores
+                           12. Cambiar o estado
+                           13. Cerrar sesion
+                           """);
             } else {
-                System.out.println("4. Volver a tu perfil");
-            }
-            if (ownProfile) {
                 System.out.println("""
-                                   5. Enviar unha solicitude de amizade
-                                   6. Aceptar unha solicitude de amizade
-                                   7. Rexeitar unha solicitude de amizade""");
+                                   Escolle unha opción:
+                                   1. Escribir unha nova publicación
+                                   2. Comentar unha publicación
+                                   3. Facer me gusta sobre unha publicación
+                                   4. Volver a tu perfil
+                                   8. Enviar unha mensaxe privada a este amigo
+                                   11. Ver publicacións anteriores
+                                   13. Cerrar sesion
+                                   """);
+                
             }
-            if(ownProfile){
-                System.out.println("8. Enviar unha mensaxe privada a un amigo");
-            }else{
-                System.out.println("8. Enviar unha mensaxe privada a este amigo");
-            }
-           
-            
-            if(ownProfile){
-                System.out.println("9. Ler unha mensaxe privada");
-                System.out.println("10. Eliminar unha mensaxe privada");
-            }
-            System.out.println("11. Ver publicacións anteriores");
-             if(ownProfile){
-                System.out.println("12. Cambiar o estado");
-            }
-            System.out.println("13. Cerrar sesion");
 
             Scanner scan = new Scanner(System.in);
             switch (readNumber(scan)) {
@@ -225,7 +236,7 @@ public class TextProfileView implements ProfileView {
                     addLike(scan, profileInView);
                     break;
                 case 4:
-                    if(ownProfile){
+                    if (ownProfile) {
                         if (user.friends.size() > 0) {
                             System.out.println("Tienes " + user.friends.size() + " amigos");
                             for (int i = 0; i < user.friends.size(); i++) {
@@ -233,14 +244,14 @@ public class TextProfileView implements ProfileView {
                             }
                             showBiography(true, scan, user);
 
-                            } else {
+                        } else {
                             System.out.println(user.getName() + " no tienes amigos. no puedes ver otros perfiles");
                             System.out.println("");
                             showProfileMenu(profile);
-                            }
-                        }else{
-                            myController.setShownProfile(myController.getSessionProfile());
                         }
+                    } else {
+                        myController.setShownProfile(myController.getSessionProfile());
+                    }
                     break;
                 case 5:
                     System.out.println("Introduce o nome do perfil ao que queres enviar a solitude");
@@ -351,16 +362,8 @@ public class TextProfileView implements ProfileView {
             System.out.println("no hay publicaciones");
             return;
         }
-        //selecciona la publicacion del perfil usando el index
-        System.out.println("selecciona una publicacion");
-        int selectedIndex = readNumber(scanner);
-
-        if (selectedIndex < 0 || selectedIndex >= profile.getPosts().size()) {
-            System.out.println("indice invalido");
-            return;
-        }
-
-        Post selectedPost = profile.getPosts().get(selectedIndex);
+        
+        Post selectedPost = profile.getPosts().get(selectElement("Selecciona una publicación", profile.getPosts().size(), scanner));
 
         System.out.println("cual es tu comentario?");
         String commentText = scanner.nextLine();
