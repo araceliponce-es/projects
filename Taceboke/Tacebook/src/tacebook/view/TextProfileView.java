@@ -84,9 +84,9 @@ public class TextProfileView implements ProfileView {
                 System.out.println("Comentarios: ");
                 for (int j = 0; j < post.getComments().size(); j++) {
                     //Todo esto para un número, un comentario, una fecha y un nombre
-                    System.out.println("--" + (j + 1) + ". " + post.getComments().get(j).getText() + 
-                    " publicado el " + formatter.format(post.getComments().get(j).getDate())+" por "
-                    + post.getComments().get(j).getSourceProfile().getName());
+                    System.out.println("--" + (j + 1) + ". " + post.getComments().get(j).getText()
+                            + " publicado el " + formatter.format(post.getComments().get(j).getDate()) + " por "
+                            + post.getComments().get(j).getSourceProfile().getName());
                 }
             }
         }
@@ -116,6 +116,17 @@ public class TextProfileView implements ProfileView {
                 }
             } else {
                 System.out.println("tienes 0 solicitudes de amistad");
+            }
+
+            ArrayList<Message> messages = profile.getMessages();
+            System.out.println("|MENSAJES|");
+            if (messages.size() > 0) {
+                System.out.println("Tienes " + messages.size() + " mensajes");
+                for (int i = 0; i < messages.size(); i++) {
+                    System.out.println((i + 1) + " - " + messages.get(i).getSourceProfile().getName()+" te escribió el: "+formatter.format(messages.get(i).getDate()));
+                }
+            } else {
+                System.out.println("tienes 0 mensajes, asocial, busca amigos ");
             }
 
         }
@@ -188,7 +199,6 @@ public class TextProfileView implements ProfileView {
 
             //TODO que no se dónde meter para que lo leais: Punto 8,9,10,11
             //Implementar el selectElement cuando intentamos mirar un mensaje concreto
-
             if (ownProfile) {
                 System.out.println("""
                            Escolle unha opción:
@@ -217,7 +227,7 @@ public class TextProfileView implements ProfileView {
                                    11. Ver publicacións anteriores
                                    13. Cerrar sesion
                                    """);
-                
+
             }
 
             Scanner scan = new Scanner(System.in);
@@ -266,16 +276,15 @@ public class TextProfileView implements ProfileView {
                     proccessFriendshipRequest(true, scan, profile, false);
                     break;
                 case 8:
-
                     if (!profile.friends.isEmpty()) {
                         System.out.println("------------");
                         //selecciona un numero de amigo
                         Profile destProfile = null;
                         //encuentra ese numero en la lista de amigos
-                        int destIndex = selectElement("elige un amigo", profile.friends.size(), scan);
+                        int destIndex = selectElement("Elige un amigo", profile.friends.size(), scan);
                         //sera el profile de destino
                         destProfile = profile.friends.get(destIndex);
-
+                        System.out.println("Escribe tu mensaje : ");
                         String message = scan.nextLine();
                         myController.newMessage(destProfile, message);
 
@@ -328,7 +337,7 @@ public class TextProfileView implements ProfileView {
             //pregunta por consola algo
             System.out.println(text);
             //recibe un numero
-            numberUser = readNumber(scanner)-1;
+            numberUser = readNumber(scanner) - 1;
 
             //sigue preguntando si el usuario sigue colocando numeros invalidos 
             // (es invalido si : menor que cero o es >= al maxnumber)
@@ -359,7 +368,7 @@ public class TextProfileView implements ProfileView {
             System.out.println("no hay publicaciones");
             return;
         }
-        
+
         Post selectedPost = profile.getPosts().get(selectElement("Selecciona una publicación", profile.getPosts().size(), scanner));
 
         System.out.println("cual es tu comentario?");
@@ -417,7 +426,7 @@ public class TextProfileView implements ProfileView {
         //si usuario esta en su propio perfil, le pide que eliga a uno de sus amigos para mostrar el perfil de est@
         if (ownProfile) {
             //mostrar aqui o antes la lusta de amigos con sus indices
-            myController.setShownProfile(profile.getFriends().get(selectElement("Elige el amigo que quieres ver",profile.getFriends().size() , scanner)));
+            myController.setShownProfile(profile.getFriends().get(selectElement("Elige el amigo que quieres ver", profile.getFriends().size(), scanner)));
         } else {
             //si no está en su perfil
             myController.setShownProfile(profile);
