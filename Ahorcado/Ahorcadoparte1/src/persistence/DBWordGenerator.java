@@ -14,7 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * reemplaza a ArrayWordGenerator
+ * Clase que genera palabras atraves de una base de datos
  *
  * @author Araceli,Diego,Óscar
  */

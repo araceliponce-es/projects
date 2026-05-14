@@ -14,11 +14,16 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /**
- *
+ * Clase que genera palabras atraves de un archivo
  * @author daw1al13
  */
 public class FileWordGenerator implements WordGenerator{
-
+    /**
+     * Metodo que genera la palabra aleatoria leyendo un archivo
+     * 
+     * @return word
+     * @throws GenerateWordException 
+     */
     @Override
     public String generateWord() throws GenerateWordException {
         try (BufferedReader in = new BufferedReader(new FileReader("palabras.txt"))) {
