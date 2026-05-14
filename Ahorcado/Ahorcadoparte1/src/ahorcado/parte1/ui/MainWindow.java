@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import ahorcado.parte1.ui.GenerateWordException;
 import java.awt.event.KeyEvent;
 import persistence.DBWordGenerator;
+import persistence.FileWordGenerator;
 
 /**
  * Interfaz grafica
@@ -51,7 +52,7 @@ public class MainWindow extends javax.swing.JFrame {
     /**
      * Metodo para comenzar una nueva partida
      */
-    private void startNewGame() {
+    private void startNewGame() throws GenerateWordException {
         showLevelCombobox();
     }
 
@@ -60,7 +61,7 @@ public class MainWindow extends javax.swing.JFrame {
      *
      * @return
      */
-    private String showLevelCombobox() {
+    private String showLevelCombobox() throws GenerateWordException {
         String option1= "Clásico,generando palabra al azar";
         String option2= "Competitivo,metiendo la palabra por teclado";
         String option3= "Claseico 2.0, con palabras de un fichero";
@@ -96,7 +97,15 @@ public class MainWindow extends javax.swing.JFrame {
             resetComponents();
             return secretWordCompetitive();
         } else if ((seleccion.equals(option3))) {
-            
+            resetComponents();
+                FileWordGenerator palabraSecr = new FileWordGenerator();
+                selectedWord = palabraSecr.generateWord();
+
+                word = new HiddenWord(selectedWord);
+                hangman = new HangMan(selectedWord);
+
+                //show muestra guiones
+                jLhiddenWordOut.setText(word.show());
         }
         return null;
     }
@@ -129,7 +138,7 @@ public class MainWindow extends javax.swing.JFrame {
     /**
      * Metodo para inicializar los componentes de una partida
      */
-    public void init() {
+    public void init() throws GenerateWordException {
 
         initComponents();
         iconInicializer();
@@ -373,7 +382,11 @@ public class MainWindow extends javax.swing.JFrame {
      * @param evt
      */
     private void jBNovaPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBNovaPartidaActionPerformed
-        showLevelCombobox();
+        try {
+            showLevelCombobox();
+        } catch (GenerateWordException ex) {
+            System.getLogger(MainWindow.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
     }//GEN-LAST:event_jBNovaPartidaActionPerformed
 
     /**
@@ -436,7 +449,11 @@ public class MainWindow extends javax.swing.JFrame {
                 //HangManController myController = new HangManController();
                 //myController.init();
                 MainWindow myWindow = new MainWindow(null);
-                myWindow.init();
+                try {
+                    myWindow.init();
+                } catch (GenerateWordException ex) {
+                    System.getLogger(MainWindow.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+                }
 
             }
         });
