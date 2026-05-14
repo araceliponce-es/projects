@@ -21,7 +21,7 @@ public class FileWordGenerator implements WordGenerator{
 
     @Override
     public String generateWord() throws GenerateWordException {
-        try (BufferedReader in = new BufferedReader(new FileReader("/persistence/palabras.txt"))) {
+        try (BufferedReader in = new BufferedReader(new FileReader("palabras.txt"))) {
                 String line = "";
                 ArrayList<String> words = new ArrayList<>();
                 while ((line = in.readLine()) != null) {
@@ -33,9 +33,8 @@ public class FileWordGenerator implements WordGenerator{
                     words.add(line);
                 }
                 return words.get(new Random().nextInt(words.size()));
-        } catch (IOException ex) {
-            System.out.println("No encuentra el archivo");
-            return null;
+        } catch (IOException e) {
+             throw new GenerateWordException("error al obtener palabra "+ e.getMessage(),true);
         }
     }
 }

@@ -52,7 +52,7 @@ public class MainWindow extends javax.swing.JFrame {
     /**
      * Metodo para comenzar una nueva partida
      */
-    private void startNewGame() throws GenerateWordException {
+    private void startNewGame() {
         showLevelCombobox();
     }
 
@@ -61,17 +61,17 @@ public class MainWindow extends javax.swing.JFrame {
      *
      * @return
      */
-    private String showLevelCombobox() throws GenerateWordException {
-        String option1= "Clásico,generando palabra al azar";
-        String option2= "Competitivo,metiendo la palabra por teclado";
-        String option3= "Claseico 2.0, con palabras de un fichero";
+    private String showLevelCombobox() {
+        String option1 = "Clásico,generando palabra al azar";
+        String option2 = "Competitivo,metiendo la palabra por teclado";
+        String option3 = "Clásico 2.0, con palabras de un fichero";
         Object seleccion = JOptionPane.showInputDialog(
                 this,
                 "Modo de xogo",
                 "Selecciona un modo de xogo",
                 JOptionPane.QUESTION_MESSAGE,
                 null, // null para icono defecto
-                new Object[]{option1,option2,option3},
+                new Object[]{option1, option2, option3},
                 "");
         if (seleccion == null) {
             if (hangman == null) {
@@ -97,7 +97,8 @@ public class MainWindow extends javax.swing.JFrame {
             resetComponents();
             return secretWordCompetitive();
         } else if ((seleccion.equals(option3))) {
-            resetComponents();
+            try {
+                resetComponents();
                 FileWordGenerator palabraSecr = new FileWordGenerator();
                 selectedWord = palabraSecr.generateWord();
 
@@ -106,6 +107,11 @@ public class MainWindow extends javax.swing.JFrame {
 
                 //show muestra guiones
                 jLhiddenWordOut.setText(word.show());
+                System.out.println(word.getCharacters());
+
+            } catch (GenerateWordException ex) {
+                System.getLogger(MainWindow.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            }
         }
         return null;
     }
@@ -138,7 +144,7 @@ public class MainWindow extends javax.swing.JFrame {
     /**
      * Metodo para inicializar los componentes de una partida
      */
-    public void init() throws GenerateWordException {
+    public void init() {
 
         initComponents();
         iconInicializer();
@@ -382,11 +388,7 @@ public class MainWindow extends javax.swing.JFrame {
      * @param evt
      */
     private void jBNovaPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBNovaPartidaActionPerformed
-        try {
-            showLevelCombobox();
-        } catch (GenerateWordException ex) {
-            System.getLogger(MainWindow.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-        }
+        showLevelCombobox();
     }//GEN-LAST:event_jBNovaPartidaActionPerformed
 
     /**
@@ -401,10 +403,11 @@ public class MainWindow extends javax.swing.JFrame {
 
     /**
      * evita escribir mas de 1 letra
-     * @param evt 
+     *
+     * @param evt
      */
     private void jTcharToTryKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTcharToTryKeyTyped
-  
+
         if (jTcharToTry.getText().length() >= 1) {
             evt.consume(); // detiene al char de ser añadido al text field
         }
@@ -449,11 +452,7 @@ public class MainWindow extends javax.swing.JFrame {
                 //HangManController myController = new HangManController();
                 //myController.init();
                 MainWindow myWindow = new MainWindow(null);
-                try {
-                    myWindow.init();
-                } catch (GenerateWordException ex) {
-                    System.getLogger(MainWindow.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-                }
+                myWindow.init();
 
             }
         });
