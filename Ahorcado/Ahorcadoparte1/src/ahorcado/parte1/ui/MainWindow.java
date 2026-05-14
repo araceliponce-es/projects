@@ -60,19 +60,22 @@ public class MainWindow extends javax.swing.JFrame {
      * @return 
      */
     private String showLevelCombobox() {
+        String option1= "Clásico,generando palabra al azar";
+        String option2= "Competitivo,metiendo la palabra por teclado";
+        String option3= "Claseico 2.0, con palabras de un fichero";
         Object seleccion = JOptionPane.showInputDialog(
                 this,
                 "Modo de xogo",
                 "Selecciona un modo de xogo",
                 JOptionPane.QUESTION_MESSAGE,
                 null, // null para icono defecto
-                new Object[]{"Clásico,generando palabra al azar", "Competitivo,metiendo la palabra por teclado"},
+                new Object[]{option1,option2,option3},
                 "");
         if (seleccion == null) {
             if (hangman == null) {
                 System.exit(0);
             }
-        } else if (seleccion.equals("Clásico,generando palabra al azar")) {
+        } else if (seleccion.equals(option1)) {
             try {
                 resetComponents();
                 DBWordGenerator palabraSecr = new DBWordGenerator();
@@ -88,9 +91,11 @@ public class MainWindow extends javax.swing.JFrame {
             } catch (GenerateWordException ex) {
                 System.getLogger(MainWindow.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
             }
-        } else if ((seleccion.equals("Competitivo,metiendo la palabra por teclado"))) {
+        } else if ((seleccion.equals(option2))) {
             resetComponents();
             return secretWordCompetitive();
+        } else if ((seleccion.equals(option3))) {
+            
         }
         return null;
     }
