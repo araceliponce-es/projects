@@ -20,8 +20,7 @@ import tacebook.model.Message;
  */
 public class TextProfileView implements ProfileView {
     //TODO que no se dónde meter para que lo leais: Punto 8,9,10,11
-    //Implementar el selectElement cuando intentamos mirar un comentario o amigo concreto
-    //Hacer que el índice del comentario introducido sea uno menos para buscar entre los comentarios
+    //Implementar el selectElement cuando intentamos mirar un mensaje concreto
 
     private ProfileController myController;
     private SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy 'ás' HH:mm:ss");
@@ -165,8 +164,7 @@ public class TextProfileView implements ProfileView {
         }
     }
     //TODO que no se dónde meter para que lo leais: Punto 8,9,10,11
-    //Implementar el selectElement cuando intentamos mirar un comentario o amigo concreto
-    //Hacer que el índice del comentario introducido sea uno menos para buscar entre los comentarios
+    //Implementar el selectElement cuando intentamos mirar un mensaje concreto
 
     /**
      * profileController en su método openSession usa
@@ -188,9 +186,8 @@ public class TextProfileView implements ProfileView {
 
             showProfileInfo(ownProfile, profileInView);
 
-            //TODO que no se dónde meter para que lo leais: Punto 8,9,10,11,12
-            //Implementar el selectElement cuando intentamos mirar un comentario o amigo concreto
-            //Hacer que el índice del comentario introducido sea uno menos para buscar entre los comentarios
+            //TODO que no se dónde meter para que lo leais: Punto 8,9,10,11
+            //Implementar el selectElement cuando intentamos mirar un mensaje concreto
 
             if (ownProfile) {
                 System.out.println("""
@@ -237,7 +234,7 @@ public class TextProfileView implements ProfileView {
                     break;
                 case 4:
                     if (ownProfile) {
-                        if (user.friends.size() > 0) {
+                        if (!user.friends.isEmpty()) {
                             System.out.println("Tienes " + user.friends.size() + " amigos");
                             for (int i = 0; i < user.friends.size(); i++) {
                                 System.out.println((i + 1) + " - " + user.friends.get(i).getName());
@@ -270,7 +267,7 @@ public class TextProfileView implements ProfileView {
                     break;
                 case 8:
 
-                    if (profile.friends.size() > 0) {
+                    if (!profile.friends.isEmpty()) {
                         System.out.println("------------");
                         //selecciona un numero de amigo
                         Profile destProfile = null;
@@ -331,7 +328,7 @@ public class TextProfileView implements ProfileView {
             //pregunta por consola algo
             System.out.println(text);
             //recibe un numero
-            numberUser = readNumber(scanner);
+            numberUser = readNumber(scanner)-1;
 
             //sigue preguntando si el usuario sigue colocando numeros invalidos 
             // (es invalido si : menor que cero o es >= al maxnumber)
@@ -419,10 +416,8 @@ public class TextProfileView implements ProfileView {
 
         //si usuario esta en su propio perfil, le pide que eliga a uno de sus amigos para mostrar el perfil de est@
         if (ownProfile) {
-            System.out.println("Elige el perfil de cual amigo quieres ver");
             //mostrar aqui o antes la lusta de amigos con sus indices
-            int userText = readNumber(scanner);
-            myController.setShownProfile(profile.getFriends().get(userText - 1));
+            myController.setShownProfile(profile.getFriends().get(selectElement("Elige el amigo que quieres ver",profile.getFriends().size() , scanner)));
         } else {
             //si no está en su perfil
             myController.setShownProfile(profile);
