@@ -10,6 +10,7 @@ import controller.HangManController;
 import javax.swing.Icon;
 import javax.swing.JOptionPane;
 import ahorcado.parte1.ui.GenerateWordException;
+import java.awt.event.KeyEvent;
 import persistence.DBWordGenerator;
 
 /**
@@ -57,7 +58,7 @@ public class MainWindow extends javax.swing.JFrame {
     /**
      * Menu para comenzar una nueva partida
      *
-     * @return 
+     * @return
      */
     private String showLevelCombobox() {
         String option1= "Clásico,generando palabra al azar";
@@ -143,8 +144,8 @@ public class MainWindow extends javax.swing.JFrame {
     private void showGameStatus() {
         if (hangman.isGameOver() && hangman.maxFailsExceeded()) {
             JOptionPane.showMessageDialog(this, "Perdiste, la palabra era : " + hangman.showFullWord());
-        }else if(hangman.isGameOver()){
-             JOptionPane.showMessageDialog(this, "Ganaste, la palabra era : " + hangman.showFullWord());
+        } else if (hangman.isGameOver()) {
+            JOptionPane.showMessageDialog(this, "Ganaste, la palabra era : " + hangman.showFullWord());
         }
     }
 
@@ -289,6 +290,14 @@ public class MainWindow extends javax.swing.JFrame {
                 jTcharToTryActionPerformed(evt);
             }
         });
+        jTcharToTry.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTcharToTryKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTcharToTryKeyTyped(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
@@ -316,22 +325,38 @@ public class MainWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBtryCharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtryCharActionPerformed
+        testChar();
+        jTcharToTry.setText("");
+    }//GEN-LAST:event_jBtryCharActionPerformed
 
-            char charToTry = jTcharToTry.getText().trim().charAt(0);
+    private void testChar() {
+
+        String text = jTcharToTry.getText().trim();
+
+        //si el texto esta vacio no va a poder encontrar su 1er char
+        if (!text.isEmpty()) {
+            char charToTry = text.charAt(0);
+
             hangman.tryChar(charToTry);
             this.jLImage_Ahorcado.setIcon(imagenes[hangman.getFails().size()]);
             jLfailLetterOut.setText(hangman.getStringFails());
             jLhiddenWordOut.setText(hangman.showHiddenWord());
             showGameStatus();
-    }//GEN-LAST:event_jBtryCharActionPerformed
+        } else {
+            System.out.println("El string está vacío");
+        }
+
+    }
+
     /**
      * Metodo que resetea los componentes al hacer una nueva partida
      */
-    private void resetComponents(){
+    private void resetComponents() {
         this.jLImage_Ahorcado.setIcon(imagenes[0]);
         this.jLfailLetterOut.setText("");
         this.jTcharToTry.setText("");
     }
+
     /**
      * hacer click en btn de exit, extingue el juego
      *
@@ -358,8 +383,29 @@ public class MainWindow extends javax.swing.JFrame {
      * @param evt
      */
     private void jTcharToTryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTcharToTryActionPerformed
-        
+
     }//GEN-LAST:event_jTcharToTryActionPerformed
+
+    /**
+     * evita escribir mas de 1 letra
+     * @param evt 
+     */
+    private void jTcharToTryKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTcharToTryKeyTyped
+  
+        if (jTcharToTry.getText().length() >= 1) {
+            evt.consume(); // detiene al char de ser añadido al text field
+        }
+
+    }//GEN-LAST:event_jTcharToTryKeyTyped
+
+    private void jTcharToTryKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTcharToTryKeyPressed
+
+        // si presiona espacio debe activar lo mismo que el btn
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            testChar();
+            jTcharToTry.setText("");
+        }
+    }//GEN-LAST:event_jTcharToTryKeyPressed
 
     /**
      * @param args the command line arguments
