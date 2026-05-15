@@ -123,7 +123,10 @@ public class TextProfileView implements ProfileView {
             if (messages.size() > 0) {
                 System.out.println("Tienes " + messages.size() + " mensajes");
                 for (int i = 0; i < messages.size(); i++) {
-                    System.out.println((i + 1) + " - " + messages.get(i).getSourceProfile().getName()+" te escribió el: "+formatter.format(messages.get(i).getDate()));
+                    if (messages.get(i).isRead()) {
+
+                    }
+                    System.out.println((i + 1) + " - " + messages.get(i).getSourceProfile().getName() + " te escribió el: " + formatter.format(messages.get(i).getDate()));
                 }
             } else {
                 System.out.println("tienes 0 mensajes, asocial, busca amigos ");
@@ -269,42 +272,27 @@ public class TextProfileView implements ProfileView {
                 case 6:
                     // el profesor no muestra lista de solicitudes de amistad de nuevo.
                     // porque despues de realizar cualquier accion se muestra de nuevo la biografia entera y debajo el menu
-                    proccessFriendshipRequest(true, scan, profile, true);
+                    proccessFriendshipRequest(ownProfile, scan, profile, true);
 
                     break;
                 case 7:
-                    proccessFriendshipRequest(true, scan, profile, false);
+                    proccessFriendshipRequest(ownProfile, scan, profile, false);
                     break;
                 case 8:
-                    if (!profile.friends.isEmpty()) {
-                        System.out.println("------------");
-                        //selecciona un numero de amigo
-                        Profile destProfile = null;
-                        //encuentra ese numero en la lista de amigos
-                        int destIndex = selectElement("Elige un amigo", profile.friends.size(), scan);
-                        //sera el profile de destino
-                        destProfile = profile.friends.get(destIndex);
-                        System.out.println("Escribe tu mensaje : ");
-                        String message = scan.nextLine();
-                        myController.newMessage(destProfile, message);
-
-                    } else {
-                        showProfileInfo(true, profile);
-                    }
-
+                    sendPrivateMessage(ownProfile, scan, profile);
                     break;
                 case 9:
-                    readPrivateMessage(true, scan, profile);
+                    readPrivateMessage(ownProfile, scan, profile);
                     break;
 
                 case 10:
-                    deletePrivateMessage(true, scan, profile);
+                    deletePrivateMessage(ownProfile, scan, profile);
                     break;
                 case 11:
                     showOldPosts(scan, profile);
                     break;
                 case 12:
-                    changeStatus(true, scan, profile);
+                    changeStatus(ownProfile, scan, profile);
                     break;
                 case 13:
                     //cerrar sesion
@@ -498,21 +486,18 @@ public class TextProfileView implements ProfileView {
      */
     private void sendPrivateMessage(boolean ownProfile, Scanner scanner, Profile profile) {
         if (ownProfile) {
-            //Si estas en tu propio perfil obtiene el amigo con el index indicado
-            System.out.println("Seleciona un amigo : ");
-            int selectedNumber = readNumber(scanner);
-            int selectedIndex = selectedNumber - 1;
+            if (!profile.friends.isEmpty()) {
+                //Si estas en tu propio perfil obtiene el amigo con el index indicado
+                int selectedIndex = selectElement("Selecciona un amigo", profile.getFriends().size(), scanner);
 
-            if (selectedNumber > 0 && selectedNumber <= profile.getFriends().size()) {
                 System.out.println("Escribe el mensaje para tu amigo : ");
                 String msg = scanner.nextLine();
 
                 Profile friend = profile.getFriends().get(selectedIndex);
                 myController.newMessage(friend, msg);
             } else {
-                System.out.println("Índice inválido");
+                System.out.println("No tienes amigos, buscate un dieguillo");
             }
-
         } else {
             //Si ya estas sobre el perfil de un amigo entonces ya le mandas el mensaje
             System.out.println("Escribe el mensaje para tu amigo : ");
@@ -533,8 +518,10 @@ public class TextProfileView implements ProfileView {
                 System.out.println("No tienes mensajes");
             } else {
                 System.out.println("Que mensaje quieres leer : ");
-                int msgIndex = readNumber(scanner);
-                System.out.println("elige del 1 al " + myController.getShownProfile().getMessages().size());
+                int msgIndex = selectElement("Elige del 1 al " + myController.getShownProfile().getMessages().size(), myController.getSessionProfile().getMessages().size(), scanner);
+
+                System.out.println(myController.getShownProfile().getMessages().get(msgIndex).getText());
+                myController.getSessionProfile().getMessages().get(msgIndex).setRead(true);
 
                 System.out.println("Que quieres hacer con el mensaje :");
                 System.out.println("1.Responder :");
@@ -543,11 +530,11 @@ public class TextProfileView implements ProfileView {
                 System.out.println("");
                 switch (readNumber(scanner)) {
                     case 1 ->
-                        sendPrivateMessage(ownProfile, scanner, myController.getShownProfile().getMessages().get(msgIndex).getSourceProfile());
+                        sendPrivateMessage(false, scanner, myController.getShownProfile().getMessages().get(msgIndex).getSourceProfile());
                     case 2 ->
                         myController.deleteMessage(myController.getShownProfile().getMessages().get(msgIndex));
                     case 3 ->
-                        myController.setShownProfile(profile);
+                        myController.setShownProfile(myController.getSessionProfile());
                     default -> {
                         System.out.println("Mete un numero del menu");
                     }
