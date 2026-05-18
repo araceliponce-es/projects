@@ -72,7 +72,6 @@ public class TextProfileView implements ProfileView {
         ArrayList<Post> profilePosts = profile.getPosts();
         if (profilePosts.isEmpty()) {
             System.out.println("No hay publicaciones");
-            return;
         }
         //Number of posts en vez de pasarle el size del array list
         //le pasamos number of posts para que si pasa de 10 deje de mostrarlo
