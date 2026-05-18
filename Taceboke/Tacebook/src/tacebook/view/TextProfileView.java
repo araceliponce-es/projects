@@ -74,8 +74,15 @@ public class TextProfileView implements ProfileView {
             System.out.println("No hay publicaciones");
             return;
         }
-
-        for (int i = 0; i < profilePosts.size(); i++) {
+        //Number of posts en vez de pasarle el size del array list
+        //le pasamos number of posts para que si pasa de 10 deje de mostrarlo
+        int numberOfPosts = 0;
+        if (postsShown > profile.getPosts().size()){
+            numberOfPosts = profile.getPosts().size();
+        }else{
+            numberOfPosts = postsShown;
+        }
+        for (int i = 0; i < numberOfPosts ; i++) {
             Post post = profilePosts.get(i);
             System.out.println((i + 1) + ". " + post.getText() + " publicado el " + formatter.format(post.getDate()) + " Me gustas " + post.getLikeProfiles().size());
 
@@ -124,9 +131,11 @@ public class TextProfileView implements ProfileView {
                 System.out.println("Tienes " + messages.size() + " mensajes");
                 for (int i = 0; i < messages.size(); i++) {
                     if (messages.get(i).isRead()) {
-
+                        System.out.println((i + 1) + " - " + messages.get(i).getSourceProfile().getName() + " te escribió el: " + formatter.format(messages.get(i).getDate()));
+                    }else{
+                        //Si esta sin leer entonces pone un hastag para indicarlo
+                        System.out.println("*"+(i + 1) + " - " + messages.get(i).getSourceProfile().getName() + " te escribió el: " + formatter.format(messages.get(i).getDate()));
                     }
-                    System.out.println((i + 1) + " - " + messages.get(i).getSourceProfile().getName() + " te escribió el: " + formatter.format(messages.get(i).getDate()));
                 }
             } else {
                 System.out.println("tienes 0 mensajes, asocial, busca amigos ");
