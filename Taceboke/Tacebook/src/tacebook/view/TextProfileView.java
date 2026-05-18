@@ -274,7 +274,7 @@ public class TextProfileView implements ProfileView {
                     }
                     break;
                 case 5:
-                    sendFriendshipRequest(true, scan);
+                    sendFriendshipRequest(ownProfile, scan);
                     break;
                 case 6:
                     // el profesor no muestra lista de solicitudes de amistad de nuevo.
