@@ -3,6 +3,7 @@ package tacebook.view;
 import java.awt.Color;
 import java.awt.Insets;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -10,6 +11,8 @@ import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.metal.MetalLookAndFeel;
 import javax.swing.plaf.metal.OceanTheme;
+import tacebook.controller.ProfileController;
+import tacebook.model.Profile;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -19,18 +22,47 @@ import javax.swing.plaf.metal.OceanTheme;
  *
  * @author Araceli,Diego,Oscar
  */
-public class Gui extends javax.swing.JFrame {
+public class Gui extends javax.swing.JFrame implements ProfileView {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Gui.class.getName());
+    private ProfileController myController;
+    private SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy 'ás' HH:mm:ss");
+    private int postsShown = 10;
 
     /**
      * Creates new form Gui
      */
-    public Gui() {
-
+    public Gui(ProfileController myController) {
+        this.myController = myController;
         initComponents();
+        customizePallete();
+        initIconImages();
         showloginMenu();
+        
+        this.setVisible(true);
+    }
 
+    /**
+     * carga icono y si no encuentra muestra mensaje en terminal
+     *
+     * usar clean y build para que netbeans copie los recursos a:
+     * build/classes/tacebook/img/nombre_imagen.png
+     *
+     * @param path
+     * @return
+     */
+    private ImageIcon loadIcon(String path) {
+        URL url = getClass().getResource("/tacebook/view/images/" + path);
+
+        if (url == null) {
+            System.err.println("No se encontro.... " + path);
+            return null;
+        }
+
+        return new ImageIcon(url);
+    }
+
+    private void initIconImages() {
         jTabbedPane1h466.setIconAt(0, loadIcon("persona.png"));
         jTabbedPane1h466.setIconAt(1, loadIcon("personas.png"));
         jTabbedPane1h466.setIconAt(2, loadIcon("mail.png"));
@@ -56,26 +88,6 @@ public class Gui extends javax.swing.JFrame {
         btnMessageRead.setIcon(loadIcon("visto.png"));
         btnMessageDelete.setIcon(loadIcon("equis.png"));
 
-    }
-
-    /**
-     * carga icono y si no encuentra muestra mensaje en terminal
-     *
-     * usar clean y build para que netbeans copie los recursos a:
-     * build/classes/tacebook/img/nombre_imagen.png
-     *
-     * @param path
-     * @return
-     */
-    private ImageIcon loadIcon(String path) {
-        URL url = getClass().getResource("/tacebook/view/images/" + path);
-
-        if (url == null) {
-            System.err.println("No se encontro.... " + path);
-            return null;
-        }
-
-        return new ImageIcon(url);
     }
 
     private boolean showloginMenu() {
@@ -709,10 +721,8 @@ public class Gui extends javax.swing.JFrame {
 //        }
         //</editor-fold>
 
-        customizePallete();
+        
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new Gui().setVisible(true));
     }
 
     public static void customizePallete() {
@@ -803,4 +813,63 @@ public class Gui extends javax.swing.JFrame {
     private javax.swing.JTable tableMessages;
     private javax.swing.JTable tablePosts;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * obtiene el numero de posts mostrados
+     *
+     * @return
+     */
+    public int getPostsShown() {
+        return postsShown;
+    }
+
+    @Override
+    public void showProfileMenu(Profile profile) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void showProfileNotFoundMessage() {
+        JOptionPane.showMessageDialog(this, "Profile not found", "No se ha encontrado el perfil", JOptionPane.WARNING_MESSAGE);
+    }
+
+    @Override
+    public void showCannotLikeOwnPostMessage() {
+        JOptionPane.showMessageDialog(this, "Aviso", "No te puedes dar like sobre ti mismo", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    @Override
+    public void showAlreadyLikedPostMessage() {
+        JOptionPane.showMessageDialog(this, "Aviso", "No te puedes dar like dos vezes al mismo post", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    @Override
+    public void showIsAlreadyFriendMessage(String profileName) {
+        JOptionPane.showMessageDialog(this, "Aviso", "Ya eres amigo de : " + profileName, JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    @Override
+    public void showExistsFrienshipRequestMessage(String profileName) {
+        JOptionPane.showMessageDialog(this, "Aviso", "Ya existe una solicitud de amistad de  : " + profileName, JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    @Override
+    public void showDuplicateFrienshipRequestMessage(String profileName) {
+        JOptionPane.showMessageDialog(this, "Aviso", "Ya le enviaste una solicitud de amistad a : " + profileName, JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    @Override
+    public void showConnectionErrorMessage() {
+        JOptionPane.showMessageDialog(this, "Error", "Erro na conexión co almacén de datos!", JOptionPane.WARNING_MESSAGE);
+    }
+
+    @Override
+    public void showReadErrorMessage() {
+        JOptionPane.showMessageDialog(this, "Error", "Erro na lectura de datos!", JOptionPane.WARNING_MESSAGE);
+    }
+
+    @Override
+    public void showWriteErrorMessage() {
+        JOptionPane.showMessageDialog(this, "Error", "Erro na escritura de datos!", JOptionPane.WARNING_MESSAGE);
+    }
 }
