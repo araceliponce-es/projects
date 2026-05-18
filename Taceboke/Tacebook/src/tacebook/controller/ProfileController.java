@@ -128,7 +128,7 @@ public class ProfileController {
      */
     public void reloadProfile() {
         try {
-            ProfileDB.findByName(this.shownProfile.getName(), myView.getPostsShown());
+            shownProfile = ProfileDB.findByName(this.shownProfile.getName(), myView.getPostsShown());
         } catch (PersistenceException ex) {
             proccessPersistenceException(ex);
         }
