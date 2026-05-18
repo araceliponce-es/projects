@@ -23,7 +23,7 @@ public class InitMenuController {
 
     //Este atributo no tiene get ni set, indica si se activa el modo texto
     private boolean textMode;
-    private InitMenuView myView;  
+    private InitMenuView myView;
 
     /**
      * Controlador de la fase 3 en adelante, como estamos en la fae 2 da errores
@@ -31,7 +31,7 @@ public class InitMenuController {
      * @param textMode
      */
     public InitMenuController(boolean textMode) {
-        
+
         this.textMode = textMode;
         if (textMode) {
             this.myView = new TextInitMenuView(this);
@@ -95,11 +95,11 @@ public class InitMenuController {
             if (p == null) {
                 myView.showLoginErrorMessage();
             } else {
-                                  new ProfileController(textMode).openSession(p);          
+                new ProfileController(textMode).openSession(p);
             }
         } catch (PersistenceException ex) {
             proccessPersistenceException(ex);
-        }   
+        }
     }
 
     /**
