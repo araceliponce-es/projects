@@ -19,8 +19,8 @@ import tacebook.model.Message;
  * @author Araceli,Diego,Oscar
  */
 public class TextProfileView implements ProfileView {
-    //TODO que no se dónde meter para que lo leais: Punto 8,9,10,11
-    //Implementar el selectElement cuando intentamos mirar un mensaje concreto
+    //TODO: hacer que cuando se ejecute en terminal no se muestren las contraseñas por pantalla
+    //Fase 4 (GUI)
 
     private ProfileController myController;
     private SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy 'ás' HH:mm:ss");
@@ -39,6 +39,7 @@ public class TextProfileView implements ProfileView {
      *
      * @return
      */
+    @Override
     public int getPostsShown() {
         return postsShown;
     }
@@ -103,7 +104,7 @@ public class TextProfileView implements ProfileView {
 
             // lista de amigos : 0 - nombre
             ArrayList<Profile> friends = profile.getFriends();
-            if (friends.size() > 0) {
+            if (!friends.isEmpty()) {
                 System.out.println("Tienes " + friends.size() + " amigos");
                 for (int i = 0; i < friends.size(); i++) {
                     System.out.println((i + 1) + " - " + friends.get(i).getName());
@@ -115,7 +116,7 @@ public class TextProfileView implements ProfileView {
             ArrayList<Profile> pendingRequests = profile.getFriendshipsRequest();
 
             System.out.println("Solicitudes de amistad : ");
-            if (pendingRequests.size() > 0) {
+            if (!pendingRequests.isEmpty()) {
                 System.out.println("Tienes " + pendingRequests.size() + " solicitudes de amistad");
                 for (int i = 0; i < pendingRequests.size(); i++) {
                     System.out.println((i + 1) + " - " + pendingRequests.get(i).getName());
@@ -126,7 +127,7 @@ public class TextProfileView implements ProfileView {
 
             ArrayList<Message> messages = profile.getMessages();
             System.out.println("|MENSAJES|");
-            if (messages.size() > 0) {
+            if (!messages.isEmpty()) {
                 System.out.println("Tienes " + messages.size() + " mensajes");
                 for (int i = 0; i < messages.size(); i++) {
                     if (messages.get(i).isRead()) {
@@ -185,8 +186,8 @@ public class TextProfileView implements ProfileView {
                 break;
         }
     }
-    //TODO que no se dónde meter para que lo leais: Punto 8,9,10,11
-    //Implementar el selectElement cuando intentamos mirar un mensaje concreto
+    //TODO: hacer que cuando se ejecute en terminal no se muestren las contraseñas por pantalla
+    //Fase 4 (GUI)
 
     /**
      * profileController en su método openSession usa
@@ -196,6 +197,7 @@ public class TextProfileView implements ProfileView {
      *
      * @param profile
      */
+    @Override
     public void showProfileMenu(Profile profile) {
         boolean keepShowing = true;
         while (keepShowing) {
@@ -208,8 +210,8 @@ public class TextProfileView implements ProfileView {
 
             showProfileInfo(ownProfile, profileInView);
 
-            //TODO que no se dónde meter para que lo leais: Punto 8,9,10,11
-            //Implementar el selectElement cuando intentamos mirar un mensaje concreto
+            //TODO: hacer que cuando se ejecute en terminal no se muestren las contraseñas por pantalla
+            //Fase 4 (GUI)
             if (ownProfile) {
                 System.out.println("""
                            Escolle unha opción:
@@ -273,7 +275,7 @@ public class TextProfileView implements ProfileView {
                     break;
                 case 5:
                     System.out.println("Introduce o nome do perfil ao que queres enviar a solitude");
-                    String futureFriendName = scan.nextLine().toLowerCase();
+                    String futureFriendName = scan.nextLine();
                     // todo: controller debe verificar que no sean ya amigos o no este ya en solicitudes
                     myController.newFriendshipRequest(futureFriendName);
                     break;
@@ -595,6 +597,7 @@ public class TextProfileView implements ProfileView {
      * Neste caso, que un perfil non se atopou (Úsase cando se quere enviar unha
      * solicitude de amizade). *
      */
+    @Override
     public void showProfileNotFoundMessage() {
         System.out.println("No se encontro el perfil");
     }
@@ -602,6 +605,7 @@ public class TextProfileView implements ProfileView {
     /**
      * Informa de que non se pode facer like sobre unha publicación propia. *
      */
+    @Override
     public void showCannotLikeOwnPostMessage() {
         System.out.println("No te puedes dar like a ti mismo egolatra =). Intenta ver primero el perfil de un amigo (4)");
     }
@@ -610,6 +614,7 @@ public class TextProfileView implements ProfileView {
      * Informa de que non se pode facer like sobre unha publicación sobre a que
      * xa se fixo like. *
      */
+    @Override
     public void showAlreadyLikedPostMessage() {
         System.out.println("No puedes dar like dos veces");
     }
@@ -620,6 +625,7 @@ public class TextProfileView implements ProfileView {
      *
      * @param profileName
      */
+    @Override
     public void showIsAlreadyFriendMessage(String profileName) {
         System.out.println("Ya eres amigo de : " + profileName);
     }
@@ -630,6 +636,7 @@ public class TextProfileView implements ProfileView {
      *
      * @param profileName
      */
+    @Override
     public void showExistsFrienshipRequestMessage(String profileName) {
         System.out.println("Ya existe una solicitud de amistad de  : " + profileName);
     }
@@ -640,6 +647,7 @@ public class TextProfileView implements ProfileView {
      *
      * @param profileName
      */
+    @Override
     public void showDuplicateFrienshipRequestMessage(String profileName) {
         System.out.println("Antes le enviaste una solicitud a  : " + profileName);
     }
@@ -666,6 +674,7 @@ public class TextProfileView implements ProfileView {
      * Método que debe mostrar un mensaje cuando se porduzca un error en la
      * conexión con la base de datos
      */
+    @Override
     public void showConnectionErrorMessage() {
         System.out.println("Erro na conexión co almacén de datos!");
     }
@@ -674,6 +683,7 @@ public class TextProfileView implements ProfileView {
      * Método que debe mostrar un mensaje cuando se porduzca un error en la
      * lectura de datos
      */
+    @Override
     public void showReadErrorMessage() {
         System.out.println("Erro na lectura de datos!");
     }
@@ -682,6 +692,7 @@ public class TextProfileView implements ProfileView {
      * Método que debe mostrar un mensaje cuando se porduzca un error en la
      * escritura de datos
      */
+    @Override
     public void showWriteErrorMessage() {
         System.out.println("Erro na escritura dos datos!");
     }
