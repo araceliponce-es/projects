@@ -19,7 +19,7 @@ import tacebook.model.Message;
  * @author Araceli,Diego,Oscar
  */
 public class TextProfileView implements ProfileView {
-    //TODO: hacer que cuando se ejecute en terminal no se muestren las contraseñas por pantalla
+    //TODO: 
     //Fase 4 (GUI)
 
     private ProfileController myController;
@@ -186,7 +186,7 @@ public class TextProfileView implements ProfileView {
                 break;
         }
     }
-    //TODO: hacer que cuando se ejecute en terminal no se muestren las contraseñas por pantalla
+    //TODO: 
     //Fase 4 (GUI)
 
     /**
@@ -210,7 +210,7 @@ public class TextProfileView implements ProfileView {
 
             showProfileInfo(ownProfile, profileInView);
 
-            //TODO: hacer que cuando se ejecute en terminal no se muestren las contraseñas por pantalla
+            //TODO: 
             //Fase 4 (GUI)
             if (ownProfile) {
                 System.out.println("""
