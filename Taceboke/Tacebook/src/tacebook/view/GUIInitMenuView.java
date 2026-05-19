@@ -6,6 +6,12 @@ package tacebook.view;
 
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 import tacebook.controller.InitMenuController;
 
 /**
@@ -36,26 +42,58 @@ public class GUIInitMenuView implements InitMenuView {
      */
     @Override
     public boolean showLoginMenu() {
-        System.out.println("gui ¿Iniciar sesión(1), registrarse(2) o salir(3)?");
-        Scanner scan = new Scanner(System.in);
-        switch (readNumber(scan)) {
-            case 1:
+        JPanel panel = new JPanel();
+        JLabel jLabel2 = new javax.swing.JLabel();
+        JTextField jTextField1 = new javax.swing.JTextField();
+        JLabel jLabel3 = new javax.swing.JLabel();
+        JPasswordField jPasswordField1 = new javax.swing.JPasswordField();
+        JLabel jLabel1 = new javax.swing.JLabel();
+        JTextField jTextField2 = new javax.swing.JTextField();
 
-                System.out.println("Escribe tu nombre de usuario: ");
-                String name = scan.nextLine();
-                System.out.println("Escribe tu contraseña: ");
-                String password = scan.nextLine();
-                myController.login(name, password);
-                break;
-            case 2:
-                myController.register();
-                break;
-            case 3:
-                return true;
-            default:
-                break;
-        }
+        panel.setLayout(new java.awt.GridLayout(3, 2));
+
+        jLabel2.setText("jLabel2");
+        panel.add(jLabel2);
+
+        panel.add(jTextField1);
+
+        jLabel3.setText("jLabel3");
+        panel.add(jLabel3);
+
+
+        panel.add(jPasswordField1);
+
+        jLabel1.setText("jLabel1");
+        panel.add(jLabel1);
+
+        panel.add(jTextField2);
+        
+        //panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        
+        JOptionPane.showConfirmDialog(null, panel, "Proba", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+        
         return false;
+
+//        System.out.println("gui ¿Iniciar sesión(1), registrarse(2) o salir(3)?");
+//        Scanner scan = new Scanner(System.in);
+//        switch (readNumber(scan)) {
+//            case 1:
+//
+//                System.out.println("Escribe tu nombre de usuario: ");
+//                String name = scan.nextLine();
+//                System.out.println("Escribe tu contraseña: ");
+//                String password = scan.nextLine();
+//                myController.login(name, password);
+//                break;
+//            case 2:
+//                myController.register();
+//                break;
+//            case 3:
+//                return true;
+//            default:
+//                break;
+//        }
+//        return false;
     }
 
     /**

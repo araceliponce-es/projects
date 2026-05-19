@@ -22,9 +22,9 @@ import tacebook.model.Profile;
  *
  * @author Araceli,Diego,Oscar
  */
-public class Gui extends javax.swing.JFrame implements ProfileView {
+public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
 
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Gui.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GUIProfileView.class.getName());
     private ProfileController myController;
     private SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy 'ás' HH:mm:ss");
     private int postsShown = 10;
@@ -32,7 +32,7 @@ public class Gui extends javax.swing.JFrame implements ProfileView {
     /**
      * Creates new form Gui
      */
-    public Gui(ProfileController myController) {
+    public GUIProfileView(ProfileController myController) {
         this.myController = myController;
         initComponents();
         customizePallete();
@@ -799,7 +799,7 @@ public class Gui extends javax.swing.JFrame implements ProfileView {
 
     @Override
     public void showProfileMenu(Profile profile) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
     }
 
     @Override
