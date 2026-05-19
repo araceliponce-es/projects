@@ -31,9 +31,12 @@ public class NewJFrame extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
+        jToggleButton1 = new javax.swing.JToggleButton();
         jPasswordField1 = new javax.swing.JPasswordField();
-        jLabel1 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new java.awt.GridLayout(3, 2));
@@ -47,14 +50,23 @@ public class NewJFrame extends javax.swing.JFrame {
         jLabel3.setText("jLabel3");
         getContentPane().add(jLabel3);
 
+        jToggleButton1.setText("jToggleButton1");
+        getContentPane().add(jToggleButton1);
+
         jPasswordField1.setText("jPasswordField1");
         getContentPane().add(jPasswordField1);
 
-        jLabel1.setText("jLabel1");
-        getContentPane().add(jLabel1);
-
         jTextField2.setText("jTextField2");
         getContentPane().add(jTextField2);
+
+        jButton1.setText("jButton1");
+        getContentPane().add(jButton1);
+
+        jButton2.setText("jButton2");
+        getContentPane().add(jButton2);
+
+        jButton3.setText("jButton3");
+        getContentPane().add(jButton3);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -85,11 +97,14 @@ public class NewJFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables
 }

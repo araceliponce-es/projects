@@ -4,9 +4,12 @@
  */
 package tacebook.view;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -49,9 +52,18 @@ public class GUIInitMenuView implements InitMenuView {
         JPasswordField jPasswordField1 = new javax.swing.JPasswordField();
         JLabel jLabel1 = new javax.swing.JLabel();
         JTextField jTextField2 = new javax.swing.JTextField();
+        JButton jBLogin = new javax.swing.JButton();
+        JButton jBRegister = new javax.swing.JButton();
+        JButton jBexit = new javax.swing.JButton();
+        jBexit.setText("Salir");
+        jBLogin.setText("Iniciar Sesion");
+        jBRegister.setText("Registrarse");
+        JButton[] optionButtons = {jBLogin,jBRegister,jBexit};
+        
+        
 
         panel.setLayout(new java.awt.GridLayout(3, 2));
-
+        
         jLabel2.setText("jLabel2");
         panel.add(jLabel2);
 
@@ -70,7 +82,9 @@ public class GUIInitMenuView implements InitMenuView {
         
         //panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         
-        JOptionPane.showConfirmDialog(null, panel, "Proba", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+        JOptionPane.showInputDialog(null, panel, "prueba", 0, null, optionButtons,null);
+          
         
         return false;
 
