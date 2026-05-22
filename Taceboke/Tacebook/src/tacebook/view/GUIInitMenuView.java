@@ -4,12 +4,10 @@
  */
 package tacebook.view;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
+import java.awt.GridLayout;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -46,68 +44,58 @@ public class GUIInitMenuView implements InitMenuView {
     @Override
     public boolean showLoginMenu() {
         JPanel panel = new JPanel();
-        JLabel jLabel2 = new javax.swing.JLabel();
-        JTextField jTextField1 = new javax.swing.JTextField();
-        JLabel jLabel3 = new javax.swing.JLabel();
-        JPasswordField jPasswordField1 = new javax.swing.JPasswordField();
-        JLabel jLabel1 = new javax.swing.JLabel();
-        JTextField jTextField2 = new javax.swing.JTextField();
-        JButton jBLogin = new javax.swing.JButton();
-        JButton jBRegister = new javax.swing.JButton();
-        JButton jBexit = new javax.swing.JButton();
-        jBexit.setText("Salir");
-        jBLogin.setText("Iniciar Sesion");
-        jBRegister.setText("Registrarse");
-        JButton[] optionButtons = {jBLogin,jBRegister,jBexit};
         
-        
+        JLabel jLabel1 = new JLabel();
+        JTextField inputUsuario = new JTextField();
 
-        panel.setLayout(new java.awt.GridLayout(3, 2));
-        
-        jLabel2.setText("jLabel2");
-        panel.add(jLabel2);
+        JLabel jLabel2 = new JLabel();
+        JPasswordField inputPassword = new JPasswordField();
 
-        panel.add(jTextField1);
+       
 
-        jLabel3.setText("jLabel3");
-        panel.add(jLabel3);
+        panel.setLayout(new GridLayout(4, 2));
 
-
-        panel.add(jPasswordField1);
-
-        jLabel1.setText("jLabel1");
+        jLabel1.setText("Nombre de usuario:");
         panel.add(jLabel1);
+        panel.add(inputUsuario);
 
-        panel.add(jTextField2);
-        
-        //panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        jLabel2.setText("Contraseña:");
+        panel.add(jLabel2);
+        panel.add(inputPassword);
+
         
 
-        JOptionPane.showInputDialog(null, panel, "prueba", 0, null, optionButtons,null);
-          
-        
+// Botones personalizados
+        Object[] opciones = {"Login","Registrar", "Cancelar" };
+
+        int resultado = JOptionPane.showOptionDialog(
+                null,
+                panel,
+                "Proba",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                opciones,
+                opciones[0]
+        );
+
+// Saber qué botón pulsó
+        if (resultado == 0) {
+           
+            String pwd = new String(inputPassword.getPassword());
+            System.out.println(pwd);
+            
+           myController.login(inputUsuario.getText().trim(), pwd);
+return true;
+        } else if (resultado == 1) {
+           
+             showRegisterMenu();
+        } else if (resultado == 2) {
+            System.out.println("Login");
+        }
+
         return false;
 
-//        System.out.println("gui ¿Iniciar sesión(1), registrarse(2) o salir(3)?");
-//        Scanner scan = new Scanner(System.in);
-//        switch (readNumber(scan)) {
-//            case 1:
-//
-//                System.out.println("Escribe tu nombre de usuario: ");
-//                String name = scan.nextLine();
-//                System.out.println("Escribe tu contraseña: ");
-//                String password = scan.nextLine();
-//                myController.login(name, password);
-//                break;
-//            case 2:
-//                myController.register();
-//                break;
-//            case 3:
-//                return true;
-//            default:
-//                break;
-//        }
-//        return false;
     }
 
     /**
@@ -128,23 +116,37 @@ public class GUIInitMenuView implements InitMenuView {
      */
     @Override
     public void showRegisterMenu() {
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Escribe un nombre de usuario:");
+        JPanel panel = new JPanel();
+        JLabel jLabel2 = new javax.swing.JLabel();
+        JTextField inputUsuario = new javax.swing.JTextField();
+        JLabel jLabel3 = new javax.swing.JLabel();
+        JPasswordField inputPassword = new javax.swing.JPasswordField();
+        JLabel jLabel1 = new javax.swing.JLabel();
+        JTextField inputPasswordNuevo = new javax.swing.JTextField();
+        JLabel jLabel4 = new javax.swing.JLabel();
+        JTextField inputStatus = new javax.swing.JTextField();
 
-        String name = scan.nextLine();
-        System.out.println("Escribe una contraseña:");
-        String contraseña = scan.nextLine();
-        System.out.println("Escríbela otra vez, que no me quedó clara");
-        String segundaContraseña = scan.nextLine();
-        if (contraseña.equals(segundaContraseña)) {
-            String password = segundaContraseña;
-            System.out.println("Dime el estado de tu perfil:");
-            String status = scan.nextLine();
-            myController.createProfile(name, password, status);
+        panel.setLayout(new java.awt.GridLayout(3, 2));
 
-        } else {
-            System.out.println("Las contraseñas no coinciden");
-        }
+        jLabel1.setText("Nombre de usuario:");
+        panel.add(jLabel1);
+        panel.add(inputUsuario);
+
+        jLabel2.setText("Contraseña:");
+        panel.add(jLabel2);
+        panel.add(inputPassword);
+
+        jLabel3.setText("Repite contraseña:");
+        panel.add(jLabel3);
+        panel.add(inputPasswordNuevo);
+
+        jLabel4.setText("Estado:");
+        panel.add(jLabel4);
+        panel.add(inputStatus);
+
+        //panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        JOptionPane.showConfirmDialog(null, panel, "Proba", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+
     }
 
     /**
