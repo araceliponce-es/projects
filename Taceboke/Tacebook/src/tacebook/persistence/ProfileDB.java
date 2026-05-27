@@ -4,6 +4,9 @@
  */
 package tacebook.persistence;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import tacebook.model.Profile;
 
 /**
@@ -147,6 +150,21 @@ public class ProfileDB {
             profile1.getFriends().add(profile2);
             profile2.getFriends().add(profile1);
         }
+    }
+
+    
+    private static String getPasswordHash(String password) throws NoSuchAlgorithmException {
+        // Calculamos e obtemos o Hash
+        MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
+        messageDigest.update(password.getBytes());
+        byte[] myHash = messageDigest.digest();
+        // Codificamos o Hash en hexadecimal        
+        BigInteger number = new BigInteger(1, myHash);
+        StringBuilder hexString = new StringBuilder(number.toString(16));
+        while (hexString.length() < 64) {
+            hexString.insert(0, '0');
+        }
+        return hexString.toString();
     }
 
 }

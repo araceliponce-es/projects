@@ -14,9 +14,9 @@ package tacebook.persistence;
 public class PersistenceException extends Exception {
 
     private int code;
-    private static int CONNECTION_ERROR = 0;
-    private static int CANNOT_READ = 1;
-    private static int CANNOT_WRITE = 2;
+    public static final int CONNECTION_ERROR = 0;
+    public static final int CANNOT_READ = 1;
+    public static final int CANNOT_WRITE = 2;
 
     /**
      * Obtiene el código del error producido
@@ -45,14 +45,6 @@ public class PersistenceException extends Exception {
 
     /**
      *
-     * @param CONNECTION_ERROR
-     */
-    public static void setCONNECTION_ERROR(int CONNECTION_ERROR) {
-        PersistenceException.CONNECTION_ERROR = CONNECTION_ERROR;
-    }
-
-    /**
-     *
      * @return
      */
     public static int getCANNOT_READ() {
@@ -61,26 +53,10 @@ public class PersistenceException extends Exception {
 
     /**
      *
-     * @param CANNOT_READ
-     */
-    public static void setCANNOT_READ(int CANNOT_READ) {
-        PersistenceException.CANNOT_READ = CANNOT_READ;
-    }
-
-    /**
-     *
      * @return
      */
     public static int getCANNOT_WRITE() {
         return CANNOT_WRITE;
-    }
-
-    /**
-     *
-     * @param CANNOT_WRITE
-     */
-    public static void setCANNOT_WRITE(int CANNOT_WRITE) {
-        PersistenceException.CANNOT_WRITE = CANNOT_WRITE;
     }
 
     /**
