@@ -26,7 +26,8 @@ public interface InitMenuView {
     /**
      * muestra mensaje en caso de error en login
      */
-    public void showLoginErrorMessage();
+    public void showLoginErrorMessage(
+    );
 
     /**
      * muestra el menu de registro

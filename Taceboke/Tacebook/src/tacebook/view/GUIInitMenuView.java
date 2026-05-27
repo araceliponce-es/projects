@@ -69,7 +69,7 @@ public class GUIInitMenuView implements InitMenuView {
         int resultado = JOptionPane.showOptionDialog(
                 null,
                 panel,
-                "Proba",
+                "Menu Inicio de Sesion",
                 JOptionPane.DEFAULT_OPTION,
                 JOptionPane.QUESTION_MESSAGE,
                 null,
@@ -80,16 +80,23 @@ public class GUIInitMenuView implements InitMenuView {
 // Saber qué botón pulsó
         if (resultado == 0) {
 
+            if (inputUsuario.getText().trim().equals("") || valueOf(inputPassword.getPassword()).trim().equals("")) {
+
+                JOptionPane.showMessageDialog(panel, "No puedes dejar ningun campo vacio!!");
+                return false;
+            }
             String pwd = new String(inputPassword.getPassword());
             System.out.println(pwd);
 
+            //intenta hacer login
+            // to-do: hacer 
             myController.login(inputUsuario.getText().trim(), pwd);
             return true;
         } else if (resultado == 1) {
             showRegisterMenu();
             return true;
-        }else{
-             System.exit(0);
+        } else {
+            System.exit(0);
         }
         return false;
     }
@@ -99,7 +106,8 @@ public class GUIInitMenuView implements InitMenuView {
      */
     @Override
     public void showLoginErrorMessage() {
-        System.out.println("Usuario y contraseña incorrectos, probablemente sólo uno esté mal, pero no te voy a decir cuál");
+        JOptionPane.showMessageDialog(null, "Usuario y contraseña incorrectos, probablemente sólo uno esté mal, pero no te voy a decir cuál");
+        showLoginMenu();
     }
 
     /**
@@ -112,6 +120,8 @@ public class GUIInitMenuView implements InitMenuView {
      */
     @Override
     public void showRegisterMenu() {
+        boolean exitRegister = false;
+
         JPanel panel = new JPanel();
         JLabel jLabel2 = new javax.swing.JLabel();
         JTextField inputUsuario = new javax.swing.JTextField();
@@ -141,16 +151,21 @@ public class GUIInitMenuView implements InitMenuView {
         panel.add(inputStatus);
 
         //panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        JOptionPane.showConfirmDialog(null, panel, "Proba", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+        while (!exitRegister) {
+            int confirmed = JOptionPane.showConfirmDialog(null, panel, "Menu de Registro", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
 
-        //Recorre las contraseñas 
-        if (valueOf(inputPassword.getPassword()).equals(valueOf(inputPasswordNuevo.getPassword()))) {
-            myController.createProfile(inputUsuario.getText(), valueOf(inputPassword.getPassword()), inputStatus.getText());
-        } else {
-            JOptionPane.showMessageDialog(panel, "Las contraseñasa no coinciden !!");
+            if (confirmed == JOptionPane.CANCEL_OPTION || confirmed == JOptionPane.CLOSED_OPTION) {
+                showLoginMenu();
+            } else if (inputUsuario.getText().trim().equals("") || valueOf(inputPassword.getPassword()).trim().equals("") || valueOf(inputPassword.getPassword()).trim().equals("") || inputStatus.getText().trim().equals("")) {
+                JOptionPane.showMessageDialog(panel, "No puedes dejar ningun campo vacio!!");
 
-            System.out.println("ya estas avisado");
-
+            } else if (valueOf(inputPassword.getPassword()).equals(valueOf(inputPasswordNuevo.getPassword()))) {
+                myController.createProfile(inputUsuario.getText(), valueOf(inputPassword.getPassword()), inputStatus.getText());
+                exitRegister = true;
+            } else {
+                JOptionPane.showMessageDialog(panel, "Las contraseñasa no coinciden !!");
+                System.out.println("ya estas avisado");
+            }
         }
 
     }

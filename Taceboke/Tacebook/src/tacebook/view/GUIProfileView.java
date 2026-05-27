@@ -40,7 +40,8 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
         
         
         
-        this.setVisible(true);
+//        this.setVisible(true);
+        this.showProfileMenu(myController.getSessionProfile());
     }
 
     /**
@@ -799,7 +800,7 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
 
     @Override
     public void showProfileMenu(Profile profile) {
-        
+        this.setVisible(true);
     }
 
     @Override
