@@ -89,10 +89,9 @@ public class TextInitMenuView implements InitMenuView {
         System.out.println("Escríbela otra vez, que no me quedó clara");
         String segundaContraseña = scan.nextLine();
         if (contraseña.equals(segundaContraseña)) {
-            String password = segundaContraseña;
             System.out.println("Dime el estado de tu perfil:");
             String status = scan.nextLine();
-            myController.createProfile(name, password, status);
+            myController.createProfile(name, segundaContraseña, status);
 
         } else {
             System.out.println("Las contraseñas no coinciden");

@@ -45,26 +45,26 @@ public class TacebookDB {
     public static void close() {
     }
     
-    // Referencia á conexión coa BD
-    private static Connection connection = null;
-
-    /**
-     * Obtén unha única conexión coa base de datos, abríndoa se é necesario
-     *
-     * @return Conexión coa base de datos aberta
-     * @throws PersistenceException Se se produce un erro ao conectar coa BD
-     */
-    public static Connection getConnection() throws PersistenceException {
-        // Obtemos unha conexión coa base de datos
-        try {
-            if (connection == null) {
-                connection = DriverManager.getConnection("URL", "usuario", "contrasinal");
-            }
-            return connection;
-        } catch (SQLException e) {
-            throw new PersistenceException(PersistenceException.CONNECTION_ERROR, e.getMessage());
-        }
-    }
+//    // Referencia á conexión coa BD
+//    private static Connection connection = null;
+//
+//    /**
+//     * Obtén unha única conexión coa base de datos, abríndoa se é necesario
+//     *
+//     * @return Conexión coa base de datos aberta
+//     * @throws PersistenceException Se se produce un erro ao conectar coa BD
+//     */
+//    public static Connection getConnection() throws PersistenceException {
+//        // Obtemos unha conexión coa base de datos
+//        try {
+//            if (connection == null) {
+//                connection = DriverManager.getConnection("URL", "usuario", "contrasinal");
+//            }
+//            return connection;
+//        } catch (SQLException e) {
+//            throw new PersistenceException(PersistenceException.CONNECTION_ERROR, e.getMessage());
+//        }
+//    }
 
     
     

@@ -5,8 +5,10 @@
 package tacebook.view;
 
 import java.awt.GridLayout;
+import static java.lang.String.valueOf;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+import javax.management.StringValueExp;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -44,14 +46,12 @@ public class GUIInitMenuView implements InitMenuView {
     @Override
     public boolean showLoginMenu() {
         JPanel panel = new JPanel();
-        
+
         JLabel jLabel1 = new JLabel();
         JTextField inputUsuario = new JTextField();
 
         JLabel jLabel2 = new JLabel();
         JPasswordField inputPassword = new JPasswordField();
-
-       
 
         panel.setLayout(new GridLayout(4, 2));
 
@@ -63,10 +63,8 @@ public class GUIInitMenuView implements InitMenuView {
         panel.add(jLabel2);
         panel.add(inputPassword);
 
-        
-
 // Botones personalizados
-        Object[] opciones = {"Login","Registrar", "Cancelar" };
+        Object[] opciones = {"Login", "Registrar", "Cancelar"};
 
         int resultado = JOptionPane.showOptionDialog(
                 null,
@@ -81,21 +79,19 @@ public class GUIInitMenuView implements InitMenuView {
 
 // Saber qué botón pulsó
         if (resultado == 0) {
-           
+
             String pwd = new String(inputPassword.getPassword());
             System.out.println(pwd);
-            
-           myController.login(inputUsuario.getText().trim(), pwd);
-return true;
+
+            myController.login(inputUsuario.getText().trim(), pwd);
+            return true;
         } else if (resultado == 1) {
-           
-             showRegisterMenu();
-        } else if (resultado == 2) {
-            System.out.println("Login");
+            showRegisterMenu();
+            return true;
+        }else{
+             System.exit(0);
         }
-
         return false;
-
     }
 
     /**
@@ -122,11 +118,11 @@ return true;
         JLabel jLabel3 = new javax.swing.JLabel();
         JPasswordField inputPassword = new javax.swing.JPasswordField();
         JLabel jLabel1 = new javax.swing.JLabel();
-        JTextField inputPasswordNuevo = new javax.swing.JTextField();
+        JPasswordField inputPasswordNuevo = new javax.swing.JPasswordField();
         JLabel jLabel4 = new javax.swing.JLabel();
         JTextField inputStatus = new javax.swing.JTextField();
 
-        panel.setLayout(new java.awt.GridLayout(3, 2));
+        panel.setLayout(new java.awt.GridLayout(4, 2));
 
         jLabel1.setText("Nombre de usuario:");
         panel.add(jLabel1);
@@ -146,6 +142,16 @@ return true;
 
         //panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         JOptionPane.showConfirmDialog(null, panel, "Proba", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+        //Recorre las contraseñas 
+        if (valueOf(inputPassword.getPassword()).equals(valueOf(inputPasswordNuevo.getPassword()))) {
+            myController.createProfile(inputUsuario.getText(), valueOf(inputPassword.getPassword()), inputStatus.getText());
+        } else {
+            JOptionPane.showMessageDialog(panel, "Las contraseñasa no coinciden !!");
+
+            System.out.println("ya estas avisado");
+
+        }
 
     }
 
