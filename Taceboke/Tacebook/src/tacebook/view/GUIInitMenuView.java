@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import tacebook.controller.InitMenuController;
+import static tacebook.view.GUIProfileView.customizePallete;
 
 /**
  * Aquí metemos el código de InitMenuView
@@ -32,6 +33,7 @@ public class GUIInitMenuView implements InitMenuView {
      */
     public GUIInitMenuView(InitMenuController controller) {
         myController = controller;
+        customizePallete();
     }
 
     /**
