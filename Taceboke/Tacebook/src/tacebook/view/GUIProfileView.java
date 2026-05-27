@@ -798,7 +798,6 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
     public void showProfileMenu(Profile profile) {
         lblUsername.setText(profile.getName());
         lblStatus.setText(profile.getStatus());
-        tablePosts.addRow
         this.setVisible(true);
     }
 
