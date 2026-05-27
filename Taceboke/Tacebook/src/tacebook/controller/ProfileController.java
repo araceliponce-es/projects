@@ -147,6 +147,11 @@ public class ProfileController {
         myView.showProfileMenu(sessionProfile); //muestra opciones de cambiar de sesion o cerrar sesion
 
     }
+    
+    public void closeSession(){
+        InitMenuController controller = new InitMenuController(textMode);
+        controller.init();
+    }
 
     /**
      * Actualiza y guarda los datos del perfil, luego recarga el perfil y lo

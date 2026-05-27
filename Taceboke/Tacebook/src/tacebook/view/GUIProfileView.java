@@ -1,3 +1,7 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package tacebook.view;
 
 import java.awt.Color;
@@ -5,6 +9,7 @@ import java.awt.Insets;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import javax.swing.DefaultListModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -15,6 +20,7 @@ import javax.swing.plaf.metal.OceanTheme;
 import javax.swing.table.DefaultTableModel;
 import tacebook.controller.ProfileController;
 import tacebook.model.Comment;
+import tacebook.model.Message;
 import tacebook.model.Post;
 import tacebook.model.Profile;
 
@@ -33,7 +39,11 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
     private SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy 'ás' HH:mm:ss");
     private int postsShown = 10;
 
-    ArrayList<Post> visiblePosts;
+    //Atributos para inicializar las tablas
+    private ArrayList<Post> visiblePosts;
+    private ArrayList<Profile> visibleFriends;
+    private ArrayList<Profile> visibleFriendsRequest;
+    private ArrayList<Message> visibleMessages;
 
     /**
      * Creates new form Gui
@@ -91,49 +101,68 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
         //panel mensajes
         btnMessageRead.setIcon(loadIcon("visto.png"));
         btnMessageDelete.setIcon(loadIcon("equis.png"));
-
     }
 
     private void loadPosts() {
-
         DefaultTableModel postModel = (DefaultTableModel) tablePosts.getModel();
         //llena la tabla de posts
-        visiblePosts = myController.getShownProfile().getPosts();
+        visiblePosts = myController.getSessionProfile().getPosts();
+        String nombreAutor = "";
         for (Post p : visiblePosts) {
+            if (p.getAuthor() != null) {
+                nombreAutor = p.getAuthor().getName();
+            } else {
+                nombreAutor = "Autor desconocido";
+            }
+
             postModel.addRow(new Object[]{
                 formatter.format(p.getDate()),
-//                p.getAuthor().getName(),
-                " --",
+                nombreAutor,
                 p.getText(),
                 p.getLikeProfiles().size()
             });
+            tablePosts.getSelectionModel().addListSelectionListener(e -> {
+                //Comprueba si hay cambios en el listener
+                if (!e.getValueIsAdjusting()) {
+                    int filaSelecionada = tablePosts.getSelectedRow();
+                    //Fila selecionada distinto a -1 es que tenga alguna selecionada
+                    if (filaSelecionada != -1) {
+                        int indiceModelo = tablePosts.convertRowIndexToModel(filaSelecionada);
+                        Post postSelecionado = visiblePosts.get(indiceModelo);
+                        loadComments(postSelecionado);
+                    }
+                }
+
+            });
+        };
+
+    }
+
+    private void loadMensajes() {
+        DefaultTableModel model = (DefaultTableModel) tableMessages.getModel();
+        
+        visibleMessages = myController.getSessionProfile().getMessages();
+        for (Message m : visibleMessages) {
+            model.addRow(new Object[]{"prueba",formatter.format(m.getDate()),m.getDestProfile().getName(),m.getText()});
         }
 
-        tablePosts.getSelectionModel().addListSelectionListener(e -> {
+    }
 
-            System.out.println(e);
-            if (e.getValueIsAdjusting()) {
-                return;
-            }
-
-           
-            int row = tablePosts.getSelectedRow();
-            System.out.println("row"+row);
-            if (row == -1) {
-                return;
-            }
-
-// incompleto
-        });
-
+    private void loadFriendsRequest() {
+        //llena la tabla de comentarios
+        //Creas un estilo y añades todos los elemento y lo seteas al list model
+        DefaultListModel listModel = new DefaultListModel();
+        visibleFriendsRequest = myController.getSessionProfile().getFriendshipsRequest();
+        for (Profile p : visibleFriendsRequest) {
+            String friendVisual = "El perfil @"+ p.getName() + " quiere ser tu amigo ";
+            listModel.addElement(friendVisual);
+        }
+        listFriendRequests.setModel(listModel);
     }
 
     private void loadComments(Post post) {
 
         DefaultTableModel model = (DefaultTableModel) tableComments.getModel();
-        // limpia la tabla de comentarios
-        model.setRowCount(0);
-        //llena la tabla de comentarios
 
         for (Comment c : post.getComments()) {
             model.addRow(new Object[]{
@@ -141,6 +170,20 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
                 c.getSourceProfile().getName(),
                 formatter.format(c.getDate())
             });
+        }
+
+    }
+
+    private void loadFriends() {
+        DefaultTableModel postModel = (DefaultTableModel) tableFriends.getModel();
+        // limpia la tabla de comentarios
+        visibleFriends = myController.getSessionProfile().getFriends();
+        //llena la tabla de comentarios
+        for (Profile p : visibleFriends) {
+            postModel.addRow(new Object[]{
+                p.getName(), p.getStatus()
+            });
+
         }
     }
 
@@ -286,6 +329,7 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
                 "Data", "autor", "texto", "me gustas"
             }
         ));
+        tablePosts.setCellSelectionEnabled(false);
         tablePosts.setMaximumSize(new java.awt.Dimension(800, 200));
         tablePosts.setPreferredSize(new java.awt.Dimension(800, 200));
         jScrollPane4.setViewportView(tablePosts);
@@ -704,9 +748,18 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
     private void btnMessageDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMessageDeleteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnMessageDeleteActionPerformed
-
+    ///////////////////////////
+    /// TODO NO VA ///////////
+    ////////////////////////
     private void btnBioSeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBioSeeActionPerformed
-        // TODO add your handling code here:
+            int filaSelecionada = tableFriends.getSelectedRow();
+            //Fila selecionada distinto a -1 es que tenga alguna selecionada
+            if (filaSelecionada != -1) {
+                int indiceModelo = tableFriends.convertRowIndexToModel(filaSelecionada);
+                Profile friend = visibleFriends.get(indiceModelo);
+                myController.setShownProfile(friend);
+                showProfileMenu(friend);
+            };
     }//GEN-LAST:event_btnBioSeeActionPerformed
 
     private void btnMessageCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMessageCreateActionPerformed
@@ -726,11 +779,22 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
     }//GEN-LAST:event_btnNewRequestActionPerformed
 
     private void btnUpdateStatus2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateStatus2ActionPerformed
-        // TODO add your handling code here:
+        String seleccion = JOptionPane.showInputDialog(
+                this,
+                "Escribe tu nuevo estatus : ",
+                JOptionPane.QUESTION_MESSAGE);  // el icono sera un iterrogante
+
+        // Si seleccion es null es que el usuario ha pulsado Cancelar.
+        if (seleccion != null) {
+            Profile profile = myController.getShownProfile();
+            profile.setStatus(seleccion);
+            loadStatus(profile);
+        }
     }//GEN-LAST:event_btnUpdateStatus2ActionPerformed
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
+        myController.closeSession();
     }//GEN-LAST:event_btnLogoutActionPerformed
 
     private void btnOlderPostsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOlderPostsActionPerformed
@@ -738,15 +802,47 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
     }//GEN-LAST:event_btnOlderPostsActionPerformed
 
     private void btnPostLikeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPostLikeActionPerformed
-        // TODO add your handling code here:
+        int filaSelecionada = tablePosts.getSelectedRow();
+        //Fila selecionada distinto a -1 es que tenga alguna selecionada
+        if (filaSelecionada != -1) {
+            int indiceModelo = tablePosts.convertRowIndexToModel(filaSelecionada);
+            Post postSelecionado = visiblePosts.get(indiceModelo);
+            myController.newLike(postSelecionado);
+        };
     }//GEN-LAST:event_btnPostLikeActionPerformed
 
     private void btnPostCommentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPostCommentActionPerformed
-        // TODO add your handling code here:
+        String seleccion = JOptionPane.showInputDialog(
+                this,
+                "Escribe el comentario del post : ",
+                JOptionPane.QUESTION_MESSAGE);  // el icono sera un iterrogante
+
+        // Si seleccion es null es que el usuario ha pulsado Cancelar.
+        if (seleccion != null) {
+
+            //Comprueba si hay cambios en el listener
+            int filaSelecionada = tablePosts.getSelectedRow();
+            //Fila selecionada distinto a -1 es que tenga alguna selecionada
+            if (filaSelecionada != -1) {
+                int indiceModelo = tablePosts.convertRowIndexToModel(filaSelecionada);
+                Post postSelecionado = visiblePosts.get(indiceModelo);
+                myController.newComment(postSelecionado, seleccion);
+                loadComments(postSelecionado);
+            }
+        };
     }//GEN-LAST:event_btnPostCommentActionPerformed
 
     private void btnPostCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPostCreateActionPerformed
-        // TODO add your handling code here:
+        String seleccion = JOptionPane.showInputDialog(
+                this,
+                "Escribe el texto del post : ",
+                JOptionPane.QUESTION_MESSAGE);  // el icono sera un iterrogante
+
+        // Si seleccion es null es que el usuario ha pulsado Cancelar.
+        if (seleccion != null) {
+            myController.newPost(seleccion, myController.getShownProfile());
+            loadPosts();
+        }
     }//GEN-LAST:event_btnPostCreateActionPerformed
 
     public static void customizePallete() {
@@ -847,13 +943,18 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
         return postsShown;
     }
 
+    public void loadStatus(Profile profile) {
+        lblStatus.setText(profile.getStatus());
+    }
+
     @Override
     public void showProfileMenu(Profile profile) {
         //Actualiza textos: username y status en interfaz
         lblUsername.setText(profile.getName());
-        lblStatus.setText(profile.getStatus());
-
+        loadStatus(profile);
         loadPosts();
+        loadFriends();
+        loadFriendsRequest();
         this.setVisible(true);
     }
 
@@ -864,27 +965,27 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
 
     @Override
     public void showCannotLikeOwnPostMessage() {
-        JOptionPane.showMessageDialog(this, "Aviso", "No te puedes dar like sobre ti mismo", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, "No te puedes dar like sobre ti mismo", "Aviso", JOptionPane.INFORMATION_MESSAGE);
     }
 
     @Override
     public void showAlreadyLikedPostMessage() {
-        JOptionPane.showMessageDialog(this, "Aviso", "No te puedes dar like dos vezes al mismo post", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, "No te puedes dar like dos vezes al mismo post", "Aviso", JOptionPane.INFORMATION_MESSAGE);
     }
 
     @Override
     public void showIsAlreadyFriendMessage(String profileName) {
-        JOptionPane.showMessageDialog(this, "Aviso", "Ya eres amigo de : " + profileName, JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Ya eres amigo de : " + profileName, "Aviso", JOptionPane.INFORMATION_MESSAGE);
     }
 
     @Override
     public void showExistsFrienshipRequestMessage(String profileName) {
-        JOptionPane.showMessageDialog(this, "Aviso", "Ya existe una solicitud de amistad de  : " + profileName, JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Ya existe una solicitud de amistad de  : " + profileName, "Aviso", JOptionPane.INFORMATION_MESSAGE);
     }
 
     @Override
     public void showDuplicateFrienshipRequestMessage(String profileName) {
-        JOptionPane.showMessageDialog(this, "Aviso", "Ya le enviaste una solicitud de amistad a : " + profileName, JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Ya le enviaste una solicitud de amistad a : " + profileName, "Aviso", JOptionPane.INFORMATION_MESSAGE);
     }
 
     @Override

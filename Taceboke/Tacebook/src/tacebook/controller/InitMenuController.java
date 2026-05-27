@@ -64,7 +64,7 @@ public class InitMenuController {
      * Método que llama al método "showLoginMenu" hasta que devuelva true,
      * inicia el tacebook hasta que el usuario salga
      */
-    private void init() {
+    public void init() {
 
         try {
             DemoData.load();
