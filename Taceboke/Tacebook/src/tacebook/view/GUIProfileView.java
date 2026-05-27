@@ -38,12 +38,8 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
         customizePallete();
         initIconImages();
         
-        
-        
-//        this.setVisible(true);
-        this.showProfileMenu(myController.getSessionProfile());
     }
-
+   
     /**
      * carga icono y si no encuentra muestra mensaje en terminal
      *
@@ -800,6 +796,9 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
 
     @Override
     public void showProfileMenu(Profile profile) {
+        lblUsername.setText(profile.getName());
+        lblStatus.setText(profile.getStatus());
+        tablePosts.addRow
         this.setVisible(true);
     }
 
