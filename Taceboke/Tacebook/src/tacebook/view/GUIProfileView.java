@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Insets;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -11,7 +12,10 @@ import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.metal.MetalLookAndFeel;
 import javax.swing.plaf.metal.OceanTheme;
+import javax.swing.table.DefaultTableModel;
 import tacebook.controller.ProfileController;
+import tacebook.model.Comment;
+import tacebook.model.Post;
 import tacebook.model.Profile;
 
 /*
@@ -29,6 +33,8 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
     private SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy 'ás' HH:mm:ss");
     private int postsShown = 10;
 
+    ArrayList<Post> visiblePosts;
+
     /**
      * Creates new form Gui
      */
@@ -37,9 +43,9 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
         initComponents();
         customizePallete();
         initIconImages();
-        
+
     }
-   
+
     /**
      * carga icono y si no encuentra muestra mensaje en terminal
      *
@@ -88,6 +94,55 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
 
     }
 
+    private void loadPosts() {
+
+        DefaultTableModel postModel = (DefaultTableModel) tablePosts.getModel();
+        //llena la tabla de posts
+        visiblePosts = myController.getShownProfile().getPosts();
+        for (Post p : visiblePosts) {
+            postModel.addRow(new Object[]{
+                formatter.format(p.getDate()),
+//                p.getAuthor().getName(),
+                " --",
+                p.getText(),
+                p.getLikeProfiles().size()
+            });
+        }
+
+        tablePosts.getSelectionModel().addListSelectionListener(e -> {
+
+            System.out.println(e);
+            if (e.getValueIsAdjusting()) {
+                return;
+            }
+
+           
+            int row = tablePosts.getSelectedRow();
+            System.out.println("row"+row);
+            if (row == -1) {
+                return;
+            }
+
+// incompleto
+        });
+
+    }
+
+    private void loadComments(Post post) {
+
+        DefaultTableModel model = (DefaultTableModel) tableComments.getModel();
+        // limpia la tabla de comentarios
+        model.setRowCount(0);
+        //llena la tabla de comentarios
+
+        for (Comment c : post.getComments()) {
+            model.addRow(new Object[]{
+                c.getText(),
+                c.getSourceProfile().getName(),
+                formatter.format(c.getDate())
+            });
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -694,8 +749,6 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnPostCreateActionPerformed
 
-
-
     public static void customizePallete() {
         //cambio de lookandfeel
         try {
@@ -796,8 +849,11 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
 
     @Override
     public void showProfileMenu(Profile profile) {
+        //Actualiza textos: username y status en interfaz
         lblUsername.setText(profile.getName());
         lblStatus.setText(profile.getStatus());
+
+        loadPosts();
         this.setVisible(true);
     }
 
