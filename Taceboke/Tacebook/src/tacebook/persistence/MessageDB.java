@@ -4,6 +4,10 @@
  */
 package tacebook.persistence;
 
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import tacebook.model.Message;
 
 /**
@@ -13,7 +17,7 @@ import tacebook.model.Message;
 public class MessageDB {
 
     /**
-     * Métoido que guarda un mensaje en el primer lugar del array de mensajes
+     * Método que guarda un mensaje en el primer lugar del array de mensajes
      * del usuario destino
      *
      * @param message Mensaje para un perfil
@@ -21,6 +25,23 @@ public class MessageDB {
      */
     public static void save(Message message) throws PersistenceException{
         message.destProfile.messages.addFirst(message);
+
+        Connection c=TacebookDB.getConnection();
+        try (c) {
+            System.out.println("Conexion realizada con exito");
+            PreparedStatement stM = c.prepareStatement("INSERT INTO MESSAGE VALUES(?,?,?,?,?,?)");
+            stM.setInt(1, message.getId());
+            stM.setString(2, message.getText());
+            stM.setDate(3, (Date) message.getDate());
+            stM.setBoolean(4, message.isRead());
+            stM.setString(5, message.getSourceProfile().getName());
+            stM.setString(6, message.getDestProfile().getName());
+            stM.close();
+            
+
+        } catch (SQLException e) {
+            System.out.println("Fallo en comentarios");
+        }
     }
 
     /**
