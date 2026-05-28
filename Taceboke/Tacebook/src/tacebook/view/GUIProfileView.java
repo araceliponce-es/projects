@@ -146,7 +146,6 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
     private void loadMensajes() {
         DefaultTableModel model = (DefaultTableModel) tableMessages.getModel();
         model.setRowCount(0);
-
         visibleMessages = myController.getSessionProfile().getMessages();
         for (Message m : visibleMessages) {
             model.addRow(new Object[]{"prueba", formatter.format(m.getDate()), m.getDestProfile().getName(), m.getText()});
@@ -771,11 +770,16 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
     }//GEN-LAST:event_btnMessageReadActionPerformed
 
     private void btnMessageDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMessageDeleteActionPerformed
-        // TODO add your handling code here:
+           int filaSelecionada = tableMessages.getSelectedRow();
+           //Fila selecionada distinto a -1 es que tenga alguna selecionada
+            if (filaSelecionada != -1) {
+                int indiceModelo = tableMessages.convertRowIndexToModel(filaSelecionada);
+                Message mensaje = visibleMessages.get(indiceModelo);
+                myController.deleteMessage(mensaje);
+                loadMensajes();
+            };
     }//GEN-LAST:event_btnMessageDeleteActionPerformed
-    ///////////////////////////
-    /// TODO NO VA ///////////
-    ////////////////////////
+
     private void btnBioSeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBioSeeActionPerformed
             int filaSelecionada = tableFriends.getSelectedRow();
             //Fila selecionada distinto a -1 es que tenga alguna selecionada
@@ -796,7 +800,20 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
     }//GEN-LAST:event_btnBioSeeActionPerformed
 
     private void btnMessageCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMessageCreateActionPerformed
-        // TODO add your handling code here:
+        String seleccion = JOptionPane.showInputDialog(
+                this,
+                "Escribe el mensaje para tu amigo : ",
+                JOptionPane.QUESTION_MESSAGE);
+        if(seleccion != null){
+            int filaSelecionada = tableFriends.getSelectedRow();
+            //Fila selecionada distinto a -1 es que tenga alguna selecionada
+            if (filaSelecionada != -1) {
+                int indiceModelo = tableFriends.convertRowIndexToModel(filaSelecionada);
+                Profile friend = visibleFriends.get(indiceModelo);
+                myController.newMessage(friend,seleccion);
+            };
+        }
+        
     }//GEN-LAST:event_btnMessageCreateActionPerformed
 
     private void btnAcceptRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcceptRequestActionPerformed
@@ -831,9 +848,8 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
 
         // Si seleccion es null es que el usuario ha pulsado Cancelar.
         if (seleccion != null) {
-            Profile profile = myController.getShownProfile();
-            profile.setStatus(seleccion);
-            loadStatus(profile);
+            myController.updateProfileStatus(seleccion);
+            loadStatus(myController.getShownProfile());
         }
     }//GEN-LAST:event_btnUpdateStatus2ActionPerformed
 
