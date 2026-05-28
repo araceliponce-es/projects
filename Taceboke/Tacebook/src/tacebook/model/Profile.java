@@ -15,6 +15,11 @@ public class Profile {
     
     private String name, password, status;
 
+    @Override
+    public String toString() {
+        return "El perfil @"+name+" quiere ser tu amigo";
+    }
+
     /**
      *En serio, ¿Por qué hacer todo esto public si hay getters y setters?
      */

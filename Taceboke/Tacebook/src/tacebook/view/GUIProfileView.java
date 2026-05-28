@@ -141,7 +141,7 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
 
     private void loadMensajes() {
         DefaultTableModel model = (DefaultTableModel) tableMessages.getModel();
-        
+        model.setRowCount(0);
         visibleMessages = myController.getSessionProfile().getMessages();
         for (Message m : visibleMessages) {
             model.addRow(new Object[]{"prueba",formatter.format(m.getDate()),m.getDestProfile().getName(),m.getText()});
@@ -154,9 +154,9 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
         //Creas un estilo y añades todos los elemento y lo seteas al list model
         DefaultListModel listModel = new DefaultListModel();
         visibleFriendsRequest = myController.getSessionProfile().getFriendshipsRequest();
+        listModel.removeAllElements();
         for (Profile p : visibleFriendsRequest) {
-            String friendVisual = "El perfil @"+ p.getName() + " quiere ser tu amigo ";
-            listModel.addElement(friendVisual);
+            listModel.addElement(p);
         }
         listFriendRequests.setModel(listModel);
     }
@@ -176,8 +176,10 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
     }
 
     private void loadFriends() {
+    
         DefaultTableModel postModel = (DefaultTableModel) tableFriends.getModel();
         // limpia la tabla de comentarios
+        postModel.setRowCount(0);
         visibleFriends = myController.getShownProfile().getFriends();
         //llena la tabla de comentarios
         for (Profile p : visibleFriends) {
@@ -759,7 +761,7 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
                 Profile friend = visibleFriends.get(indiceModelo);
                 myController.setShownProfile(friend);
                 showProfileMenu(friend);
-            };
+            }
     }//GEN-LAST:event_btnBioSeeActionPerformed
 
     private void btnMessageCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMessageCreateActionPerformed
@@ -767,7 +769,11 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
     }//GEN-LAST:event_btnMessageCreateActionPerformed
 
     private void btnAcceptRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcceptRequestActionPerformed
-        // TODO add your handling code here:
+        Profile profilefilaSelecionada = listFriendRequests.getSelectedValue();
+        //Fila selecionada distinto a -1 es que tenga alguna selecionada
+        myController.acceptFriendshipRequest(profilefilaSelecionada);
+        loadFriendsRequest();
+        loadFriends();
     }//GEN-LAST:event_btnAcceptRequestActionPerformed
 
     private void btnDenyRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDenyRequestActionPerformed
@@ -926,7 +932,7 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
     private javax.swing.JTabbedPane jTabbedPane1h466;
     private javax.swing.JLabel lblStatus;
     private javax.swing.JLabel lblUsername;
-    private javax.swing.JList<String> listFriendRequests;
+    private javax.swing.JList<Profile> listFriendRequests;
     private javax.swing.JLabel logo;
     private javax.swing.JTable tableComments;
     private javax.swing.JTable tableFriends;
@@ -955,6 +961,7 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
         loadPosts();
         loadFriends();
         loadFriendsRequest();
+        
         this.setVisible(true);
     }
 
