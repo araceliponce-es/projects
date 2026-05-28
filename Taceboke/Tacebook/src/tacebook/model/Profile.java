@@ -150,5 +150,9 @@ public class Profile {
     public void setMessages(ArrayList<Message> messages) {
         this.messages = messages;
     }
-    
+
+    @Override
+    public String toString() {
+        return "El perfil @" +name +"quiere ser tu amigo";
+    }    
 }

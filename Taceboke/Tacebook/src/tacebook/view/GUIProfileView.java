@@ -5,6 +5,7 @@
 package tacebook.view;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Insets;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -87,9 +88,6 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
         btnPostLike.setIcon(loadIcon("corazon.png"));
         btnOlderPosts.setIcon(loadIcon("mas.png"));
 
-        btnUpdateStatus2.setIcon(loadIcon("bot.png"));
-        btnLogout.setIcon(loadIcon("salir.png"));
-
         // panel amigos
         btnBioSee.setIcon(loadIcon("bandera.png"));
         btnMessageCreate.setIcon(loadIcon("lapiz-2.png"));
@@ -101,6 +99,12 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
         //panel mensajes
         btnMessageRead.setIcon(loadIcon("visto.png"));
         btnMessageDelete.setIcon(loadIcon("equis.png"));
+
+        //btns del final
+        btnUpdateStatus2.setIcon(loadIcon("bot.png"));
+        btnSendPrivateMessage.setIcon(loadIcon("mensaje.png"));
+        btnLogout.setIcon(loadIcon("salir.png"));
+        btnGoBack.setIcon(loadIcon("casa.png"));
     }
 
     private void loadPosts() {
@@ -142,9 +146,10 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
     private void loadMensajes() {
         DefaultTableModel model = (DefaultTableModel) tableMessages.getModel();
         model.setRowCount(0);
+
         visibleMessages = myController.getSessionProfile().getMessages();
         for (Message m : visibleMessages) {
-            model.addRow(new Object[]{"prueba",formatter.format(m.getDate()),m.getDestProfile().getName(),m.getText()});
+            model.addRow(new Object[]{"prueba", formatter.format(m.getDate()), m.getDestProfile().getName(), m.getText()});
         }
 
     }
@@ -224,13 +229,13 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
         tableComments = new javax.swing.JTable();
         contenedor2 = new javax.swing.JPanel();
         jSplitPane2 = new javax.swing.JSplitPane();
-        FIRST1 = new javax.swing.JPanel();
+        amigosPrimerContenedor = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         tableFriends = new javax.swing.JTable();
         jPanel9 = new javax.swing.JPanel();
         btnBioSee = new javax.swing.JButton();
         btnMessageCreate = new javax.swing.JButton();
-        SECOND1 = new javax.swing.JPanel();
+        amigosSegundoContenedor = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
         listFriendRequests = new javax.swing.JList<>();
         BTNS_DOS1 = new javax.swing.JPanel();
@@ -245,6 +250,8 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
         btnMessageRead = new javax.swing.JButton();
         btnMessageDelete = new javax.swing.JButton();
         BTNS_DOS3 = new javax.swing.JPanel();
+        btnGoBack = new javax.swing.JButton();
+        btnSendPrivateMessage = new javax.swing.JButton();
         btnUpdateStatus2 = new javax.swing.JButton();
         btnLogout = new javax.swing.JButton();
 
@@ -455,7 +462,7 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
         jSplitPane2.setMaximumSize(new java.awt.Dimension(800, 500));
         jSplitPane2.setMinimumSize(new java.awt.Dimension(800, 500));
 
-        FIRST1.setPreferredSize(new java.awt.Dimension(800, 250));
+        amigosPrimerContenedor.setPreferredSize(new java.awt.Dimension(800, 250));
 
         jScrollPane5.setBorder(javax.swing.BorderFactory.createTitledBorder("Lista de amigos"));
         jScrollPane5.setMaximumSize(new java.awt.Dimension(800, 200));
@@ -492,21 +499,21 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
         });
         jPanel9.add(btnMessageCreate);
 
-        javax.swing.GroupLayout FIRST1Layout = new javax.swing.GroupLayout(FIRST1);
-        FIRST1.setLayout(FIRST1Layout);
-        FIRST1Layout.setHorizontalGroup(
-            FIRST1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(FIRST1Layout.createSequentialGroup()
+        javax.swing.GroupLayout amigosPrimerContenedorLayout = new javax.swing.GroupLayout(amigosPrimerContenedor);
+        amigosPrimerContenedor.setLayout(amigosPrimerContenedorLayout);
+        amigosPrimerContenedorLayout.setHorizontalGroup(
+            amigosPrimerContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(amigosPrimerContenedorLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, 775, Short.MAX_VALUE)
                 .addContainerGap())
-            .addGroup(FIRST1Layout.createSequentialGroup()
+            .addGroup(amigosPrimerContenedorLayout.createSequentialGroup()
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 784, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
-        FIRST1Layout.setVerticalGroup(
-            FIRST1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, FIRST1Layout.createSequentialGroup()
+        amigosPrimerContenedorLayout.setVerticalGroup(
+            amigosPrimerContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, amigosPrimerContenedorLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -514,9 +521,9 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
                 .addGap(0, 0, 0))
         );
 
-        jSplitPane2.setTopComponent(FIRST1);
+        jSplitPane2.setTopComponent(amigosPrimerContenedor);
 
-        SECOND1.setPreferredSize(new java.awt.Dimension(787, 268));
+        amigosSegundoContenedor.setPreferredSize(new java.awt.Dimension(787, 268));
 
         jScrollPane6.setBorder(javax.swing.BorderFactory.createTitledBorder("Tus solicitudes de amistad"));
         jScrollPane6.setMaximumSize(new java.awt.Dimension(32767, 200));
@@ -550,30 +557,30 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
         });
         BTNS_DOS1.add(btnNewRequest);
 
-        javax.swing.GroupLayout SECOND1Layout = new javax.swing.GroupLayout(SECOND1);
-        SECOND1.setLayout(SECOND1Layout);
-        SECOND1Layout.setHorizontalGroup(
-            SECOND1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout amigosSegundoContenedorLayout = new javax.swing.GroupLayout(amigosSegundoContenedor);
+        amigosSegundoContenedor.setLayout(amigosSegundoContenedorLayout);
+        amigosSegundoContenedorLayout.setHorizontalGroup(
+            amigosSegundoContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(BTNS_DOS1, javax.swing.GroupLayout.DEFAULT_SIZE, 787, Short.MAX_VALUE)
-            .addGroup(SECOND1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(SECOND1Layout.createSequentialGroup()
+            .addGroup(amigosSegundoContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(amigosSegundoContenedorLayout.createSequentialGroup()
                     .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 780, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 7, Short.MAX_VALUE)))
         );
-        SECOND1Layout.setVerticalGroup(
-            SECOND1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SECOND1Layout.createSequentialGroup()
+        amigosSegundoContenedorLayout.setVerticalGroup(
+            amigosSegundoContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, amigosSegundoContenedorLayout.createSequentialGroup()
                 .addContainerGap(253, Short.MAX_VALUE)
                 .addComponent(BTNS_DOS1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(77, Short.MAX_VALUE))
-            .addGroup(SECOND1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(SECOND1Layout.createSequentialGroup()
+                .addContainerGap(79, Short.MAX_VALUE))
+            .addGroup(amigosSegundoContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(amigosSegundoContenedorLayout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap(113, Short.MAX_VALUE)))
         );
 
-        jSplitPane2.setBottomComponent(SECOND1);
+        jSplitPane2.setBottomComponent(amigosSegundoContenedor);
 
         javax.swing.GroupLayout contenedor2Layout = new javax.swing.GroupLayout(contenedor2);
         contenedor2.setLayout(contenedor2Layout);
@@ -682,6 +689,22 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
 
         BTNS_DOS3.setMinimumSize(new java.awt.Dimension(0, 0));
 
+        btnGoBack.setText("volver a mi biografia");
+        btnGoBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGoBackActionPerformed(evt);
+            }
+        });
+        BTNS_DOS3.add(btnGoBack);
+
+        btnSendPrivateMessage.setText("enviar mensaje privado");
+        btnSendPrivateMessage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSendPrivateMessageActionPerformed(evt);
+            }
+        });
+        BTNS_DOS3.add(btnSendPrivateMessage);
+
         btnUpdateStatus2.setText("cambiar estado");
         btnUpdateStatus2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -761,7 +784,15 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
                 Profile friend = visibleFriends.get(indiceModelo);
                 myController.setShownProfile(friend);
                 showProfileMenu(friend);
-            }
+
+                //deshabilitar 3er tab: mensajes privados
+                jTabbedPane1h466.setEnabledAt(2, false);
+                //cambia a mostrar 1er tab
+                jTabbedPane1h466.setSelectedIndex(0);
+
+                amigosSegundoContenedor.setVisible(false);
+                loadPosts();
+            };
     }//GEN-LAST:event_btnBioSeeActionPerformed
 
     private void btnMessageCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMessageCreateActionPerformed
@@ -851,6 +882,14 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
         }
     }//GEN-LAST:event_btnPostCreateActionPerformed
 
+    private void btnGoBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGoBackActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnGoBackActionPerformed
+
+    private void btnSendPrivateMessageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendPrivateMessageActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSendPrivateMessageActionPerformed
+
     public static void customizePallete() {
         //cambio de lookandfeel
         try {
@@ -893,13 +932,14 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
     private javax.swing.JPanel BTNS_DOS1;
     private javax.swing.JPanel BTNS_DOS3;
     private javax.swing.JPanel FIRST;
-    private javax.swing.JPanel FIRST1;
     private javax.swing.JPanel SECOND;
-    private javax.swing.JPanel SECOND1;
     private javax.swing.JPanel SECOND8;
+    private javax.swing.JPanel amigosPrimerContenedor;
+    private javax.swing.JPanel amigosSegundoContenedor;
     private javax.swing.JButton btnAcceptRequest;
     private javax.swing.JButton btnBioSee;
     private javax.swing.JButton btnDenyRequest;
+    private javax.swing.JButton btnGoBack;
     private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnMessageCreate;
     private javax.swing.JButton btnMessageDelete;
@@ -909,6 +949,7 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
     private javax.swing.JButton btnPostComment;
     private javax.swing.JButton btnPostCreate;
     private javax.swing.JButton btnPostLike;
+    private javax.swing.JButton btnSendPrivateMessage;
     private javax.swing.JButton btnUpdateStatus2;
     private javax.swing.JPanel contenedor1;
     private javax.swing.JPanel contenedor2;
@@ -961,7 +1002,27 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
         loadPosts();
         loadFriends();
         loadFriendsRequest();
-        
+        loadMensajes();
+
+        if (profile.getName().equalsIgnoreCase(myController.getSessionProfile().getName())) {
+            btnGoBack.setVisible(false);
+            btnSendPrivateMessage.setVisible(false);
+            btnUpdateStatus2.setVisible(true);
+        } else {
+            btnGoBack.setVisible(true);
+            btnSendPrivateMessage.setVisible(true);
+            btnUpdateStatus2.setVisible(false);
+
+            // Cambia '250' por la altura deseada en píxeles para el panel superior/izquierdo
+//jSplitPane2.setDividerLocation(500); 
+// Suponiendo un JSplitPane vertical, ajustamos la altura del panel superior a 300px
+            amigosPrimerContenedor.setPreferredSize(new Dimension(amigosPrimerContenedor.getWidth(), 700));
+ tableFriends.setPreferredSize(new Dimension(amigosPrimerContenedor.getWidth(), 700));
+// Es necesario refrescar el JSplitPane para que reconozca el cambio
+            jSplitPane2.revalidate();
+            jSplitPane2.repaint();
+        }
+
         this.setVisible(true);
     }
 

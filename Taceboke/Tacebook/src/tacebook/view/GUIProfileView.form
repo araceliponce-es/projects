@@ -615,7 +615,7 @@
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout"/>
                   <SubComponents>
-                    <Container class="javax.swing.JPanel" name="FIRST1">
+                    <Container class="javax.swing.JPanel" name="amigosPrimerContenedor">
                       <Properties>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                           <Dimension value="[800, 250]"/>
@@ -751,7 +751,7 @@
                         </Container>
                       </SubComponents>
                     </Container>
-                    <Container class="javax.swing.JPanel" name="SECOND1">
+                    <Container class="javax.swing.JPanel" name="amigosSegundoContenedor">
                       <Properties>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                           <Dimension value="[787, 268]"/>
@@ -780,7 +780,7 @@
                               <Group type="102" alignment="1" attributes="0">
                                   <EmptySpace pref="253" max="32767" attributes="0"/>
                                   <Component id="BTNS_DOS1" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="77" max="32767" attributes="0"/>
+                                  <EmptySpace pref="79" max="32767" attributes="0"/>
                               </Group>
                               <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
@@ -1115,6 +1115,22 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout"/>
           <SubComponents>
+            <Component class="javax.swing.JButton" name="btnGoBack">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="volver a mi biografia"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGoBackActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnSendPrivateMessage">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="enviar mensaje privado"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSendPrivateMessageActionPerformed"/>
+              </Events>
+            </Component>
             <Component class="javax.swing.JButton" name="btnUpdateStatus2">
               <Properties>
                 <Property name="text" type="java.lang.String" value="cambiar estado"/>
