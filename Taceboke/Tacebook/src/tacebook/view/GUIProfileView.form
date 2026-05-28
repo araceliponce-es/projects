@@ -384,10 +384,10 @@
                               <Properties>
                                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                                   <Table columnCount="4" rowCount="0">
-                                    <Column editable="true" title="Data" type="java.lang.Object"/>
-                                    <Column editable="true" title="autor" type="java.lang.Object"/>
-                                    <Column editable="true" title="texto" type="java.lang.Object"/>
-                                    <Column editable="true" title="me gustas" type="java.lang.Object"/>
+                                    <Column editable="false" title="Data" type="java.lang.Object"/>
+                                    <Column editable="false" title="autor" type="java.lang.Object"/>
+                                    <Column editable="false" title="texto" type="java.lang.Object"/>
+                                    <Column editable="false" title="me gustas" type="java.lang.Object"/>
                                   </Table>
                                 </Property>
                                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -523,9 +523,9 @@
                               <Properties>
                                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                                   <Table columnCount="3" rowCount="0">
-                                    <Column editable="true" title="texto" type="java.lang.Object"/>
-                                    <Column editable="true" title="de" type="java.lang.Object"/>
-                                    <Column editable="true" title="data" type="java.lang.Object"/>
+                                    <Column editable="false" title="texto" type="java.lang.Object"/>
+                                    <Column editable="false" title="de" type="java.lang.Object"/>
+                                    <Column editable="false" title="data" type="java.lang.Object"/>
                                   </Table>
                                 </Property>
                                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -678,22 +678,12 @@
                               <Properties>
                                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                                   <Table columnCount="2" rowCount="0">
-                                    <Column editable="true" title="nombre" type="java.lang.Object"/>
-                                    <Column editable="true" title="estado" type="java.lang.Object"/>
+                                    <Column editable="false" title="nombre" type="java.lang.Object"/>
+                                    <Column editable="false" title="estado" type="java.lang.Object"/>
                                   </Table>
                                 </Property>
                                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                                   <TableColumnModel selectionModel="0">
-                                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                                      <Title/>
-                                      <Editor/>
-                                      <Renderer/>
-                                    </Column>
-                                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                                      <Title/>
-                                      <Editor/>
-                                      <Renderer/>
-                                    </Column>
                                     <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                                       <Title/>
                                       <Editor/>
@@ -961,10 +951,10 @@
                           <Properties>
                             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                               <Table columnCount="4" rowCount="0">
-                                <Column editable="true" title="leida" type="java.lang.Object"/>
-                                <Column editable="true" title="data" type="java.lang.Object"/>
-                                <Column editable="true" title="de" type="java.lang.Object"/>
-                                <Column editable="true" title="texto" type="java.lang.Object"/>
+                                <Column editable="false" title="leida" type="java.lang.Boolean"/>
+                                <Column editable="false" title="data" type="java.lang.Object"/>
+                                <Column editable="false" title="de" type="java.lang.Object"/>
+                                <Column editable="false" title="texto" type="java.lang.Object"/>
                               </Table>
                             </Property>
                             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">

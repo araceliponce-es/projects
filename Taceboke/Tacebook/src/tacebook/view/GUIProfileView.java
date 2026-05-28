@@ -110,7 +110,7 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
     private void loadPosts() {
         DefaultTableModel postModel = (DefaultTableModel) tablePosts.getModel();
         //llena la tabla de posts
-        visiblePosts = myController.getSessionProfile().getPosts();
+        visiblePosts = myController.getShownProfile().getPosts();
         postModel.setRowCount(0);
         String nombreAutor = "";
         for (Post p : visiblePosts) {
@@ -148,14 +148,7 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
         model.setRowCount(0);
         visibleMessages = myController.getSessionProfile().getMessages();
         for (Message m : visibleMessages) {
-            boolean leido = m.isRead();
-            String leidoMessage ="";
-            if(leido){
-                leidoMessage = "Leido *";
-            }else{
-                leidoMessage = "Sin leer";
-            }
-            model.addRow(new Object[]{leidoMessage, formatter.format(m.getDate()), m.getDestProfile().getName(), m.getText()});
+            model.addRow(new Object[]{m.isRead(), formatter.format(m.getDate()), m.getDestProfile().getName(), m.getText()});
         }
 
     }
@@ -344,7 +337,15 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
             new String [] {
                 "Data", "autor", "texto", "me gustas"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tablePosts.setMaximumSize(new java.awt.Dimension(800, 200));
         tablePosts.setPreferredSize(new java.awt.Dimension(800, 200));
         jScrollPane4.setViewportView(tablePosts);
@@ -418,7 +419,15 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
             new String [] {
                 "texto", "de", "data"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tableComments.setMaximumSize(new java.awt.Dimension(800, 200));
         tableComments.setPreferredSize(new java.awt.Dimension(800, 200));
         jScrollPane2.setViewportView(tableComments);
@@ -481,7 +490,15 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
             new String [] {
                 "nombre", "estado"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tableFriends.setMaximumSize(new java.awt.Dimension(800, 200));
         tableFriends.setMinimumSize(new java.awt.Dimension(60, 0));
         tableFriends.setPreferredSize(new java.awt.Dimension(800, 200));
@@ -625,7 +642,22 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
             new String [] {
                 "leida", "data", "de", "texto"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Boolean.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tableMessages.setMaximumSize(new java.awt.Dimension(800, 200));
         tableMessages.setPreferredSize(new java.awt.Dimension(800, 500));
         jScrollPane10h369.setViewportView(tableMessages);
@@ -773,31 +805,72 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnMessageReadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMessageReadActionPerformed
-        // TODO add your handling code here:
+        int filaSelecionada = tableMessages.getSelectedRow();
+        //Fila selecionada distinto a -1 es que tenga alguna selecionada
+        if (filaSelecionada != -1) {
+            int indiceModelo = tableMessages.convertRowIndexToModel(filaSelecionada);
+            Message mensaje = visibleMessages.get(indiceModelo);
+
+            int seleccion = JOptionPane.showOptionDialog(
+                    this,
+                    "De: " + mensaje.getSourceProfile().getName()
+                    + "\nData : " + formatter.format(mensaje.getDate())
+                    + "\nMensaje : "
+                    + "\n" + mensaje.getText(),
+                    "Ler mensaxe",
+                    JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.INFORMATION_MESSAGE,
+                    null, // null para icono por defecto.
+                    new Object[]{"Volver", "Eliminar", "Responder"}, // null para YES, NO y CANCEL
+                    null
+            );
+            if (seleccion == 0) {
+                myController.markMessageAsRead(mensaje);
+                loadMensajes();
+            } else if (seleccion == 1) {
+                myController.deleteMessage(mensaje);
+                loadMensajes();
+            } else if (seleccion == 2) {
+                String mensajeFriend = JOptionPane.showInputDialog(
+                        this,
+                        "Escribe el mensaje para tu amigo : ",
+                        JOptionPane.QUESTION_MESSAGE);
+                if (mensajeFriend != null) {
+                    myController.newMessage(mensaje.getSourceProfile(), mensajeFriend);
+                }
+                myController.markMessageAsRead(mensaje);
+                loadMensajes();
+            } else {
+                myController.markMessageAsRead(mensaje);
+                loadMensajes();
+            }
+        };
+
+
     }//GEN-LAST:event_btnMessageReadActionPerformed
 
     private void btnMessageDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMessageDeleteActionPerformed
-           int filaSelecionada = tableMessages.getSelectedRow();
-           //Fila selecionada distinto a -1 es que tenga alguna selecionada
-            if (filaSelecionada != -1) {
-                int indiceModelo = tableMessages.convertRowIndexToModel(filaSelecionada);
-                Message mensaje = visibleMessages.get(indiceModelo);
-                myController.deleteMessage(mensaje);
-                loadMensajes();
-            };
+        int filaSelecionada = tableMessages.getSelectedRow();
+        //Fila selecionada distinto a -1 es que tenga alguna selecionada
+        if (filaSelecionada != -1) {
+            int indiceModelo = tableMessages.convertRowIndexToModel(filaSelecionada);
+            Message mensaje = visibleMessages.get(indiceModelo);
+            myController.deleteMessage(mensaje);
+            loadMensajes();
+        };
     }//GEN-LAST:event_btnMessageDeleteActionPerformed
 
     private void btnBioSeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBioSeeActionPerformed
-            int filaSelecionada = tableFriends.getSelectedRow();
-            //Fila selecionada distinto a -1 es que tenga alguna selecionada
-            if (filaSelecionada != -1) {
-                int indiceModelo = tableFriends.convertRowIndexToModel(filaSelecionada);
-                Profile friend = visibleFriends.get(indiceModelo);
-                myController.setShownProfile(friend);
-                showProfileMenu(friend);
+        int filaSelecionada = tableFriends.getSelectedRow();
+        //Fila selecionada distinto a -1 es que tenga alguna selecionada
+        if (filaSelecionada != -1) {
+            int indiceModelo = tableFriends.convertRowIndexToModel(filaSelecionada);
+            Profile friend = visibleFriends.get(indiceModelo);
+            myController.setShownProfile(friend);
+            showProfileMenu(friend);
 
-                changeUILoggedProfileIsVisible(false);
-            };
+            changeUILoggedProfileIsVisible(false);
+        };
     }//GEN-LAST:event_btnBioSeeActionPerformed
 
     private void changeUILoggedProfileIsVisible(boolean bool) {
@@ -866,16 +939,16 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
                 this,
                 "Escribe el mensaje para tu amigo : ",
                 JOptionPane.QUESTION_MESSAGE);
-        if(seleccion != null){
+        if (seleccion != null) {
             int filaSelecionada = tableFriends.getSelectedRow();
             //Fila selecionada distinto a -1 es que tenga alguna selecionada
             if (filaSelecionada != -1) {
                 int indiceModelo = tableFriends.convertRowIndexToModel(filaSelecionada);
                 Profile friend = visibleFriends.get(indiceModelo);
-                myController.newMessage(friend,seleccion);
+                myController.newMessage(friend, seleccion);
             };
         }
-        
+
     }//GEN-LAST:event_btnMessageCreateActionPerformed
 
     private void btnAcceptRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcceptRequestActionPerformed
@@ -899,7 +972,7 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
                 this,
                 "Escribe el nombre del perfil que quieres agregar : ",
                 JOptionPane.QUESTION_MESSAGE);  // el icono sera un iterrogante
-       myController.newFriendshipRequest(seleccion);
+        myController.newFriendshipRequest(seleccion);
     }//GEN-LAST:event_btnNewRequestActionPerformed
 
     private void btnUpdateStatus2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateStatus2ActionPerformed
@@ -921,7 +994,22 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
     }//GEN-LAST:event_btnLogoutActionPerformed
 
     private void btnOlderPostsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOlderPostsActionPerformed
-        // TODO add your handling code here:
+        boolean seleccionNumber = false;
+        int numberOfPosts = 0;
+        do {
+            String seleccion = JOptionPane.showInputDialog(
+                    this,
+                    "Escribe el numero de posts que quieres recibir : ",
+                    JOptionPane.QUESTION_MESSAGE);  // el icono sera un iterrogante
+            try {
+                numberOfPosts = Integer.parseInt(seleccion);
+                seleccionNumber = true;
+            }catch(NumberFormatException e){
+                seleccionNumber =false;
+            }
+        } while (!seleccionNumber);
+        postsShown = numberOfPosts;
+        loadPosts();
     }//GEN-LAST:event_btnOlderPostsActionPerformed
 
     private void btnPostLikeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPostLikeActionPerformed
@@ -976,13 +1064,13 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
     }//GEN-LAST:event_btnGoBackActionPerformed
 
     private void btnSendPrivateMessageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendPrivateMessageActionPerformed
-                String seleccion = JOptionPane.showInputDialog(
+        String seleccion = JOptionPane.showInputDialog(
                 this,
                 "Escribe el mensaje para tu amigo : ",
                 JOptionPane.QUESTION_MESSAGE);
-        if(seleccion != null){
-            
-            myController.newMessage(myController.getShownProfile(),seleccion);
+        if (seleccion != null) {
+
+            myController.newMessage(myController.getShownProfile(), seleccion);
         }
     }//GEN-LAST:event_btnSendPrivateMessageActionPerformed
 
@@ -1137,16 +1225,16 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
 
     @Override
     public void showConnectionErrorMessage() {
-        JOptionPane.showMessageDialog(this, "Error", "Erro na conexión co almacén de datos!", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Erro na conexión co almacén de datos!", "Error", JOptionPane.WARNING_MESSAGE);
     }
 
     @Override
     public void showReadErrorMessage() {
-        JOptionPane.showMessageDialog(this, "Error", "Erro na lectura de datos!", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Erro na lectura de datos!", "Error", JOptionPane.WARNING_MESSAGE);
     }
 
     @Override
     public void showWriteErrorMessage() {
-        JOptionPane.showMessageDialog(this, "Error", "Erro na escritura de datos!", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Erro na escritura de datos!", "Error", JOptionPane.WARNING_MESSAGE);
     }
 }
