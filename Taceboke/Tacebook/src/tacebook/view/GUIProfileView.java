@@ -107,6 +107,7 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
         DefaultTableModel postModel = (DefaultTableModel) tablePosts.getModel();
         //llena la tabla de posts
         visiblePosts = myController.getSessionProfile().getPosts();
+        postModel.setRowCount(0);
         String nombreAutor = "";
         for (Post p : visiblePosts) {
             if (p.getAuthor() != null) {
@@ -163,7 +164,7 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
     private void loadComments(Post post) {
 
         DefaultTableModel model = (DefaultTableModel) tableComments.getModel();
-
+        model.setRowCount(0);
         for (Comment c : post.getComments()) {
             model.addRow(new Object[]{
                 c.getText(),
@@ -177,7 +178,7 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
     private void loadFriends() {
         DefaultTableModel postModel = (DefaultTableModel) tableFriends.getModel();
         // limpia la tabla de comentarios
-        visibleFriends = myController.getSessionProfile().getFriends();
+        visibleFriends = myController.getShownProfile().getFriends();
         //llena la tabla de comentarios
         for (Profile p : visibleFriends) {
             postModel.addRow(new Object[]{
@@ -329,14 +330,13 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
                 "Data", "autor", "texto", "me gustas"
             }
         ));
-        tablePosts.setCellSelectionEnabled(false);
         tablePosts.setMaximumSize(new java.awt.Dimension(800, 200));
         tablePosts.setPreferredSize(new java.awt.Dimension(800, 200));
         jScrollPane4.setViewportView(tablePosts);
 
         jPanel8.setMinimumSize(new java.awt.Dimension(0, 0));
 
-        btnPostCreate.setText("crear nueva publicacion");
+        btnPostCreate.setText("nueva publicacion");
         btnPostCreate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPostCreateActionPerformed(evt);

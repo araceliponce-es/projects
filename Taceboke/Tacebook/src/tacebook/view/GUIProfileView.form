@@ -438,7 +438,7 @@
                           <SubComponents>
                             <Component class="javax.swing.JButton" name="btnPostCreate">
                               <Properties>
-                                <Property name="text" type="java.lang.String" value="crear nueva publicacion"/>
+                                <Property name="text" type="java.lang.String" value="nueva publicacion"/>
                               </Properties>
                               <Events>
                                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPostCreateActionPerformed"/>
