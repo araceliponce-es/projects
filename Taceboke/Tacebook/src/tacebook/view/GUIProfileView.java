@@ -180,7 +180,7 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
     }
 
     private void loadFriends() {
-    
+
         DefaultTableModel postModel = (DefaultTableModel) tableFriends.getModel();
         // limpia la tabla de comentarios
         postModel.setRowCount(0);
@@ -789,15 +789,70 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
                 myController.setShownProfile(friend);
                 showProfileMenu(friend);
 
-                //deshabilitar 3er tab: mensajes privados
-                jTabbedPane1h466.setEnabledAt(2, false);
-                //cambia a mostrar 1er tab
-                jTabbedPane1h466.setSelectedIndex(0);
-
-                amigosSegundoContenedor.setVisible(false);
-                loadPosts();
+                changeUILoggedProfileIsVisible(false);
             };
     }//GEN-LAST:event_btnBioSeeActionPerformed
+
+    private void changeUILoggedProfileIsVisible(boolean bool) {
+
+        if (bool) {
+            //si vista es de logged profile
+
+            //btns visibles e invisibles
+            btnGoBack.setVisible(false);
+            btnSendPrivateMessage.setVisible(false);
+            btnUpdateStatus2.setVisible(true);
+
+//              //ajuste de tabla de amigos
+            // jSplitPane vertical, ajustamos la altura del panel superior a 300px
+            amigosPrimerContenedor.setPreferredSize(new Dimension(amigosPrimerContenedor.getWidth(), 100));
+            jScrollPane5.setMinimumSize(new Dimension(amigosPrimerContenedor.getWidth(), 100));
+            tableFriends.setPreferredSize(new Dimension(amigosPrimerContenedor.getWidth(), 100));
+            // Es necesario refrescar el jSplitPane para que reconozca el cambio
+            jSplitPane2.revalidate();
+            jSplitPane2.repaint();
+
+            //re habilitar 3er tab: mensajes privados
+            jTabbedPane1h466.setEnabledAt(2, true);
+            //remostrar segunda parte de amigos
+            amigosSegundoContenedor.setVisible(true);
+            amigosSegundoContenedor.revalidate();
+            amigosSegundoContenedor.repaint();
+            amigosSegundoContenedor.getParent().revalidate();
+            amigosSegundoContenedor.getParent().repaint();
+            jSplitPane2.setDividerLocation(100);
+            jSplitPane2.resetToPreferredSizes();
+            //fin de remostrar
+
+            loadPosts();
+
+        } else {
+
+            //si vista actual es de amigo
+            //btns visibles e invisibles
+            btnGoBack.setVisible(true);
+            btnSendPrivateMessage.setVisible(true);
+            btnUpdateStatus2.setVisible(false);
+
+            //ajuste de tabla de amigos
+            // jSplitPane vertical, ajustamos la altura del panel superior a 300px
+            amigosPrimerContenedor.setPreferredSize(new Dimension(amigosPrimerContenedor.getWidth(), 575));
+            jScrollPane5.setMinimumSize(new Dimension(amigosPrimerContenedor.getWidth(), 565));
+            tableFriends.setPreferredSize(new Dimension(amigosPrimerContenedor.getWidth(), 565));
+            // Es necesario refrescar el jSplitPane para que reconozca el cambio
+            jSplitPane2.revalidate();
+            jSplitPane2.repaint();
+
+            //deshabilitar 3er tab: mensajes privados
+            jTabbedPane1h466.setEnabledAt(2, false);
+            //cambia a mostrar 1er tab
+            jTabbedPane1h466.setSelectedIndex(0);
+            //ocultar segunda parte de amigos
+            amigosSegundoContenedor.setVisible(false);
+            loadPosts();
+
+        }
+    }
 
     private void btnMessageCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMessageCreateActionPerformed
         String seleccion = JOptionPane.showInputDialog(
@@ -908,6 +963,9 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
 
     private void btnGoBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGoBackActionPerformed
         // TODO add your handling code here:
+        myController.setShownProfile(myController.getSessionProfile());
+        this.showProfileMenu(myController.getShownProfile());
+        changeUILoggedProfileIsVisible(true);
     }//GEN-LAST:event_btnGoBackActionPerformed
 
     private void btnSendPrivateMessageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendPrivateMessageActionPerformed
@@ -1028,24 +1086,7 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
         loadFriendsRequest();
         loadMensajes();
 
-        if (profile.getName().equalsIgnoreCase(myController.getSessionProfile().getName())) {
-            btnGoBack.setVisible(false);
-            btnSendPrivateMessage.setVisible(false);
-            btnUpdateStatus2.setVisible(true);
-        } else {
-            btnGoBack.setVisible(true);
-            btnSendPrivateMessage.setVisible(true);
-            btnUpdateStatus2.setVisible(false);
-
-            // Cambia '250' por la altura deseada en píxeles para el panel superior/izquierdo
-//jSplitPane2.setDividerLocation(500); 
-// Suponiendo un JSplitPane vertical, ajustamos la altura del panel superior a 300px
-            amigosPrimerContenedor.setPreferredSize(new Dimension(amigosPrimerContenedor.getWidth(), 700));
- tableFriends.setPreferredSize(new Dimension(amigosPrimerContenedor.getWidth(), 700));
-// Es necesario refrescar el JSplitPane para que reconozca el cambio
-            jSplitPane2.revalidate();
-            jSplitPane2.repaint();
-        }
+        changeUILoggedProfileIsVisible(profile.getName().equals(myController.getSessionProfile().getName()));
 
         this.setVisible(true);
     }
