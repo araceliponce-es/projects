@@ -14,8 +14,20 @@ package tacebook.persistence;
 public class PersistenceException extends Exception {
 
     private int code;
+
+    /**
+     *Valor del error con la conexión con la base de datos
+     */
     public static final int CONNECTION_ERROR = 0;
+
+    /**
+     *Valor del error con la lectura de algo
+     */
     public static final int CANNOT_READ = 1;
+
+    /**
+     *Valor del error con la escritura de algo
+     */
     public static final int CANNOT_WRITE = 2;
 
     /**
@@ -60,7 +72,7 @@ public class PersistenceException extends Exception {
     }
 
     /**
-     *
+     *Constructor de la clase que recibe el código del error que saltó y el mensaje que tiene que salir por pantalla
      * @param code
      * @param message
      */

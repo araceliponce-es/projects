@@ -7,7 +7,12 @@ package tacebook.persistence;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import tacebook.model.Profile;
+import java.sql.SQLException;
 
 /**
  * Clase que implementa la persistencia (almacenamiento) de los perfiles de la
@@ -26,14 +31,26 @@ public class ProfileDB {
      */
     public static Profile findByName(String name) throws PersistenceException {
         Profile res = null;
-
         for (Profile person : TacebookDB.getProfiles()) {
-
             if (person.getName().equals(name)) {
                 //usuario encontrado por nombre, numero de posts aun no implementado
                 res = person;
             }
-
+        }
+        Connection c=TacebookDB.getConnection();
+        try (c) {
+            System.out.println("Conexion realizada con exito");
+            PreparedStatement stPf = c.prepareStatement("SELECT * FROM Profile WHERE name=?");
+            stPf.setString(1, name);
+            ResultSet rst = stPf.executeQuery();
+            rst.next();
+            rst.getString("name");
+            rst.getString("password");
+            rst.getString("status");
+            rst.close();
+            stPf.close();
+        } catch (SQLException e) {
+            System.out.println("Fallo en profiles");
         }
         return res;
     }
@@ -90,6 +107,20 @@ public class ProfileDB {
      */
     public static void save(Profile profile) throws PersistenceException {
         TacebookDB.profiles.add(profile);
+        Connection c=TacebookDB.getConnection();
+        try (c) {
+            System.out.println("Conexion realizada con exito");
+            PreparedStatement stPf = c.prepareStatement("INSERT INTO Profile VALUES(?,?,?)");
+            stPf.setString(1, profile.getName());
+            stPf.setString(2, getPasswordHash(profile.getPassword()));
+            stPf.setString(3, profile.getStatus());
+            stPf.executeUpdate();
+            stPf.close();
+        } catch (SQLException e) {
+            System.out.println("Fallo en profiles");
+        } catch (NoSuchAlgorithmException ex) {
+            System.getLogger(ProfileDB.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
     }
 
     /**
@@ -152,7 +183,6 @@ public class ProfileDB {
         }
     }
 
-    
     private static String getPasswordHash(String password) throws NoSuchAlgorithmException {
         // Calculamos e obtemos o Hash
         MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");

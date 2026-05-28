@@ -24,34 +24,41 @@ public class MessageDB {
      * @throws tacebook.persistence.PersistenceException
      */
     public static void save(Message message) throws PersistenceException{
-        message.destProfile.messages.addFirst(message);
-
         Connection c=TacebookDB.getConnection();
         try (c) {
             System.out.println("Conexion realizada con exito");
-            PreparedStatement stM = c.prepareStatement("INSERT INTO MESSAGE VALUES(?,?,?,?,?,?)");
+            PreparedStatement stM = c.prepareStatement("INSERT INTO Message VALUES(?,?,?,?,?,?)");
             stM.setInt(1, message.getId());
             stM.setString(2, message.getText());
             stM.setDate(3, (Date) message.getDate());
             stM.setBoolean(4, message.isRead());
             stM.setString(5, message.getSourceProfile().getName());
             stM.setString(6, message.getDestProfile().getName());
+            stM.executeUpdate();
             stM.close();
-            
-
         } catch (SQLException e) {
-            System.out.println("Fallo en comentarios");
+            System.out.println("Fallo en mensajes");
         }
     }
 
     /**
-     * En la parte 2 eso no hace nada, luego ya veremos
+     * Actualiza si un mensaje fue leído
      *
      * @param message Mensaje para un perfil
      * @throws tacebook.persistence.PersistenceException
      */
     public static void update(Message message) throws PersistenceException{
-
+        Connection c=TacebookDB.getConnection();
+        try (c) {
+            System.out.println("Conexion realizada con exito");
+            PreparedStatement stM = c.prepareStatement("UPDATE Message SET isRead=? WHERE id=?");
+            stM.setBoolean(4, message.isRead());
+            stM.setInt(1, message.getId());
+            stM.executeUpdate();
+            stM.close();
+        } catch (SQLException e) {
+            System.out.println("Fallo en mensajes");
+        }
     }
 
     /**
@@ -62,6 +69,16 @@ public class MessageDB {
      * @throws tacebook.persistence.PersistenceException
      */
     public static void remove(Message message) throws PersistenceException{
-        message.destProfile.messages.remove(message);
+
+        Connection c=TacebookDB.getConnection();
+        try (c) {
+            PreparedStatement stM = c.prepareStatement("DELETE FROM Messages WHERE id = ?");
+            stM.setInt(1, message.getId());
+            stM.executeUpdate();
+            stM.close();
+        } catch (SQLException e) {
+            System.out.println("Fallo en mensajaes");
+        }
+        
     }
 }
