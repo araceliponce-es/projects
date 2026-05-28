@@ -808,11 +808,19 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
     }//GEN-LAST:event_btnAcceptRequestActionPerformed
 
     private void btnDenyRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDenyRequestActionPerformed
-        // TODO add your handling code here:
+        Profile profilefilaSelecionada = listFriendRequests.getSelectedValue();
+        //Fila selecionada distinto a -1 es que tenga alguna selecionada
+        myController.rejectFriendshipRequest(profilefilaSelecionada);
+        loadFriendsRequest();
+        loadFriends();
     }//GEN-LAST:event_btnDenyRequestActionPerformed
 
     private void btnNewRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewRequestActionPerformed
-        // TODO add your handling code here:
+        String seleccion = JOptionPane.showInputDialog(
+                this,
+                "Escribe el nombre del perfil que quieres agregar : ",
+                JOptionPane.QUESTION_MESSAGE);  // el icono sera un iterrogante
+       myController.newFriendshipRequest(seleccion);
     }//GEN-LAST:event_btnNewRequestActionPerformed
 
     private void btnUpdateStatus2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateStatus2ActionPerformed

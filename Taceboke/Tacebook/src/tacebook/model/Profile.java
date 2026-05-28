@@ -147,6 +147,6 @@ public class Profile {
 
     @Override
     public String toString() {
-        return "El perfil @" +name +"quiere ser tu amigo";
+        return "El perfil @" +name +" quiere ser tu amigo";
     }    
 }
