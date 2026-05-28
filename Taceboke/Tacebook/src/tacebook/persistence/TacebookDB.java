@@ -61,8 +61,6 @@ public class TacebookDB {
         // Obtemos unha conexión coa base de datos
         try {
             if (connection == null) {
-                //TODO: llenar esto
-                //preguntar a Antonio sobre la base sqlite
                 connection = DriverManager.getConnection("jdbc:sqlite:/home/daw1al11/projects/Taceboke/tacebook.db", "", "");
             }
             return connection;
