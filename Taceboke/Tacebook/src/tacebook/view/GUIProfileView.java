@@ -148,7 +148,14 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
         model.setRowCount(0);
         visibleMessages = myController.getSessionProfile().getMessages();
         for (Message m : visibleMessages) {
-            model.addRow(new Object[]{"prueba", formatter.format(m.getDate()), m.getDestProfile().getName(), m.getText()});
+            boolean leido = m.isRead();
+            String leidoMessage ="";
+            if(leido){
+                leidoMessage = "Leido *";
+            }else{
+                leidoMessage = "Sin leer";
+            }
+            model.addRow(new Object[]{leidoMessage, formatter.format(m.getDate()), m.getDestProfile().getName(), m.getText()});
         }
 
     }
@@ -969,7 +976,14 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
     }//GEN-LAST:event_btnGoBackActionPerformed
 
     private void btnSendPrivateMessageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendPrivateMessageActionPerformed
-        // TODO add your handling code here:
+                String seleccion = JOptionPane.showInputDialog(
+                this,
+                "Escribe el mensaje para tu amigo : ",
+                JOptionPane.QUESTION_MESSAGE);
+        if(seleccion != null){
+            
+            myController.newMessage(myController.getShownProfile(),seleccion);
+        }
     }//GEN-LAST:event_btnSendPrivateMessageActionPerformed
 
     public static void customizePallete() {
