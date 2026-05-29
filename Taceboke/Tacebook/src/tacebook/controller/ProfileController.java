@@ -177,9 +177,9 @@ public class ProfileController {
      * @param text
      * @param destProfile
      */
-    public void newPost(String text, Profile destProfile) {
+    public void newPost(String text, Profile destProfile ,Profile author) {
         //crea nuevo post y lo guarda en bd
-        Post post = new Post(text, destProfile);
+        Post post = new Post(text, destProfile,author);
         try {
             PostDB.save(post);
         } catch (PersistenceException ex) {

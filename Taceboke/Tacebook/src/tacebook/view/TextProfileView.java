@@ -247,7 +247,7 @@ public class TextProfileView implements ProfileView {
             switch (readNumber(scan)) {
                 case 1:
                     //puedes escribir posts en tu perfil y de amigos
-                    writeNewPost(scan, profileInView);
+                    writeNewPost(scan, profileInView ,user);
                     break;
                 case 2:
                     commentPost(scan, profileInView);
@@ -345,13 +345,13 @@ public class TextProfileView implements ProfileView {
      * Pide o texto para crear unha nova publicación e chama ao controlador para
      * creala. *
      */
-    private void writeNewPost(Scanner scanner, Profile profile) {
+    private void writeNewPost(Scanner scanner, Profile profile,Profile author) {
         // pide el texto?
         System.out.println("ingresa el texto para tu post:");
 
         //guarda el texto obtenido y crea nuevo post
         String postText = scanner.nextLine();
-        myController.newPost(postText, profile);
+        myController.newPost(postText, profile,author);
     }
 
     /**

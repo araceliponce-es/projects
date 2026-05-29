@@ -7,12 +7,13 @@ package tacebook.persistence;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import tacebook.model.Profile;
 import java.sql.DriverManager;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Scanner;
+
 
 /**
  * Clase que simula ser una BD de nuestra aplicación
@@ -61,21 +62,18 @@ public class TacebookDB {
      * @return Conexión coa base de datos aberta
      * @throws PersistenceException Se se produce un erro ao conectar coa BD
      */
-    public static Connection getConnection() throws PersistenceException, FileNotFoundException {
-        try (Scanner in = new Scanner(new BufferedReader(new FileReader("/home/daw1al11/projects/Taceboke/Tacebook/RutaBaseSQLite")))) {
-            // Establecemos como delimitador : ou espazo en branco
-            in.useDelimiter("[:.]");
-            // Lemos todos os doubles e os mostramos
-            while (in.hasNext()) {
-                String rutaBD=
-            }
-        }
+    public static Connection getConnection() throws PersistenceException, FileNotFoundException, IOException {
+        
+        
+       String rutaBD = "";
+       try (BufferedReader br = new BufferedReader(new FileReader("RutaBaseSQLite.txt"))){
+           rutaBD = br.readLine();
+       }catch(IOException e){
+           
+       }
         // Obtemos unha conexión coa base de datos
         try {
-            if (connection == null) {
-                connection = DriverManager.getConnection("jdbc:sqlite:tacebook.db");
-            }
-            return connection;
+            return  DriverManager.getConnection(rutaBD);
         } catch (SQLException e) {
             throw new PersistenceException(PersistenceException.CONNECTION_ERROR, e.getMessage());
         }

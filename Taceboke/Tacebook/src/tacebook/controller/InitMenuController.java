@@ -5,7 +5,6 @@
 package tacebook.controller;
 
 import tacebook.model.Profile;
-import tacebook.persistence.DemoData;
 import tacebook.persistence.PersistenceException;
 import tacebook.view.InitMenuView;
 import tacebook.persistence.ProfileDB;
@@ -66,11 +65,11 @@ public class InitMenuController {
      */
     public void init() {
 
-        try {
-            DemoData.load();
-        } catch (PersistenceException ex) {
-            proccessPersistenceException(ex);
-        }
+//        try {
+//            DemoData.load();
+//        } catch (PersistenceException ex) {
+//            proccessPersistenceException(ex);
+//        }
 
         //muestra el menu de loginMenu en loop
         // hasta que este retorne true

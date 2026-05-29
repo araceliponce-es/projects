@@ -51,6 +51,12 @@ public class Post {
         this.text = text;
         this.profile = profile;
     }
+    
+    public Post(String text, Profile profile,Profile profileaAuthor) {
+        this.text = text;
+        this.profile = profile;
+        this.author = profileaAuthor;
+    }
 
     /**
      * Obtiene el id del post

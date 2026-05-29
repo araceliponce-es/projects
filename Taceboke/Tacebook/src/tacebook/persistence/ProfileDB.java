@@ -4,6 +4,7 @@
  */
 package tacebook.persistence;
 
+import java.io.IOException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -31,26 +32,33 @@ public class ProfileDB {
      */
     public static Profile findByName(String name) throws PersistenceException {
         Profile res = null;
-        for (Profile person : TacebookDB.getProfiles()) {
-            if (person.getName().equals(name)) {
-                //usuario encontrado por nombre, numero de posts aun no implementado
-                res = person;
+        try {
+
+            for (Profile person : TacebookDB.getProfiles()) {
+                if (person.getName().equals(name)) {
+                    //usuario encontrado por nombre, numero de posts aun no implementado
+                    res = person;
+                }
             }
-        }
-        Connection c=TacebookDB.getConnection();
-        try (c) {
-            System.out.println("Conexion realizada con exito");
-            PreparedStatement stPf = c.prepareStatement("SELECT * FROM Profile WHERE name=?");
-            stPf.setString(1, name);
-            ResultSet rst = stPf.executeQuery();
-            rst.next();
-            rst.getString("name");
-            rst.getString("password");
-            rst.getString("status");
-            rst.close();
-            stPf.close();
-        } catch (SQLException e) {
-            System.out.println("Fallo en profiles");
+
+            Connection c = TacebookDB.getConnection();
+            try (c) {
+                System.out.println("Conexion realizada con exito");
+                PreparedStatement stPf = c.prepareStatement("SELECT * FROM Profile WHERE name=?");
+                stPf.setString(1, name);
+                ResultSet rst = stPf.executeQuery();
+                rst.next();
+                rst.getString("name");
+                rst.getString("password");
+                rst.getString("status");
+                rst.close();
+                stPf.close();
+            } catch (SQLException e) {
+                System.out.println("Fallo en profiles");
+
+            }
+        } catch (IOException ex) {
+            System.getLogger(ProfileDB.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
         return res;
     }
@@ -88,14 +96,34 @@ public class ProfileDB {
      * @return Perfil de usuario encontrado, o null
      * @throws tacebook.persistence.PersistenceException
      */
-    public static Profile findByNameAndPassword(String name, String password, int numberOfPosts) throws PersistenceException {
+    public static Profile findByNameAndPassword(String name, String password, int numberOfPosts)
+            throws PersistenceException {
+
         Profile res = null;
 
-        for (Profile person : TacebookDB.getProfiles()) {
-            if (person.getName().equals(name) && person.getPassword().equals(password)) {
-                res = person;
+        try (Connection c = TacebookDB.getConnection()) {
+
+            PreparedStatement st = c.prepareStatement(
+                    "SELECT name, password, status FROM Profile WHERE name=? AND password=?"
+            );
+
+            st.setString(1, name);
+            st.setString(2, getPasswordHash(password));
+
+            ResultSet rs = st.executeQuery();
+
+            if (rs.next()) {
+                res = new Profile(
+                        rs.getString("name"),
+                        rs.getString("password"),
+                        rs.getString("status")
+                );
             }
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
         return res;
     }
 
@@ -106,19 +134,26 @@ public class ProfileDB {
      * @throws tacebook.persistence.PersistenceException
      */
     public static void save(Profile profile) throws PersistenceException {
-        TacebookDB.profiles.add(profile);
-        Connection c=TacebookDB.getConnection();
-        try (c) {
-            System.out.println("Conexion realizada con exito");
-            PreparedStatement stPf = c.prepareStatement("INSERT INTO Profile VALUES(?,?,?)");
-            stPf.setString(1, profile.getName());
-            stPf.setString(2, getPasswordHash(profile.getPassword()));
-            stPf.setString(3, profile.getStatus());
-            stPf.executeUpdate();
-            stPf.close();
-        } catch (SQLException e) {
-            System.out.println("Fallo en profiles");
-        } catch (NoSuchAlgorithmException ex) {
+        try {
+            TacebookDB.profiles.add(profile);
+
+            try (Connection c = TacebookDB.getConnection();) {
+                System.out.println("Conexion realizada con exito");
+                PreparedStatement stPf = c.prepareStatement("INSERT INTO Profile VALUES(?,?,?)");
+                stPf.setString(1, profile.getName());
+                stPf.setString(2, getPasswordHash(profile.getPassword()));
+                stPf.setString(3, profile.getStatus());
+                stPf.executeUpdate();
+                stPf.close();
+
+                TacebookDB.profiles.add(profile);
+            } catch (SQLException e) {
+                System.out.println("Fallo en profiles");
+                e.printStackTrace();
+            } catch (NoSuchAlgorithmException ex) {
+                System.getLogger(ProfileDB.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            }
+        } catch (IOException ex) {
             System.getLogger(ProfileDB.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
     }

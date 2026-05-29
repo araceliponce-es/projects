@@ -1051,7 +1051,7 @@ public class GUIProfileView extends javax.swing.JFrame implements ProfileView {
 
         // Si seleccion es null es que el usuario ha pulsado Cancelar.
         if (seleccion != null) {
-            myController.newPost(seleccion, myController.getShownProfile());
+            myController.newPost(seleccion,myController.getShownProfile(),myController.getSessionProfile());
             loadPosts();
         }
     }//GEN-LAST:event_btnPostCreateActionPerformed
