@@ -8,12 +8,13 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import tacebook.model.Profile;
 import java.sql.DriverManager;
 import java.sql.Connection;
 import java.sql.SQLException;
-
+import java.util.Properties;
 
 /**
  * Clase que simula ser una BD de nuestra aplicación
@@ -62,21 +63,41 @@ public class TacebookDB {
      * @return Conexión coa base de datos aberta
      * @throws PersistenceException Se se produce un erro ao conectar coa BD
      */
-    public static Connection getConnection() throws PersistenceException, FileNotFoundException, IOException {
-        
-        
-       String rutaBD = "";
-       try (BufferedReader br = new BufferedReader(new FileReader("RutaBaseSQLite.txt"))){
-           rutaBD = br.readLine();
-       }catch(IOException e){
-           
-       }
-        // Obtemos unha conexión coa base de datos
+    public static Connection getConnection() throws PersistenceException, IOException {
+
+        String rutaBD = "";
+     
         try {
-            return  DriverManager.getConnection(rutaBD);
+            // Abrimos un fluxo sobre un ficheiro que está na carpeta "config"
+            // da aplicación. En lugar de "FileManager" hai que poñer o nome da clase na que esteamos
+            InputStream input = TacebookDB.class.getClassLoader().getResourceAsStream("resources/config.properties");
+
+            if (input == null) {
+                throw new PersistenceException(
+                        PersistenceException.CONNECTION_ERROR,
+                        "No se puede leer config.properties"
+                );
+            }
+
+            // Cargamos as propiedades do ficheiro
+            Properties prop = new Properties();
+            prop.load(input);
+            // Obtemos o valor de dúas propiedades e pechamos o fluxo
+            String db = prop.getProperty("db");
+
+            input.close();
+           
+            rutaBD = db;
+
+            if (rutaBD != null) {
+                DriverManager.getConnection(rutaBD);
+            }
+
+            return DriverManager.getConnection(rutaBD);
         } catch (SQLException e) {
             throw new PersistenceException(PersistenceException.CONNECTION_ERROR, e.getMessage());
         }
+
     }
 
 }
