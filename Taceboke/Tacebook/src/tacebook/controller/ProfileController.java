@@ -127,6 +127,7 @@ public class ProfileController {
      * fase 2: shownProfile en lugar de sessionProfile
      */
     public void reloadProfile() {
+        
         try {
             shownProfile = ProfileDB.findByName(this.shownProfile.getName(), myView.getPostsShown());
         } catch (PersistenceException ex) {
