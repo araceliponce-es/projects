@@ -45,7 +45,7 @@ public class PostDB {
                 stP.executeUpdate();
                 stP.close();
             } catch (SQLException e) {
-                System.out.println("Fallo en posts");
+                System.out.println("Fallo en posts1");
             }
 
         } catch (IOException ex) {
@@ -73,7 +73,7 @@ public class PostDB {
                 stP.executeUpdate();
                 stP.close();
             } catch (SQLException e) {
-                System.out.println("Fallo en Posts");
+                System.out.println("Fallo en Posts2");
             }
         } catch (IOException ex) {
             System.getLogger(PostDB.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);

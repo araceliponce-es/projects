@@ -61,6 +61,7 @@ public class TacebookDB {
      *
      * @return Conexión coa base de datos aberta
      * @throws PersistenceException Se se produce un erro ao conectar coa BD
+     * @throws java.io.FileNotFoundException
      */
     public static Connection getConnection() throws PersistenceException, FileNotFoundException, IOException {
         
