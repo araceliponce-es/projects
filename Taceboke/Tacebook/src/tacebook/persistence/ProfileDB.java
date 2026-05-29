@@ -14,6 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import tacebook.model.Profile;
 import java.sql.SQLException;
+import tacebook.model.Post;
 
 /**
  * Clase que implementa la persistencia (almacenamiento) de los perfiles de la
@@ -23,47 +24,6 @@ import java.sql.SQLException;
  */
 public class ProfileDB {
 
-    /**
-     * ? metodo para encontrar profile por el name, sin otro parametro
-     *
-     * @param name
-     * @return
-     * @throws tacebook.persistence.PersistenceException
-     */
-    public static Profile findByName(String name) throws PersistenceException {
-        Profile res = null;
-        try {
-
-            for (Profile person : TacebookDB.getProfiles()) {
-                if (person.getName().equals(name)) {
-                    //usuario encontrado por nombre, numero de posts aun no implementado
-                    res = person;
-                }
-            }
-
-            Connection c = TacebookDB.getConnection();
-            try (c) {
-                System.out.println("Conexion realizada con exito");
-                PreparedStatement stPf = c.prepareStatement("SELECT * FROM Profile WHERE name=?");
-                stPf.setString(1, name);
-                ResultSet rst = stPf.executeQuery();
-                if (rst.next()) {
-                    String profName = rst.getString("name");
-                    String profPass = rst.getString("password");
-                    String profStatus = rst.getString("status");
-                }
-
-                rst.close();
-                stPf.close();
-            } catch (SQLException e) {
-                System.out.println("Fallo en profiles");
-
-            }
-        } catch (IOException ex) {
-            System.getLogger(ProfileDB.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-        }
-        return res;
-    }
 
     /**
      * Encuentra un Profile usando el nombre de usuario y el numero de posts y
@@ -77,13 +37,26 @@ public class ProfileDB {
     public static Profile findByName(String name, int numberOfPosts) throws PersistenceException {
         Profile res = null;
 
-        for (Profile person : TacebookDB.getProfiles()) {
+        try (Connection c = TacebookDB.getConnection()) {
 
-            if (person.getName().equals(name)) {
-                //usuario encontrado por nombre, numero de posts aun no implementado
-                res = person;
+            PreparedStatement st = c.prepareStatement(
+                    "SELECT name, password, status FROM Profile WHERE name=?"
+            );
+
+            st.setString(1, name);
+
+            ResultSet rs = st.executeQuery();
+
+            if (rs.next()) {
+                res = new Profile(
+                        rs.getString("name"),
+                        rs.getString("password"),
+                        rs.getString("status")
+                );
             }
 
+        } catch (Exception e) {
+            System.out.println("Error en profile");
         }
         return res;
     }
@@ -98,8 +71,7 @@ public class ProfileDB {
      * @return Perfil de usuario encontrado, o null
      * @throws tacebook.persistence.PersistenceException
      */
-    public static Profile findByNameAndPassword(String name, String password, int numberOfPosts)
-            throws PersistenceException {
+    public static Profile findByNameAndPassword(String name, String password, int numberOfPosts)throws PersistenceException {
 
         Profile res = null;
 
@@ -123,10 +95,31 @@ public class ProfileDB {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Error en profile");
         }
-
+        loadPostsInProfile(res);
         return res;
+    }
+
+    private static void loadPostsInProfile(Profile perfil) {
+        try (Connection c = TacebookDB.getConnection()) {
+
+            PreparedStatement st = c.prepareStatement("SELECT text,profile,author FROM Post WHERE profile=?");
+            st.setString(4, perfil.getName());
+            ResultSet rs = st.executeQuery();
+
+            if (rs.next()) {
+                Post res = new Post(
+                        rs.getString("text"),
+                        findByName(rs.getString("profile"),0),
+                        findByName(rs.getString("author"),0)
+                );
+                perfil.posts.add(res);
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error en profile");
+        }
     }
 
     /**

@@ -260,7 +260,7 @@ public class ProfileController {
 
         try {
 
-            Profile profileDest = ProfileDB.findByName(profileName);
+            Profile profileDest = ProfileDB.findByName(profileName,0);
             //obtiene los amigos de A (logged user)
 
             if (profileDest == null) {
