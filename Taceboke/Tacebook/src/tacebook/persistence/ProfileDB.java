@@ -47,10 +47,12 @@ public class ProfileDB {
                 PreparedStatement stPf = c.prepareStatement("SELECT * FROM Profile WHERE name=?");
                 stPf.setString(1, name);
                 ResultSet rst = stPf.executeQuery();
-                rst.next();
-                rst.getString("name");
-                rst.getString("password");
-                rst.getString("status");
+                if (rst.next()) {
+                    String profName = rst.getString("name");
+                    String profPass = rst.getString("password");
+                    String profStatus = rst.getString("status");
+                }
+
                 rst.close();
                 stPf.close();
             } catch (SQLException e) {
