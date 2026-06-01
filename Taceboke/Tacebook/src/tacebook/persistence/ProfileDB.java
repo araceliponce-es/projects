@@ -111,8 +111,8 @@ public class ProfileDB {
             if (rs.next()) {
                 Post res = new Post(
                         rs.getString("text"),
-                        findByName(rs.getString("profile"),0),
-                        findByName(rs.getString("author"),0)
+                        new Profile(rs.getString("profile"), "", ""),
+                        new Profile(rs.getString("author"), "", "")
                 );
                 perfil.posts.add(res);
             }
