@@ -8,8 +8,6 @@ import java.awt.GridLayout;
 import static java.lang.String.valueOf;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
-import javax.management.StringValueExp;
-import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
